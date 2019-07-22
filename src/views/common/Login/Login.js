@@ -46,8 +46,9 @@ export const Login = () => {
   const [pageHeading] = useState('Login');
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');
-  const { devMode, loginStatus } = useContext(LoginContext);
+  const { devMode, loginStatus, setLoginStatus } = useContext(LoginContext);
   const performLogin = () => {
+    setLoginStatus(true)
   }
 
   const validationCheck = () => {
@@ -80,11 +81,7 @@ export const Login = () => {
 
   let content = (
     <div>
-      <Grid
-        container
-        spacing={0}
-        justify="center"
-      >
+      <Grid container spacing={0} justify="center">
         <Grid className={classes.loginBox} item xs={10}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h5">

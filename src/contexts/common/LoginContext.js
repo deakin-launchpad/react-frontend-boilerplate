@@ -18,7 +18,7 @@ export var DevMode = localStorage.getItem('devMode');
 export const LoginContext = createContext();
 export const LoginProvider = props => {
   const { children } = props;
-  const [devMode, _setDevMode] = useState(DevMode);
+  const [devMode, _setDevMode] = useState((DevMode !== '' ? DevMode : false));
   const [loginStatus, _setLoginStatus] = useState(LoginStatus);
   const [accessToken, _setAccessToken] = useState(AccessToken);
 
@@ -57,5 +57,13 @@ export const LoginProvider = props => {
     if (!loginStatus)
       setAccessToken('')
   }, [loginStatus]);
+  useEffect(() => {
+    if (DevMode !== "true")
+      _setDevMode(false)
+  }, []);
+  useEffect(() => {
+    if (!accessToken)
+      setLoginStatus(false)
+  }, [devMode, accessToken])
   return (<LoginContext.Provider value={{ loginStatus, accessToken, devMode, setAccessToken, setLoginStatus, setDevMode }}>{children}</LoginContext.Provider>)
 }

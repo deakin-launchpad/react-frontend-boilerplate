@@ -13,14 +13,14 @@ const Home = () => {
 }
 
 export const AppRoutes = () => {
-  const { loginStatus, devMode } = useContext(LoginContext);
+  const { loginStatus } = useContext(LoginContext);
   const [redirectToLogin, setRedirectToLogin] = useState(true);
   useEffect(() => {
-    if (loginStatus || devMode)
+    if (loginStatus)
       setRedirectToLogin(false);
     else
       setRedirectToLogin(true);
-  }, [loginStatus, devMode])
+  }, [loginStatus])
   return (
     <Switch>
       <Route exact path='/' render={() => ((redirectToLogin ? <Login /> : <Home />))} />

@@ -7,8 +7,8 @@ import './database/idb'
 import { CssBaseline, Container } from '@material-ui/core'
 import { AppRoutes } from './routes/routes';
 import { ContextManager } from 'contexts'
-import { Notification } from 'components'
-
+import { Notification, DevModeSwitch } from 'components'
+import { DevModeConfig } from 'configurations'
 
 const App = () => {
   useEffect(() => {
@@ -19,6 +19,7 @@ const App = () => {
       <Container maxWidth="lg">
         <CssBaseline />
         <AppRoutes />
+        {DevModeConfig.visible ? <DevModeSwitch /> : ''}
         <Notification />
       </Container>
     </ContextManager>
