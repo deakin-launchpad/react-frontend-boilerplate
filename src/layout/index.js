@@ -28,10 +28,7 @@ export const Layout = (props) => {
       <Header />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <div
-          maxWidth="lg"
-          className={classes.container}
-        >
+        <div className={classes.container}>
           {props.children}
         </div>
       </main>
