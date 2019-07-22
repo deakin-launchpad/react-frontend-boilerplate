@@ -1,0 +1,11 @@
+{
+  "items": [
+    {
+      "name": "HOME",
+      "type": "button",
+      "icon": "home",
+      "controller": "home",
+      "customTitle": "Welcome to Boiler Plate"
+    }
+  ]
+}
