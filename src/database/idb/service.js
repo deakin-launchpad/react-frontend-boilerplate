@@ -1,10 +1,14 @@
 import { openDB, deleteDB, wrap, unwrap } from 'idb/with-async-ittr.js';
-const DBTitle = process.env.REACT_APP_IDB_DATABASE_NAME;
+var CONFIG = require('./config.json')
+const DBTitle = (process.env.REACT_APP_IDB_DATABASE_NAME === undefined ?
+  (CONFIG.dbName ? CONFIG.dbName : 'defaultDB') : process.env.REACT_APP_IDB_DATABASE_NAME);
+
 class IDBService {
 
   async reset() {
     return deleteDB(DBTitle);
   }
+
 
   async createGenericObject(objectStoreName, version, autoIncrementValue) {
     var database = await openDB(DBTitle, version, {

@@ -1,3 +1,4 @@
 {
-  "genericStores": [] 
+  "dbName":"boilerPlate",
+  "genericStores": ["generic"] 
 }
