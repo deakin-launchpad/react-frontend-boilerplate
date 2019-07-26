@@ -1,12 +1,15 @@
 import { AccessToken } from 'contexts/helpers'
 
-export default class API {
+class API {
   displayAccessToken = () => {
     console.log(AccessToken)
   }
 
   login = (data, callback) => {
+    console.log(data)
     if (data)
-      callback(true)
+      return callback(true)
   }
 }
+const instance = new API();
+export default instance;
