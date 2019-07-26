@@ -1,6 +1,10 @@
 {
   "visible": true,
   "label": "God Mode",
-  "verticlePosition": "top" ,
-  "horizontalPosition": "left"
+  "verticlePosition": "top",
+  "horizontalPosition": "left",
+  "devDetails": {
+    "user": "sanchit",
+    "password": "password"
+  }
 }

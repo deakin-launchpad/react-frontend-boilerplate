@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { TextField, Paper, makeStyles, Typography, Button, Box, Grid } from '@material-ui/core';
 import { LoginContext } from 'contexts';
 import { notify } from 'components';
+import { DevModeConfig } from 'configurations';
+import { API } from 'helpers';
 
 
 const useStyles = makeStyles(theme => ({
@@ -48,7 +50,11 @@ export const Login = () => {
   const [password, setPassword] = useState('');
   const { devMode, loginStatus, setLoginStatus } = useContext(LoginContext);
   const performLogin = () => {
-    setLoginStatus(true)
+    let details = {
+      username: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.user : '') : emailId),
+      password: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.password : '') : password)
+    }
+    API.login(details, setLoginStatus)
   }
 
   const validationCheck = () => {
