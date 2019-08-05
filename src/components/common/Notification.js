@@ -9,10 +9,12 @@ let OpenNotificationFunction;
 
 /***
  *  Notification is a component which needs to be places in Global App.js or alongside the Routes
+ *  DisplayBrowserNotification triggers browser notification
  *  notify() is a helper function to trigger Notification Component
+ *  @notify params are message, callback, variant
  ***/
 
-const Notification = (props) => {
+const EnhancedNotification = (props) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('')
   const [verticalPosition, setVerticalPosition] = useState('bottom')
@@ -55,8 +57,37 @@ const Notification = (props) => {
 
 }
 
-export const notify = (message) => {
-  OpenNotificationFunction(message)
+export const DisplayBrowserNotification = (message) => {
+  if (!("Notification" in window)) {
+    notify("This browser does not support desktop notification", null, "inapp");
+  }
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+    new Notification(message);
+  }
+  else if (Notification.permission !== "denied") {
+    Notification.requestPermission().then(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        new Notification(message);
+      }
+    });
+  }
 }
 
-export default Notification;
+export const notify = (message, callback, variant) => {
+  if (variant === "inapp") {
+    OpenNotificationFunction(message)
+  } else if (variant === "push") {
+    DisplayBrowserNotification(message)
+  } else {
+    OpenNotificationFunction(message)
+    DisplayBrowserNotification(message)
+  }
+  if (callback !== undefined) {
+    callback()
+  }
+}
+
+
+export default EnhancedNotification;
