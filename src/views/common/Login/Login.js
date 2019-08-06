@@ -48,13 +48,18 @@ export const Login = () => {
   const [pageHeading] = useState('Login');
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');
-  const { devMode, loginStatus, setLoginStatus } = useContext(LoginContext);
+  const { devMode, loginStatus, setLoginStatus, setAccessToken } = useContext(LoginContext);
   const performLogin = () => {
-    let details = {
-      username: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.user : '') : emailId),
-      password: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.password : '') : password)
+    if (DevModeConfig.bypassBackend) {
+      setLoginStatus(true);
+      setAccessToken('dummyToken');
+    } else {
+      let details = {
+        username: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.user : '') : emailId),
+        password: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.password : '') : password)
+      }
+      API.login(details, setLoginStatus)
     }
-    API.login(details, setLoginStatus)
   }
 
   const validationCheck = () => {
