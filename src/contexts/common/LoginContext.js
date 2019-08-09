@@ -7,13 +7,19 @@ import React, { createContext, useState, useEffect } from 'react';
  * @AccessToken 
  * @LoginStatus 
  * @DevMode 
- * 
  * can be used by VanilaJS to check respective status 
+ * @logout : function to logout user
  */
 
 export var AccessToken = localStorage.getItem('accessToken');
 export var LoginStatus = localStorage.getItem('loginStatus');
 export var DevMode = localStorage.getItem('devMode');
+let logoutFunction;
+export const logout = async (init) => {
+  if (init !== undefined)
+    await init();
+  logoutFunction();
+}
 
 export const LoginContext = createContext();
 export const LoginProvider = props => {
@@ -37,6 +43,14 @@ export const LoginProvider = props => {
     LoginStatus = data;
     _setLoginStatus(data);
   };
+  const logoutUser = async (init) => {
+    window.localStorage.setItem('loginStatus', false);
+    LoginStatus = false;
+    _setLoginStatus(false);
+  };
+  useEffect(() => {
+    logoutFunction = logoutUser;
+  }, [])
   const setDevMode = (data) => {
     window.localStorage.setItem('devMode', data);
     DevMode = data;
@@ -50,16 +64,16 @@ export const LoginProvider = props => {
   useEffect(() => {
     if (accessToken) {
       setLoginStatus(true);
-      setAccessToken(accessToken)
+      setAccessToken(accessToken);
     }
   }, [accessToken]);
   useEffect(() => {
     if (!loginStatus)
-      setAccessToken('')
+      setAccessToken('');
   }, [loginStatus]);
   useEffect(() => {
     if (DevMode !== "true")
-      _setDevMode(false)
+      _setDevMode(false);
   }, []);
   useEffect(() => {
     if (!accessToken)
