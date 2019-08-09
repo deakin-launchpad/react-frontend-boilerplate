@@ -3,6 +3,7 @@ import { DevModeSwitch } from './common/devModeSwitch';
 import { Header } from './dependants/Header';
 import { SideMenuItems } from './dependants/SideMenuItems';
 import { EnhancedModal } from './common/EnhancedModal';
+import { EnhancedTable } from './common/EnhancedTable';
 
 export {
   EnhancedNotification as Notification,
@@ -10,5 +11,6 @@ export {
   DevModeSwitch,
   Header,
   SideMenuItems,
-  EnhancedModal
+  EnhancedModal,
+  EnhancedTable
 }
