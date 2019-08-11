@@ -1,46 +1,29 @@
-{
-  "kind": "Deployment",
-  "apiVersion": "extensions/v1beta1",
-  "spec": {
-    "replicas": 1,
-    "selector": {
-      "matchLabels": {
-        "run": "ddd"
-      }
-    },
-    "template": {
-      "metadata": {
-        "creationTimestamp": null,
-        "labels": {
-          "run": "dddd"
-        }
-      },
-      "spec": {
-        "containers": [
-          {
-            "name": "ddd",
-            "image": "alexbonti/react_fe2",
-            "resources": {},
-            "terminationMessagePath": "/dev/termination-log",
-            "terminationMessagePolicy": "File",
-            "imagePullPolicy": "Always"
-          }
-        ],
-        "restartPolicy": "Always",
-        "terminationGracePeriodSeconds": 30,
-        "dnsPolicy": "ClusterFirst",
-        "securityContext": {},
-        "schedulerName": "default-scheduler"
-      }
-    },
-    "strategy": {
-      "type": "RollingUpdate",
-      "rollingUpdate": {
-        "maxUnavailable": "25%",
-        "maxSurge": "25%"
-      }
-    },
-    "revisionHistoryLimit": 2,
-    "progressDeadlineSeconds": 600
-  },
-}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ddddd
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: ddddd
+    spec:
+      containers:
+      - name: ddddd
+        image: au.icr.io/shout/shout-test:1-master-488f7e8c-20190810083030
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ddddd
+  labels:
+    app: ddddd
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+  selector:
+    app: ddddd
