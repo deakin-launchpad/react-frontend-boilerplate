@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: ddddd
+  name: ddd
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: ddddd
+        app: ddd
     spec:
       containers:
-      - name: ddddd
+      - name: ddd
         image: au.icr.io/shout/shout-test:1-master-488f7e8c-20190810083030
         ports:
         - containerPort: 3000
@@ -18,12 +18,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ddddd
+  name: ddd
   labels:
-    app: ddddd
+    app: ddd
 spec:
   type: NodePort
   ports:
   - port: 3000
   selector:
-    app: ddddd
+    app: ddd
+    type: NodePort
