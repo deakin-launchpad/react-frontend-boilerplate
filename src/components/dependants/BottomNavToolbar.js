@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction, Icon, makeStyles } from '@material-ui/core';
 import { LayoutConfig } from 'configurations';
+import { API } from 'helpers'
 
 const useStyles = makeStyles({
   root: {
@@ -28,9 +29,11 @@ export const BottomNavToolbar = () => {
 
   const renderIcons = () => {
     return LayoutConfig.menuItems.map((item, key) => {
-      if (item.isFavourite)
+      if (item.isFavourite) {
+        if (item.type === "logout")
+          return <BottomNavigationAction onClick={() => { API.logoutUser() }} label={item.name} icon={<Icon>{item.icon}</Icon>} key={key} />;
         return <BottomNavigationAction component={Link} to={item.controller} label={item.name} icon={<Icon>{item.icon}</Icon>} key={key} />;
-      return null;
+      } return null;
     }
     );
   }

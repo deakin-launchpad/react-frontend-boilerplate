@@ -1,15 +1,18 @@
 import React from 'react';
-import { List, Icon, ListItem, ListItemText, ListSubheader, Divider, makeStyles, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { List, Icon, ListItem, ListItemText, ListSubheader, Divider, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
+import { Link, Redirect } from 'react-router-dom';
 import { LayoutConfig } from 'configurations';
 import { API } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: '100%',
     height: '100vh',
     backgroundColor: theme.palette.grey,
+  },
+  menu: {
+    width: '100%',
+    height: '100%'
   },
   menuItemText: {
     marginLeft: '5vw'
@@ -33,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     paddingRight: "5vw"
   },
   logoutPlacement: {
-
+    bottom: 0
   }
 }));
 
@@ -41,22 +44,25 @@ export const MobileMenu = () => {
   const classes = useStyles();
   const items = LayoutConfig.menuItems;
 
-  let logoutButton = () => {
-    return (<div >
+  let logoutButton = (data) => {
+    return (<div className={classes.logoutPlacement}>
       <Divider />
       <ListItem onClick={() => { API.logoutUser() }} button className={classes.logoutButton} >
         <Icon>
-          logout
+          {data.icon !== undefined ? data.icon : 'logout'}
         </Icon>
-        <ListItemText className={classes.menuItemText} primary={"Logout"} />
+        <ListItemText className={classes.menuItemText} primary={data.name !== undefined ? data.name : 'Logout'} />
       </ListItem>
     </div >)
   }
-
-
+  let isItDesktop = useMediaQuery('(min-width:600px)');
+  if (isItDesktop)
+    return <Redirect to='/' />
   let content = (
     <div className={classes.root}>
-      <List component="nav"
+      <List
+        className={classes.menu}
+        component="nav"
         subheader={
           <ListSubheader className={classes.menuTitle} component="div" id="menuTitle">
             <Typography variant="h5">
@@ -67,7 +73,9 @@ export const MobileMenu = () => {
         <Divider className={classes.menuTitleDivider} />
         {
           items.map(value => {
-            if (!value.isFavourite)
+            if (!value.isFavourite) {
+              if (value.type === "logout")
+                return logoutButton(value)
               return (
                 <div>
                   <ListItem button component={Link} className={classes.listItem} to={value.controller}>
@@ -80,10 +88,10 @@ export const MobileMenu = () => {
 
                 </div>
               )
+            }
             return null;
           })
         }
-        {logoutButton()}
       </List>
     </div>
   )

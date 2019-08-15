@@ -9,6 +9,15 @@
       "customTitle": "Welcome to Boiler Plate",
       "isFavourite": true,
       "subMenuItems": []
+    },
+    {
+      "name": "Logout",
+      "type": "logout",
+      "icon": "logout",
+      "controller": "home",
+      "customTitle": "Welcome to Boiler Plate",
+      "isFavourite": false,
+      "subMenuItems": []
     }
   ],
   "bottomMobileNavigation": true,

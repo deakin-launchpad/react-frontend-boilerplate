@@ -1,11 +1,10 @@
 import React, { useState, useContext } from 'react';
 import clsx from 'clsx';
 import { AppBar, Toolbar, Typography, makeStyles, Drawer, Divider, IconButton } from '@material-ui/core'
-import { LoginContext, LayoutContext } from 'contexts';
+import { LayoutContext } from 'contexts';
 import { SideMenuItems } from './SideMenuItems';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ExitToApp from '@material-ui/icons/ExitToApp';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -85,7 +84,6 @@ const useStyles = makeStyles(theme => ({
 export const Header = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const { setAccessToken, setLoginStatus } = useContext(LoginContext)
   const { pageTitle } = useContext(LayoutContext)
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -93,13 +91,8 @@ export const Header = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const logout = () => {
-    window.localStorage.clear();
-    setLoginStatus(false);
-    setAccessToken('')
-  }
   let content = (
-    <div style={{display:"flex"}}>
+    <div style={{ display: "flex" }}>
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -114,9 +107,6 @@ export const Header = () => {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             {pageTitle}
           </Typography>
-          <IconButton color="inherit" onClick={() => logout()}>
-            <ExitToApp />
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
