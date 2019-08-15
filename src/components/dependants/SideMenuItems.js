@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { SideMenuItemsConfig } from 'configurations'
-import { LayoutContext } from 'contexts'
+import { LayoutConfig } from 'configurations';
+import { LayoutContext } from 'contexts';
 
 export const SideMenuItems = (props) => {
-  const menuItems = SideMenuItemsConfig.items;
+  const menuItems = LayoutConfig.menuItems !== undefined ? LayoutConfig.menuItems : [];
   const { setPageTitle } = useContext(LayoutContext)
   const menuitemsController = (value, key) => {
     switch (value.type) {
