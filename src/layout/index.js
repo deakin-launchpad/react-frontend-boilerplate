@@ -1,7 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core'
-import { Header } from 'components';
-
+import { makeStyles, useMediaQuery } from '@material-ui/core'
+import { Header, BottomNavToolbar } from 'components';
+import { LayoutConfig } from 'configurations';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -19,19 +19,19 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-
 export const Layout = (props) => {
-  const classes = useStyles()
-
+  const classes = useStyles();
+  let isItDesktop = useMediaQuery('(min-width:600px)');
   let content = (
     <div className={classes.root}>
-      <Header />
+      {isItDesktop ? <Header /> : LayoutConfig.bottomMobileNavigation ? null : <Header />}
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <div className={classes.container}>
+        <div className={isItDesktop ? classes.appBarSpacer : null} />
+        <div className={isItDesktop ? classes.container : null}>
           {props.children}
         </div>
       </main>
+      {isItDesktop ? null : LayoutConfig.bottomMobileNavigation ? <BottomNavToolbar /> : null}
     </div>
   )
   return content
