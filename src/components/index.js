@@ -4,6 +4,7 @@ import { Header } from './dependants/Header';
 import { SideMenuItems } from './dependants/SideMenuItems';
 import { EnhancedModal } from './common/EnhancedModal';
 import { EnhancedTable } from './common/EnhancedTable';
+import { BottomNavToolbar } from './dependants/BottomNavToolbar';
 
 export {
   EnhancedNotification as Notification,
@@ -12,5 +13,6 @@ export {
   Header,
   SideMenuItems,
   EnhancedModal,
-  EnhancedTable
+  EnhancedTable,
+  BottomNavToolbar
 }
