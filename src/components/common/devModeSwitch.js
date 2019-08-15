@@ -12,7 +12,9 @@ const useStyles = makeStyles(theme => ({
   devModeToggle: {
     position: "absolute",
     bottom: (DevModeConfig.verticlePosition === "top" ? "94vh" : "2vh"),
-    right: (DevModeConfig.horizontalPosition === "right" ? "1vw" : "64vw")
+    right: (DevModeConfig.horizontalPosition === "right" ? "1vw" : "64vw"),
+    zIndex: 99999,
+    opacity:0.8
   }
 }));
 
