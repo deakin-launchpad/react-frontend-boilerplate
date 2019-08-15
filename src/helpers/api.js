@@ -1,7 +1,6 @@
-import { AccessToken } from 'contexts/helpers'
+import { AccessToken, logout } from 'contexts/helpers'
 import { notify } from 'components'
 import { axiosInstance } from './index';
-
 /**
  *  @errorHelper :  Function to return error StatusText.
  */
@@ -26,6 +25,13 @@ class API {
     }).catch(error => {
       errorHelper(error)
     })
+  }
+
+  logoutUser = (callback) => {
+    logout()
+    if (typeof callback === "function") {
+      callback()
+    }
   }
 }
 const instance = new API();
