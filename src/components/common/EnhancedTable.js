@@ -130,8 +130,9 @@ export const EnhancedTable = (props) => {
     let _keys = await Object.keys(obj[0]);
     if (props.options !== undefined)
       if (props.options.ignoreKeys === undefined) {
-        await setKeys(_keys)
-      } else await setKeys(arrayDiff(_keys, props.options.ignoreKeys))
+        await setKeys(_keys);
+      } else await setKeys(arrayDiff(_keys, props.options.ignoreKeys));
+    else await setKeys(_keys);
   }
   useEffect(() => {
     var _tempArray = []
