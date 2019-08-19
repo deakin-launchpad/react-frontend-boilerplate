@@ -190,7 +190,7 @@ export const EnhancedTable = (props) => {
     return props.keys.map((key) => {
       return (<TableCell key={Math.random()}>
         <Typography varient="body1">
-          {String(props.data[key])}
+          {typeof props.data[key] === 'object' ? JSON.stringify(props.data[key]) : String(props.data[key])}
         </Typography>
       </TableCell>)
     })
