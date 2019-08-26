@@ -6,6 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { LoginContext } from 'contexts';
 import { Login, Register, Home, MobileMenu } from 'views';
 import { Layout } from '../layout';
+import { LayoutConfig } from 'configurations';
 
 export const AppRoutes = (props) => {
   const { loginStatus } = useContext(LoginContext);
@@ -18,7 +19,12 @@ export const AppRoutes = (props) => {
   }, [loginStatus]);
   return (
     <Switch>
-      <Route exact path='/' render={() => ((redirectToLogin ? <Redirect to={{ pathname: '/login' }} {...props} /> : <Redirect to={{ pathname: '/home' }} {...props} />))} />
+      <Route exact path='/' render={() => ((redirectToLogin ? <Redirect to={{ pathname: '/login' }} {...props} /> : <Redirect to={{
+        pathname:
+          LayoutConfig.pathname !== undefined ?
+            LayoutConfig.pathname !== "" ? LayoutConfig.pathname : '/home'
+            : '/home'
+      }} {...props} />))} />
       <Route exact path='/login' render={() => ((!redirectToLogin ? <Redirect to={{ pathname: '/home' }} {...props} /> : <Login  {...props} />))} />
       <Route exact path='/register' render={() => ((!redirectToLogin ? <Redirect to={{ pathname: '/home' }} {...props} /> : <Register {...props} />))} />
       <Layout>

@@ -21,5 +21,6 @@
     }
   ],
   "bottomMobileNavigation": true,
-  "displayMobileMenuHam": true
+  "displayMobileMenuHam": true,
+  "displayMobileHeader": true
 }

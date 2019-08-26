@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import clsx from 'clsx';
-import { AppBar, Toolbar, Typography, makeStyles, Drawer, Divider, IconButton } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, makeStyles, Drawer, Divider, IconButton, useMediaQuery } from '@material-ui/core'
 import { LayoutContext } from 'contexts';
 import { SideMenuItems } from './SideMenuItems';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -82,9 +82,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const Header = () => {
+  let isItDesktop = useMediaQuery('(min-width:600px)');
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const { pageTitle } = useContext(LayoutContext)
+  const { pageTitle, headerElements } = useContext(LayoutContext)
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -95,7 +96,7 @@ export const Header = () => {
     <div style={{ display: "flex" }}>
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
-          <IconButton
+          {isItDesktop ? < IconButton
             edge="start"
             color="inherit"
             aria-label="Open drawer"
@@ -103,28 +104,33 @@ export const Header = () => {
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
           >
             <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            {pageTitle}
-          </Typography>
+          </IconButton> : null}
+          {
+            headerElements !== null ? headerElements :
+              <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                {pageTitle}
+              </Typography>
+          }
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <SideMenuItems />
-      </Drawer>
-    </div>
+      {
+        isItDesktop ? <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          }}
+          open={open}
+        >
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <SideMenuItems />
+        </Drawer> : null
+      }
+    </div >
   )
   return content;
 }

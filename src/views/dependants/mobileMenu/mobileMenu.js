@@ -14,6 +14,11 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: '100%'
   },
+  menuMobile: {
+    paddingTop: 0,
+    width: '100%',
+    height: '100%'
+  },
   menuItemText: {
     marginLeft: '5vw'
   },
@@ -34,9 +39,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     paddingLeft: "5vw",
     paddingRight: "5vw"
-  },
-  logoutPlacement: {
-    bottom: 0
   }
 }));
 
@@ -45,8 +47,8 @@ export const MobileMenu = () => {
   const items = LayoutConfig.menuItems;
 
   let logoutButton = (data) => {
-    return (<div className={classes.logoutPlacement}>
-      <Divider />
+    return (<div >
+      {items.length > 0 ? <Divider /> : null}
       <ListItem onClick={() => { API.logoutUser() }} button className={classes.logoutButton} >
         <Icon>
           {data.icon !== undefined ? data.icon : 'logout'}
@@ -61,16 +63,16 @@ export const MobileMenu = () => {
   let content = (
     <div className={classes.root}>
       <List
-        className={classes.menu}
+        className={LayoutConfig.displayMobileHeader ? classes.menuMobile : classes.menu}
         component="nav"
         subheader={
-          <ListSubheader className={classes.menuTitle} component="div" id="menuTitle">
+          LayoutConfig.displayMobileHeader ? null : (<ListSubheader className={classes.menuTitle} component="div" id="menuTitle">
             <Typography variant="h5">
               Menu
               </Typography>
-          </ListSubheader>
+          </ListSubheader>)
         }>
-        <Divider className={classes.menuTitleDivider} />
+        {LayoutConfig.displayMobileHeader ? null : <Divider className={classes.menuTitleDivider} />}
         {
           items.map(value => {
             if (!value.isFavourite) {
@@ -85,7 +87,6 @@ export const MobileMenu = () => {
                     <ListItemText className={classes.menuItemText} primary={value.name} />
                   </ListItem>
                   <Divider />
-
                 </div>
               )
             }

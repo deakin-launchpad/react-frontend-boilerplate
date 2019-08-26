@@ -5,5 +5,6 @@ export const LayoutContext = createContext();
 export const LayoutProvider = (props) => {
   const { children } = props;
   const [pageTitle, setPageTitle] = useState("Home");
-  return <LayoutContext.Provider value={{ pageTitle, setPageTitle }} >{children}</LayoutContext.Provider>
+  const [headerElements, setHeaderElements] = useState(null);
+  return <LayoutContext.Provider value={{ pageTitle, setPageTitle, headerElements, setHeaderElements }} >{children}</LayoutContext.Provider>
 }
