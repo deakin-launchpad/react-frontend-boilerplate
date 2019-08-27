@@ -11,10 +11,10 @@ const init = () => {
   else {
     if (DBDropStatus) {
       IDBService.reset();
+      IDBService.createGenericObject(CONFIG.genericStores, 1, true);
+    } else {
+      IDBService.createStores(CONFIG.genericStores)
     }
-    CONFIG.genericStores.forEach((value, i) => {
-      IDBService.createGenericObject(value, i + 1, true);
-    })
   }
 }
 

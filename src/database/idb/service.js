@@ -42,6 +42,17 @@ class IDBService {
       return false
   }
 
+  async createStores(objectStores) {
+    let counter = 1;
+    const db = await openDB(DBTitle)
+    objectStores.forEach(async value => {
+      if (!db.objectStoreNames.contains(value)) {
+        await IDBService.createGenericObject(value, counter, true);
+        counter++;
+      }
+    })
+  }
+
   async updateItemInStore(objectStoreName, keyname, data) {
     const db = await openDB(DBTitle)
     const tx = await db.transaction(objectStoreName, 'readwrite')
