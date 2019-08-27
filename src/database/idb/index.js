@@ -1,6 +1,7 @@
 import IDBService from './service';
 var CONFIG = require('./config.json')
-const DBDropStatus = process.env.REACT_APP_DROP_IDB_DATABASE;
+const DBDropStatus = (process.env.REACT_APP_DROP_IDB_DATABASE === undefined ?
+  (CONFIG.drop ? CONFIG.drop : true) : process.env.REACT_APP_DROP_IDB_DATABASE);
 
 const init = () => {
   if (!('indexedDB' in window)) {
@@ -18,3 +19,7 @@ const init = () => {
 }
 
 init();
+
+export {
+  IDBService
+}

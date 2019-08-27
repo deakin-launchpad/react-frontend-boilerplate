@@ -1,4 +1,8 @@
 {
-  "dbName":"boilerPlate",
-  "genericStores": ["generic"] 
+  "dbName": "leriXplore",
+  "drop": "true",
+  "genericStores": [
+    "generic",
+    "GENERIC2"
+  ]
 }
