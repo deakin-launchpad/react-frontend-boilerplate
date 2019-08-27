@@ -36,7 +36,7 @@ class IDBService {
 
   async checkIfDbStoreExists(objectStoreName) {
     const db = await openDB(DBTitle)
-    if (!db.objectStoreNames.contains(objectStoreName))
+    if (db.objectStoreNames.contains(objectStoreName))
       return true
     else
       return false
