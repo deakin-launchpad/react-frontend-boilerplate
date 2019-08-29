@@ -45,7 +45,9 @@ const useStyles = makeStyles(theme => ({
 export const MobileMenu = () => {
   const classes = useStyles();
   const items = LayoutConfig.menuItems;
-
+  let menuButtonLabel = (LayoutConfig.menuButtonLabel !== undefined ?
+    LayoutConfig.menuButtonLabel !== '' ? LayoutConfig.menuButtonLabel : 'menu'
+    : 'menu');
   let logoutButton = (data) => {
     return (<div >
       {items.length > 0 ? <Divider /> : null}
@@ -68,15 +70,15 @@ export const MobileMenu = () => {
         subheader={
           LayoutConfig.displayMobileHeader ? null : (<ListSubheader className={classes.menuTitle} component="div" id="menuTitle">
             <Typography variant="h5">
-              Menu
-              </Typography>
+              {menuButtonLabel}
+            </Typography>
           </ListSubheader>)
         }>
         {LayoutConfig.displayMobileHeader ? null : <Divider className={classes.menuTitleDivider} />}
         {
           items.map(value => {
             if (!value.isFavourite) {
-              if (value.type === "logout")
+              if (value.type === 'logout')
                 return logoutButton(value)
               return (
                 <div>

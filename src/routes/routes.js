@@ -11,6 +11,9 @@ import { LayoutConfig } from 'configurations';
 export const AppRoutes = (props) => {
   const { loginStatus } = useContext(LoginContext);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
+  let landingPage = (LayoutConfig.landingPage !== undefined ?
+    LayoutConfig.landingPage !== '' ? LayoutConfig.landingPage : '/home'
+    : '/home');
   useEffect(() => {
     if (loginStatus)
       setRedirectToLogin(false);
@@ -20,13 +23,10 @@ export const AppRoutes = (props) => {
   return (
     <Switch>
       <Route exact path='/' render={() => ((redirectToLogin ? <Redirect to={{ pathname: '/login' }} {...props} /> : <Redirect to={{
-        pathname:
-          LayoutConfig.pathname !== undefined ?
-            LayoutConfig.pathname !== "" ? LayoutConfig.pathname : '/home'
-            : '/home'
+        pathname: landingPage
       }} {...props} />))} />
-      <Route exact path='/login' render={() => ((!redirectToLogin ? <Redirect to={{ pathname: '/home' }} {...props} /> : <Login  {...props} />))} />
-      <Route exact path='/register' render={() => ((!redirectToLogin ? <Redirect to={{ pathname: '/home' }} {...props} /> : <Register {...props} />))} />
+      <Route exact path='/login' render={() => ((!redirectToLogin ? <Redirect to={{ pathname: landingPage }} {...props} /> : <Login  {...props} />))} />
+      <Route exact path='/register' render={() => ((!redirectToLogin ? <Redirect to={{ pathname: landingPage }} {...props} /> : <Register {...props} />))} />
       <Layout>
         <Route exact path='/home' render={() => ((redirectToLogin ? <Redirect to={{ pathname: '/login' }} {...props} /> : <Home {...props} />))} />
         <Route exact path='/menu' render={() => ((redirectToLogin ? <Redirect to={{ pathname: '/login' }}  {...props} /> : <MobileMenu  {...props} />))} />

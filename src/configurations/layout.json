@@ -1,11 +1,12 @@
 {
-  "landingPage": "",
+  "headerWelcomeText": "Hello WORLD!",
+  "landingPage": "/home",
   "menuItems": [
     {
       "name": "HOME",
       "type": "button",
       "icon": "home",
-      "controller": "home",
+      "controller": "/home",
       "customTitle": "Welcome to Boiler Plate",
       "isFavourite": true,
       "subMenuItems": []
@@ -14,7 +15,7 @@
       "name": "Logout",
       "type": "logout",
       "icon": "logout",
-      "controller": "home",
+      "controller": "",
       "customTitle": "Welcome to Boiler Plate",
       "isFavourite": false,
       "subMenuItems": []
@@ -22,5 +23,6 @@
   ],
   "bottomMobileNavigation": true,
   "displayMobileMenuHam": true,
-  "displayMobileHeader": true
+  "displayMobileHeader": true,
+  "menuButtonLabel": "Menu"
 }
