@@ -59,7 +59,7 @@ export const MobileMenu = () => {
       </ListItem>
     </div >)
   }
-  let isItDesktop = useMediaQuery('(min-width:600px)');
+  let isItDesktop = useMediaQuery('(min-width:600px) or (min-height:600px)');
   if (isItDesktop)
     return <Redirect to='/' />
   let content = (
