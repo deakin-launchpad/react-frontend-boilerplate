@@ -1,7 +1,7 @@
 {
   "dbName": "boilerplate",
-  "drop": "true",
-  "genericStores": [
+  "drop": true,
+  "stores": [
     "generic",
     "GENERIC2"
   ]

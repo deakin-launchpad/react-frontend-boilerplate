@@ -1,5 +1,9 @@
 import IDBService from './service';
 var CONFIG = require('./config.json');
+/**
+ * This IndexedDB service is using Google's Promise based wrapper of IndexedDB.
+ * guide at : https://www.youtube.com/watch?v=VNFDoawcmNc
+ */
 
 const init = () => {
   if (!('indexedDB' in window)) {
@@ -7,12 +11,14 @@ const init = () => {
     return;
   }
   else {
-    if (CONFIG.drop) {
-      IDBService.reset();
-      IDBService.createGenericObject(CONFIG.genericStores, 1, true);
-    } else {
-      IDBService.createStores(CONFIG.genericStores);
+    if (CONFIG && CONFIG.stores && CONFIG.dbName && CONFIG.drop !== undefined) {
+      if (CONFIG.drop) {
+        IDBService.reset();
+      }
+      IDBService.createGenericObject(CONFIG.stores, true);
     }
+
+    else console.log('issue in indexDB configuration! :(');
   }
 };
 
