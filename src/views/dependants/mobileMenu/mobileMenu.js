@@ -7,7 +7,7 @@ import { API } from 'helpers';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    height: '100vh',
+    height: 'auto',
     backgroundColor: theme.palette.grey,
   },
   menu: {
