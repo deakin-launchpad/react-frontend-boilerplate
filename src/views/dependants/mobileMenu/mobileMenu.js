@@ -48,8 +48,8 @@ export const MobileMenu = () => {
   let menuButtonLabel = (LayoutConfig.menuButtonLabel !== undefined ?
     LayoutConfig.menuButtonLabel !== '' ? LayoutConfig.menuButtonLabel : 'menu'
     : 'menu');
-  let logoutButton = (data) => {
-    return (<div >
+  let logoutButton = (data, key) => {
+    return (<div key={'menu_button' + key}>
       {items.length > 0 ? <Divider /> : null}
       <ListItem onClick={() => { API.logoutUser() }} button className={classes.logoutButton} >
         <Icon>
@@ -57,11 +57,11 @@ export const MobileMenu = () => {
         </Icon>
         <ListItemText className={classes.menuItemText} primary={data.name !== undefined ? data.name : 'Logout'} />
       </ListItem>
-    </div >)
-  }
+    </div >);
+  };
   let isItDesktop = useMediaQuery('(min-width:600px) or (min-height:600px)');
   if (isItDesktop)
-    return <Redirect to='/' />
+    return <Redirect to='/' />;
   let content = (
     <div className={classes.root}>
       <List
@@ -76,12 +76,12 @@ export const MobileMenu = () => {
         }>
         {LayoutConfig.displayMobileHeader ? null : <Divider className={classes.menuTitleDivider} />}
         {
-          items.map(value => {
+          items.map((value, i) => {
             if (!value.isFavourite) {
               if (value.type === 'logout')
-                return logoutButton(value)
+                return logoutButton(value, i);
               return (
-                <div>
+                <div key={'menu_button' + i}>
                   <ListItem button component={Link} className={classes.listItem} to={value.controller}>
                     <Icon>
                       {value.icon}
@@ -90,13 +90,13 @@ export const MobileMenu = () => {
                   </ListItem>
                   <Divider />
                 </div>
-              )
+              );
             }
             return null;
           })
         }
       </List>
     </div>
-  )
+  );
   return content;
-}
+};
