@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 export const Layout = (props) => {
   const classes = useStyles();
-  let isItDesktop = useMediaQuery('(min-width:600px) or (min-height:600px)');
+  let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
   let content = (
     <div className={classes.root}>
       {isItDesktop ? <Header /> : LayoutConfig.bottomMobileNavigation ? LayoutConfig.displayMobileHeader ? <Header /> : null : <Header />}

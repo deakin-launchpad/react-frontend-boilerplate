@@ -82,7 +82,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const Header = () => {
-  let isItDesktop = useMediaQuery('(min-width:600px) or (min-height:600px)');
+  let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const { pageTitle, headerElements } = useContext(LayoutContext)
