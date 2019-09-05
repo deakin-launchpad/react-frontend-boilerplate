@@ -27,22 +27,25 @@ const useStyles = makeStyles({
 
 export const BottomNavToolbar = () => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(null);
   const { setPageTitle } = useContext(LayoutContext);
   let menuButtonLabel = (LayoutConfig.menuButtonLabel !== undefined ?
     LayoutConfig.menuButtonLabel !== '' ? LayoutConfig.menuButtonLabel : 'menu'
     : 'menu');
   useEffect(() => {
     let counter = 0;
+    let _pathtoCheck = String(window.location.pathname).split('/');
+    let _controllerArr;
     LayoutConfig.menuItems.forEach(value => {
+      _controllerArr = String(value.controller).split('/');
       if (value.isFavourite) {
-        if (window.location.pathname === value.controller) {
+        if (_pathtoCheck[1] === (_controllerArr[0] === '' ? _controllerArr[1] : _controllerArr[0])) {
           setValue(counter);
         }
         counter++;
       }
     });
-    if (window.location.pathname === '/menu') {
+    if (_pathtoCheck[1] === 'menu') {
       setValue(counter + 1);
     }
   }, []);
