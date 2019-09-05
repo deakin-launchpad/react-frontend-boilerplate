@@ -3,7 +3,7 @@
  *  Contributors : Sanchit Dang *12/08/19*
  ***/
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction, Icon, makeStyles } from '@material-ui/core';
 import { LayoutConfig } from 'configurations';
@@ -32,6 +32,20 @@ export const BottomNavToolbar = () => {
   let menuButtonLabel = (LayoutConfig.menuButtonLabel !== undefined ?
     LayoutConfig.menuButtonLabel !== '' ? LayoutConfig.menuButtonLabel : 'menu'
     : 'menu');
+  useEffect(() => {
+    let counter = 0;
+    LayoutConfig.menuItems.forEach(value => {
+      if (value.isFavourite) {
+        if (window.location.pathname === value.controller) {
+          setValue(counter);
+        }
+        counter++;
+      }
+    });
+    if (window.location.pathname === '/menu') {
+      setValue(counter + 1);
+    }
+  }, []);
   const renderIcons = () => {
     return LayoutConfig.menuItems.map((item, key) => {
       if (item.isFavourite) {
@@ -41,7 +55,7 @@ export const BottomNavToolbar = () => {
       } return null;
     }
     );
-  }
+  };
 
   return (
     <BottomNavigation
