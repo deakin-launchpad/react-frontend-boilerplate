@@ -2,8 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
   responsiveImage: {
-    width: '100%',
-    height: 'auto'
+    height: 'auto',
+    maxWidth: '100%'
   }
 }));
 
