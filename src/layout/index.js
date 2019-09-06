@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(4),
     paddingLeft: theme.spacing(6)
   },
+  containerMobile: {
+    paddingBottom: theme.spacing(8)
+  }
 }));
 
 export const Layout = (props) => {
@@ -27,7 +30,7 @@ export const Layout = (props) => {
       {isItDesktop ? <Header /> : LayoutConfig.bottomMobileNavigation ? LayoutConfig.displayMobileHeader ? <Header /> : null : <Header />}
       <main className={classes.content}>
         <div className={isItDesktop ? classes.appBarSpacer : LayoutConfig.displayMobileHeader ? classes.appBarSpacer : null} />
-        <div className={isItDesktop ? classes.container : null}>
+        <div className={isItDesktop ? classes.container : LayoutConfig.bottomMobileNavigation ? classes.containerMobile : null }>
           {props.children}
         </div>
       </main>
