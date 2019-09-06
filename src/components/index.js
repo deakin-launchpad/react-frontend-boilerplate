@@ -5,6 +5,7 @@ import { SideMenuItems } from './dependants/SideMenuItems';
 import { EnhancedModal } from './common/EnhancedModal';
 import { EnhancedTable } from './common/EnhancedTable';
 import { BottomNavToolbar } from './dependants/BottomNavToolbar';
+import { Image } from './common/Media';
 
 export {
   EnhancedNotification as Notification,
@@ -14,5 +15,6 @@ export {
   SideMenuItems,
   EnhancedModal,
   EnhancedTable,
-  BottomNavToolbar
-}
+  BottomNavToolbar,
+  Image
+};
