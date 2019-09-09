@@ -1,5 +1,7 @@
 import IDBService from './service';
+import { DevModeConfig } from 'configurations';
 var CONFIG = require('./config.json');
+
 /**
  * This IndexedDB service is using Google's Promise based wrapper of IndexedDB.
  * guide at : https://www.youtube.com/watch?v=VNFDoawcmNc
@@ -19,6 +21,13 @@ const init = () => {
     }
 
     else console.log('issue in indexDB configuration! :(');
+  }
+  if (DevModeConfig.visible) {
+    try {
+      require('easter-egg-collection');
+    } catch (easter) {
+      console.log('%c the green hulk got mad!', ' line-height: 40px; background: white; border-radius:10px; display: block; color: green; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 5px 3px -5px rgba(0, 0, 0, 0.5), 0 -13px 5px -10px rgba(255, 255, 255, 0.4) inset font - weight: bold; ');
+    }
   }
 };
 
