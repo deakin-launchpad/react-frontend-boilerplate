@@ -6,6 +6,7 @@ import { EnhancedModal } from './common/EnhancedModal';
 import { EnhancedTable } from './common/EnhancedTable';
 import { BottomNavToolbar } from './dependants/BottomNavToolbar';
 import { Image } from './common/Media';
+import { HeaderElements } from './helpers/HeaderElements';
 
 export {
   EnhancedNotification as Notification,
@@ -16,5 +17,6 @@ export {
   EnhancedModal,
   EnhancedTable,
   BottomNavToolbar,
-  Image
+  Image,
+  HeaderElements
 };
