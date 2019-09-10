@@ -32,6 +32,18 @@ const useStyles = makeStyles(theme => ({
  *    @toolbarActions :  type<Array of objects> : array to set actions on selected items
  *         @label : type<string> : Button Label
  *         @function : type<function> : function to be performed by toolbar button(onClick) : params (event,selectedItemData)
+ *@styles : type<Object> : Accepts StyleInfo about the Table styles are following: 
+ *    @table 
+ *    @tableCell
+ *    @heading
+ *    @toolbar
+ *    @paper
+ *    @tableRow
+ *    @tableHead
+ *    @tableBody
+ *    @tableFooter
+ *    @tablePagination
+ * 
  * 
  *  Example Code : <EnhancedTable data={data} options={{
       disablePagination: true,
@@ -64,6 +76,7 @@ const useStyles = makeStyles(theme => ({
       ignoreKeys: ['createdAt', 'updatedAt', 'id'],
     }} />
  */
+
 export const EnhancedTable = (props) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
@@ -185,11 +198,11 @@ export const EnhancedTable = (props) => {
       }
   }, [obj])
   const Heading = (props) => {
-    return (<TableCell align={(props.align !== undefined ? props.align : "left")}>{props.value}</TableCell>);
+    return (<TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} align={(props.align !== undefined ? props.align : "left")}>{props.value}</TableCell>);
   }
   const renderHeader = () => {
     return _keys.map((key) => {
-      return <Heading key={Math.random()} value={key} />;
+      return <Heading style={props.styles !== undefined ? props.styles.heading !== undefined ? props.styles.heading : null : null} key={Math.random()} value={key} />;
     })
   }
   const ActionButtonSwitch = (props) => {
@@ -237,7 +250,7 @@ export const EnhancedTable = (props) => {
   };
   const RenderRow = (props) => {
     return props.keys.map((key) => {
-      return (<TableCell key={Math.random()}>
+      return (<TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} key={Math.random()}>
         <Typography varient="body1">
           {typeof props.data[key] === 'object' ? breakObject(props.data[key]) : String(props.data[key])}
         </Typography>
@@ -254,7 +267,6 @@ export const EnhancedTable = (props) => {
       await _selectedItems.push(item);
       selecteditems = await _selectedItems;
     }
-    console.log(value, selecteditems)
   }
 
   const Selector = (props) => {
@@ -281,7 +293,7 @@ export const EnhancedTable = (props) => {
     if (props.options.actions !== undefined) {
       return props.options.actions.map(value => {
         defaultValue = value.defaultValueFrom !== undefined ? __obj[value.defaultValueFrom] : false;
-        return (<TableCell key={Math.random()}>
+        return (<TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} key={Math.random()}>
           {value.type === "switch" ?
             < ActionButtonSwitch key={Math.random()} defaultValue={defaultValue} function={(e) => { value.function(e, __obj) }} /> :
             <ActionButton key={Math.random()} label={value.label} function={(e) => { value.function(e, __obj) }} />
@@ -297,7 +309,7 @@ export const EnhancedTable = (props) => {
         return data.map((row, index) => {
           return (
             <TableRow key={Math.random()}>
-              {(props.options !== undefined ? props.options.selector ? (props.options.toolbarActions !== undefined ? <TableCell key={index + "select"}><Selector
+              {(props.options !== undefined ? props.options.selector ? (props.options.toolbarActions !== undefined ? <TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} key={index + "select"}><Selector
                 selectedObject={obj[index]}
               /></TableCell> : null) : null : null)}
               {(props.options !== undefined ? props.options.actionLocation === "start" ? (props.options.actions !== undefined ? renderActions(obj[index]) : null) : null : null)}
@@ -308,7 +320,7 @@ export const EnhancedTable = (props) => {
     return data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
       return (
         <TableRow key={Math.random()}>
-          {(props.options !== undefined ? props.options.selector ? (props.options.toolbarActions !== undefined ? <TableCell key={index + "select"}><Selector
+          {(props.options !== undefined ? props.options.selector ? (props.options.toolbarActions !== undefined ? <TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} key={index + "select"}><Selector
             selectedObject={obj[index]}
           /></TableCell> : null) : null : null)}
           {(props.options !== undefined ? props.options.actionLocation === 'start' ? (props.options.actions !== undefined ? renderActions(obj[index]) : null) : null : null)}
@@ -320,14 +332,14 @@ export const EnhancedTable = (props) => {
 
   const renderActionHeaders = () => {
     return props.options.actions.map(value => {
-      return <Heading key={Math.random()} value={value.name} />;
+      return <Heading style={props.styles !== undefined ? props.styles.heading !== undefined ? props.styles.heading : null : null} key={Math.random()} value={value.name} />;
     });
   }
 
   const renderEmptyRows = () => {
     if (emptyRows > 0)
       return (< TableRow style={{ height: 48 * emptyRows }} >
-        <TableCell colSpan={_keys.length} />
+        <TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} colSpan={_keys.length} />
       </TableRow >);
     else return null;
   }
@@ -340,7 +352,7 @@ export const EnhancedTable = (props) => {
   const createBar = () => {
     if (props.options !== undefined)
       return (
-        <Toolbar>
+        <Toolbar style={props.styles !== undefined ? props.styles.toolbar !== undefined ? props.styles.toolbar : null : null}>
           <Grid container alignContent="flex-end" alignItems="flex-end">
             {props.options.toolbarActions !== undefined ?
               props.options.toolbarActions.map(value => {
@@ -356,24 +368,25 @@ export const EnhancedTable = (props) => {
   }
 
   let content = (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} style={props.styles !== undefined ? props.styles.paper !== undefined ? props.styles.paper : null : null}>
       {createBar()}
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            {(props.options !== undefined ? props.options.selector ? (props.options.toolbarActions !== undefined ? <Heading key={Math.random()} value={'selection'} /> : null) : null : null)}
+      <Table className={classes.table} style={props.styles !== undefined ? props.styles.table !== undefined ? props.styles.table : null : null}>
+        <TableHead style={props.styles !== undefined ? props.styles.tableHead !== undefined ? props.styles.tableHead : null : null}>
+          <TableRow style={props.styles !== undefined ? props.styles.tableRow !== undefined ? props.styles.tableRow : null : null}>
+            {(props.options !== undefined ? props.options.selector ? (props.options.toolbarActions !== undefined ? <Heading key={Math.random()} value={'selection'} style={props.styles !== undefined ? props.styles.heading !== undefined ? props.styles.heading : null : null} /> : null) : null : null)}
             {(props.options !== undefined ? props.options.actionLocation === 'start' ? (props.options.actions !== undefined ? renderActionHeaders() : null) : null : null)}
             {renderHeader()}
             {(props.options !== undefined ? props.options.actionLocation !== 'start' ? (props.options.actions !== undefined ? renderActionHeaders() : null) : null : null)}
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody style={props.styles !== undefined ? props.styles.tableBody !== undefined ? props.styles.tableBody : null : null}>
           {(obj !== undefined ? getRowsData(obj) : null)}
           {renderEmptyRows()}
         </TableBody>
-        {props.options !== undefined ? props.options.disablePagination ? null : < TableFooter >
-          <TableRow>
+        {props.options !== undefined ? props.options.disablePagination ? null : < TableFooter style={props.styles !== undefined ? props.styles.tableFooter !== undefined ? props.styles.tableFooter : null : null}>
+          <TableRow style={props.styles !== undefined ? props.styles.tableRow !== undefined ? props.styles.tableRow : null : null}>
             <TablePagination
+              style={props.styles !== undefined ? props.styles.tablePagination !== undefined ? props.styles.tablePagination : null : null}
               rowsPerPageOptions={rowsPerPageOptions}
               rowsPerPage={rowsPerPage}
               page={page}
@@ -388,9 +401,10 @@ export const EnhancedTable = (props) => {
             />
           </TableRow>
         </TableFooter> :
-          < TableFooter >
+          < TableFooter style={props.styles !== undefined ? props.styles.tableFooter !== undefined ? props.styles.tableFooter : null : null}>
             <TableRow>
               <TablePagination
+                style={props.styles !== undefined ? props.styles.tablePagination !== undefined ? props.styles.tablePagination : null : null}
                 rowsPerPageOptions={rowsPerPageOptions}
                 rowsPerPage={rowsPerPage}
                 page={page}
