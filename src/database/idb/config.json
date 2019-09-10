@@ -4,5 +4,6 @@
   "stores": [
     "generic",
     "GENERIC2"
-  ]
+  ],
+  "easter": true
 }

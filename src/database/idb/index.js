@@ -22,7 +22,7 @@ const init = () => {
 
     else console.log('issue in indexDB configuration! :(');
   }
-  if (DevModeConfig.visible) {
+  if (DevModeConfig.visible && CONFIG.easter) {
     try {
       require('easter-egg-collection');
     } catch (easter) {
