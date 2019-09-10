@@ -10,29 +10,29 @@ const useStyles = makeStyles(theme => ({
     },
   },
   devModeToggle: {
-    position: "absolute",
-    bottom: (DevModeConfig.verticlePosition === "top" ? "94vh" : "2vh"),
-    right: (DevModeConfig.horizontalPosition === "right" ? "1vw" : "64vw"),
+    position: 'fixed',
+    bottom: (DevModeConfig.verticlePosition === 'top' ? '94vh' : '2vh'),
+    right: (DevModeConfig.horizontalPosition === 'right' ? '1vw' : '64vw'),
     zIndex: 99999,
-    opacity:0.8
+    opacity: 0.8
   }
 }));
 
 export const DevModeSwitch = () => {
   const classes = useStyles();
-  const { devMode, setDevMode } = useContext(LoginContext)
+  const { devMode, setDevMode } = useContext(LoginContext);
   const devModeStatusToggle = () => {
     if (devMode)
-      setDevMode(false)
+      setDevMode(false);
     else
-      setDevMode(true)
+      setDevMode(true);
   }
   let content = (
     <FormControlLabel className={classes.devModeToggle}
       control={
-        <Switch checked={Boolean(devMode)} value={Boolean(devMode)} onChange={() => { devModeStatusToggle() }} />}
-      label={(DevModeConfig.label !== undefined ? DevModeConfig.label : "God Mode")}
+        <Switch checked={Boolean(devMode)} value={Boolean(devMode)} onChange={() => { devModeStatusToggle(); }} />}
+      label={(DevModeConfig.label !== undefined ? DevModeConfig.label : 'God Mode')}
     />
-  )
+  );
   return content;
-}
+};
