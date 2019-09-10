@@ -58,7 +58,7 @@ const EnhancedNotification = (props) => {
 
 export const DisplayBrowserNotification = (message) => {
   if (!('Notification' in window)) {
-    notify('This browser does not support desktop notification', null, 'inapp');
+    alert(message);
   }
   else if (Notification.permission === 'granted') {
     // If it's okay let's create a notification
@@ -83,10 +83,8 @@ export const notify = (message, callback, variant) => {
   } else {
     DisplayBrowserNotification(message);
   }
-  if (callback !== undefined) {
-    if (typeof callback === 'function')
-      callback();
-  }
+  if (typeof callback === 'function')
+    callback();
 };
 
 
