@@ -84,7 +84,8 @@ export const notify = (message, callback, variant) => {
     DisplayBrowserNotification(message);
   }
   if (callback !== undefined) {
-    callback();
+    if (typeof callback === 'function')
+      callback();
   }
 };
 
