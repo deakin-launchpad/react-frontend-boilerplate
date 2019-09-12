@@ -6,8 +6,7 @@ import { API } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
-    height: 'auto',
+    minWidth: '100%',
     backgroundColor: theme.palette.grey,
   },
   menu: {
@@ -15,9 +14,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%'
   },
   menuMobile: {
-    paddingTop: 0,
-    width: '100%',
-    height: '100%'
+    width: '100%'
   },
   menuItemText: {
     marginLeft: '5vw'

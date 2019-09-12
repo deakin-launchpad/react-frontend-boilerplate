@@ -11,14 +11,6 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(5),
-    paddingBottom: theme.spacing(4),
-    paddingLeft: theme.spacing(6)
-  },
-  containerMobile: {
-    paddingBottom: theme.spacing(8)
   }
 }));
 
@@ -30,9 +22,10 @@ export const Layout = (props) => {
       {isItDesktop ? <Header /> : LayoutConfig.bottomMobileNavigation ? LayoutConfig.displayMobileHeader ? <Header /> : null : <Header />}
       <main className={classes.content}>
         <div className={isItDesktop ? classes.appBarSpacer : LayoutConfig.displayMobileHeader ? classes.appBarSpacer : null} />
-        <div className={isItDesktop ? classes.container : LayoutConfig.bottomMobileNavigation ? classes.containerMobile : null }>
+        <div className={isItDesktop ? classes.container : LayoutConfig.bottomMobileNavigation ? classes.containerMobile : null}>
           {props.children}
         </div>
+        <div className={isItDesktop ? null : LayoutConfig.bottomMobileNavigation ? classes.appBarSpacer : null} />
       </main>
       {isItDesktop ? null : LayoutConfig.bottomMobileNavigation ? <BottomNavToolbar /> : null}
     </div>
