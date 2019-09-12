@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
 export const Header = () => {
   let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
   const classes = useStyles();
-  const [open, setOpen] = useState(LayoutConfig.sideMenu.default === 'open' ? true : false);
+  const [open, setOpen] = useState(isItDesktop ? (LayoutConfig.sideMenu.default === 'open' ? true : false) : false);
   const { pageTitle, headerElements } = useContext(LayoutContext);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -96,7 +96,7 @@ export const Header = () => {
   let content = (
     <div style={{ display: 'flex', width: '100 %' }}>
       <header>
-        <AppBar position={LayoutConfig.sideMenu.permanent ? 'fixed' : 'absolute'} className={LayoutConfig.sideMenu.permanent ? classes.appBarShift : clsx(classes.appBar, open && classes.appBarShift)}>
+        <AppBar position={LayoutConfig.sideMenu.permanent ? 'fixed' : 'absolute'} className={LayoutConfig.sideMenu.permanent ? (isItDesktop ? classes.appBarShift : classes.appBar) : clsx(classes.appBar, open && classes.appBarShift)}>
           <Toolbar className={classes.toolbar}>
             {isItDesktop ? LayoutConfig.sideMenu.permanent ? null : < IconButton
               edge="start"
