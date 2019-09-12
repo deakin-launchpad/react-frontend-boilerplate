@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
 import clsx from 'clsx';
-import { AppBar, Toolbar, Typography, makeStyles, Drawer, Divider, IconButton, useMediaQuery } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, makeStyles, Drawer, Divider, IconButton, useMediaQuery } from '@material-ui/core';
 import { LayoutContext } from 'contexts';
 import { SideMenuItems } from './SideMenuItems';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { LayoutConfig } from 'configurations';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -79,13 +80,13 @@ const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(1),
   }
-}))
+}));
 
 export const Header = () => {
   let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const { pageTitle, headerElements } = useContext(LayoutContext)
+  const [open, setOpen] = useState(LayoutConfig.sideMenu.default === 'open' ? true : false);
+  const { pageTitle, headerElements } = useContext(LayoutContext);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -93,44 +94,46 @@ export const Header = () => {
     setOpen(false);
   };
   let content = (
-    <div style={{ display: "flex" }}>
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          {isItDesktop ? < IconButton
-            edge="start"
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton> : null}
-          {
-            headerElements !== null ? headerElements :
-              <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                {pageTitle}
-              </Typography>
-          }
-        </Toolbar>
-      </AppBar>
+    <div style={{ display: 'flex', width: '100 %' }}>
+      <header>
+        <AppBar position={LayoutConfig.sideMenu.permanent ? 'fixed' : 'absolute'} className={LayoutConfig.sideMenu.permanent ? classes.appBarShift : clsx(classes.appBar, open && classes.appBarShift)}>
+          <Toolbar className={classes.toolbar}>
+            {isItDesktop ? LayoutConfig.sideMenu.permanent ? null : < IconButton
+              edge="start"
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={handleDrawerOpen}
+              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            >
+              <MenuIcon />
+            </IconButton> : null}
+            {
+              headerElements !== null ? headerElements :
+                <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                  {pageTitle}
+                </Typography>
+            }
+          </Toolbar>
+        </AppBar>
+      </header>
       {
         isItDesktop ? <Drawer
           variant="permanent"
           classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+            paper: LayoutConfig.sideMenu.permanent ? classes.drawerPaper : clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
           }}
-          open={open}
+          open={LayoutConfig.sideMenu.permanent ? true : open}
         >
           <div className={classes.toolbarIcon}>
-            <IconButton onClick={handleDrawerClose}>
+            {LayoutConfig.sideMenu.permanent ? null : <IconButton onClick={handleDrawerClose}>
               <ChevronLeftIcon />
-            </IconButton>
+            </IconButton>}
           </div>
           <Divider />
           <SideMenuItems />
         </Drawer> : null
       }
     </div >
-  )
+  );
   return content;
-}
+};

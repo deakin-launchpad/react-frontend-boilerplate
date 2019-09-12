@@ -24,5 +24,9 @@
   "bottomMobileNavigation": true,
   "displayMobileMenuHam": true,
   "displayMobileHeader": true,
-  "menuButtonLabel": "Menu"
+  "menuButtonLabel": "Menu",
+  "sideMenu": {
+    "permanent": false,
+    "default": "open"
+  }
 }
