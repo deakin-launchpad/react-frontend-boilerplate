@@ -61,7 +61,7 @@ export const MobileMenu = () => {
     return <Redirect to='/' />;
   let content = (
     <div className={classes.root}>
-      <List
+      <List disablePadding
         className={LayoutConfig.displayMobileHeader ? classes.menuMobile : classes.menu}
         component="nav"
         subheader={
