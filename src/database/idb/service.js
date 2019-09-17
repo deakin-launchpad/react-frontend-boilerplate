@@ -49,6 +49,11 @@ class IDBService {
     else
       return false;
   }
+  async clearStore(objectStoreName) {
+    if (currentDBinstance === undefined)
+      currentDBinstance = await openDB(DBTitle);
+    return currentDBinstance.clear(objectStoreName);
+  }
 
   async createStores(objectStores) {
     if (currentDBinstance === undefined)
