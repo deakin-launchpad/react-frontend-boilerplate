@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 /**
- * 17/09/2019 : Options for actionsButtons are moved inside options
- * Note v 0.2.0-alpha : Update Your code accordingly previous params maybe depreceted in future versions. 
- * 
- * 
- * Params to send are as follows:
- * @isOpen : type<Boolean> : toggles the Modal
- * @dialogTitle : type<String> : Title for the modal
- * @dialogContent : type<Node/Component> : Component to be displayed as component
- * @options : type <Object> : options for component controling
- *          @submitButtonName : type<String> : Custom name for the submit button
- *          @closeButtonName : type<String> : Custom name for cancel button
- *          @disableSubmit : type<Boolean> : disable submit Button
- *          @disableClose : type<Boolean> : disable close Button
- *          @onClose : type<function> : function to perform onClose
- *          @onSubmit : type<function> : function to perfrom onSubmit
- */
-
+* 17/09/2019 : Options for actionsButtons are moved inside options
+* Note v 0.2.0-alpha : Update Your code accordingly previous params maybe depreceted in future versions.
+*
+*
+* Params to send are as follows:
+* @isOpen : type<Boolean> : toggles the Modal
+* @dialogTitle : type<String> : Title for the modal
+* @dialogContent : type<Node/Component> : Component to be displayed as component
+* @options : type <Object> : options for component controling
+*          @submitButtonName : type<String> : Custom name for the submit button
+*          @closeButtonName : type<String> : Custom name for cancel button
+*          @disableSubmit : type<Boolean> : disable submit Button
+*          @disableClose : type<Boolean> : disable close Button
+*          @onClose : type<function> : function to perform onClose
+*          @onSubmit : type<function> : function to perfrom onSubmit
+*/
 export const EnhancedModal = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [_DialogTitle, _setDialogTitle] = useState('');
   const [_DialogContent, _setDialogContent] = useState('');
   const [submitButtonName, setSubmitButtonName] = useState('Submit');
   const [cancelButtonName, setCancelButtonName] = useState('Close');
-
+  const [disableSubmit, setDisableSubmit] = useState(false);
+  const [disableClose, setDisableClose] = useState(false);
   useEffect(() => {
     if (props.isOpen) {
       setIsOpen(true);
@@ -32,7 +32,6 @@ export const EnhancedModal = (props) => {
       setIsOpen(false);
     }
   }, [props.isOpen]);
-
   useEffect(() => {
     if (props.dialogTitle)
       _setDialogTitle(props.dialogTitle);
@@ -47,9 +46,12 @@ export const EnhancedModal = (props) => {
         setSubmitButtonName(props.options.submitButtonName);
       if (props.options.closeButtonName)
         setCancelButtonName(props.options.closeButtonName);
+      if (props.options.disableSubmit)
+        setDisableSubmit(true);
+      if (props.options.disableClose)
+        setDisableClose(true);
     }
   }, [props]);
-
   const onClose = () => {
     setIsOpen(false);
     if (props.options !== undefined) {
@@ -61,7 +63,6 @@ export const EnhancedModal = (props) => {
       props.onClose();
     }
   };
-
   const onSubmit = () => {
     setIsOpen(false);
     if (props.options !== undefined) {
@@ -73,14 +74,13 @@ export const EnhancedModal = (props) => {
       return props.onSubmit();
     }
   };
-
   let content = (
     <Dialog fullWidth={true} open={isOpen} onClose={onClose} aria-labelledby="form-dialog-title"  >
       <DialogTitle id="form-dialog-title">{_DialogTitle}</DialogTitle>
       <DialogContent>{_DialogContent}</DialogContent>
       <DialogActions>
-        {props.options.disableSubmit !== true && <Button variant="contained" onClick={onSubmit} color="primary">{submitButtonName}</Button>}
-        {props.options.disableClose !== true && <Button variant="contained" onClick={onClose} color="secondary">{cancelButtonName}</Button>}
+        {disableSubmit !== true && <Button variant="contained" onClick={onSubmit} color="primary">{submitButtonName}</Button>}
+        {disableClose !== true && <Button variant="contained" onClick={onClose} color="secondary">{cancelButtonName}</Button>}
       </DialogActions>
     </Dialog>
   );
