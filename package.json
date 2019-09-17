@@ -26,6 +26,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "resolutions": {
+    "lodash": "^4.17.15",
+    "eslint-utils": "^1.4.2",
+    "lodash.template": "^4.5.0"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
