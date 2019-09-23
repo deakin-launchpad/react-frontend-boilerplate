@@ -1,4 +1,5 @@
 import EnhancedNotification, { notify } from './common/Notification';
+import { LoadingScreen } from './common/Loading';
 import { DevModeSwitch } from './common/devModeSwitch';
 import { Header } from './dependants/Header';
 import { SideMenuItems } from './dependants/SideMenuItems';
@@ -11,6 +12,7 @@ import { HeaderElements } from './helpers/HeaderElements';
 export {
   EnhancedNotification as Notification,
   notify,
+  LoadingScreen,
   DevModeSwitch,
   Header,
   SideMenuItems,
