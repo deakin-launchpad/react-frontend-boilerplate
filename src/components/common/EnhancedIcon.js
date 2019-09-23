@@ -1,7 +1,7 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
 
-const EnhancedIcon = (props) => {
+export const EnhancedIcon = (props) => {
   /**
    * This component uses icons from https://iconify.design/
    * 
