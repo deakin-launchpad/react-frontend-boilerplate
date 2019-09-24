@@ -13,7 +13,8 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'auto'
   },
   tableWrapper: {
-    overflowX: 'auto',
+    overflow: 'auto',
+    maxHeight: 407
   },
   table: {
     minWidth: 650,
@@ -400,7 +401,7 @@ export const EnhancedTable = (props) => {
       <Paper className={classes.root} style={props.styles !== undefined ? props.styles.paper !== undefined ? props.styles.paper : null : null}>
         {createBar()}
         <div className={classes.tableWrapper}>
-          <Table className={classes.table} style={props.styles !== undefined ? props.styles.table !== undefined ? props.styles.table : null : null}>
+          <Table stickyHeader={props.options !== undefined ? props.options.selector ? true : false : false} className={classes.table} style={props.styles !== undefined ? props.styles.table !== undefined ? props.styles.table : null : null}>
             <TableHead style={props.styles !== undefined ? props.styles.tableHead !== undefined ? props.styles.tableHead : null : null}>
               <TableRow style={props.styles !== undefined ? props.styles.tableRow !== undefined ? props.styles.tableRow : null : null}>
                 {(props.options !== undefined ? props.options.selector ? (props.options.toolbarActions !== undefined ? <Heading key={Math.random()} value={'selection'} style={props.styles !== undefined ? props.styles.heading !== undefined ? props.styles.heading : null : null} /> : null) : null : null)}
