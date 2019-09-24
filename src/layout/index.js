@@ -22,9 +22,7 @@ export const Layout = (props) => {
       {isItDesktop ? <Header /> : LayoutConfig.bottomMobileNavigation ? LayoutConfig.displayMobileHeader ? <Header /> : null : <Header />}
       <main className={classes.content}>
         <div className={isItDesktop ? classes.appBarSpacer : LayoutConfig.displayMobileHeader ? classes.appBarSpacer : null} />
-        <div className={isItDesktop ? classes.container : LayoutConfig.bottomMobileNavigation ? classes.containerMobile : null}>
-          {props.children}
-        </div>
+        {props.children}
         <div className={isItDesktop ? null : LayoutConfig.bottomMobileNavigation ? classes.appBarSpacer : null} />
       </main>
       {isItDesktop ? null : LayoutConfig.bottomMobileNavigation ? <BottomNavToolbar /> : null}

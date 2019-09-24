@@ -5,9 +5,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     height: '100%',
     width: '100%'
-  },
-  loadingCircle: {
-    marginTop: '20%'
   }
 }));
 export const LoadingScreen = (props) => {
