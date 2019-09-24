@@ -75,14 +75,13 @@ export const DisplayBrowserNotification = (message) => {
 };
 
 export const notify = (message, callback, variant) => {
-  if (variant === 'browser') {
+  if (variant === 'browser')
     DisplayBrowserNotification(message);
-  } else if (variant === 'both') {
+  else if (variant === 'both') {
     OpenNotificationFunction(message);
     DisplayBrowserNotification(message);
-  } else {
-    DisplayBrowserNotification(message);
-  }
+  } else
+    OpenNotificationFunction(message);
   if (typeof callback === 'function')
     callback();
 };
