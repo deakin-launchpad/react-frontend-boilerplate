@@ -9,11 +9,14 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(3),
+    overflowX: 'auto'
+  },
+  tableWrapper: {
     overflowX: 'auto',
   },
   table: {
     minWidth: 650,
-  },
+  }
 }));
 /**
  * Props to send are as follows
@@ -370,56 +373,53 @@ export const EnhancedTable = (props) => {
   let content = (
     <Paper className={classes.root} style={props.styles !== undefined ? props.styles.paper !== undefined ? props.styles.paper : null : null}>
       {createBar()}
-      <Table className={classes.table} style={props.styles !== undefined ? props.styles.table !== undefined ? props.styles.table : null : null}>
-        <TableHead style={props.styles !== undefined ? props.styles.tableHead !== undefined ? props.styles.tableHead : null : null}>
-          <TableRow style={props.styles !== undefined ? props.styles.tableRow !== undefined ? props.styles.tableRow : null : null}>
-            {(props.options !== undefined ? props.options.selector ? (props.options.toolbarActions !== undefined ? <Heading key={Math.random()} value={'selection'} style={props.styles !== undefined ? props.styles.heading !== undefined ? props.styles.heading : null : null} /> : null) : null : null)}
-            {(props.options !== undefined ? props.options.actionLocation === 'start' ? (props.options.actions !== undefined ? renderActionHeaders() : null) : null : null)}
-            {renderHeader()}
-            {(props.options !== undefined ? props.options.actionLocation !== 'start' ? (props.options.actions !== undefined ? renderActionHeaders() : null) : null : null)}
-          </TableRow>
-        </TableHead>
-        <TableBody style={props.styles !== undefined ? props.styles.tableBody !== undefined ? props.styles.tableBody : null : null}>
-          {(obj !== undefined ? getRowsData(obj) : null)}
-          {renderEmptyRows()}
-        </TableBody>
-        {props.options !== undefined ? props.options.disablePagination ? null : < TableFooter style={props.styles !== undefined ? props.styles.tableFooter !== undefined ? props.styles.tableFooter : null : null}>
-          <TableRow style={props.styles !== undefined ? props.styles.tableRow !== undefined ? props.styles.tableRow : null : null}>
-            <TablePagination
-              style={props.styles !== undefined ? props.styles.tablePagination !== undefined ? props.styles.tablePagination : null : null}
-              rowsPerPageOptions={rowsPerPageOptions}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-              onChangePage={() => { }}
-              count={(obj !== undefined ? obj.length : 0)}
-              SelectProps={{
-                inputProps: { 'aria-label': 'rows per page' },
-                native: true
-              }}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter> :
-          < TableFooter style={props.styles !== undefined ? props.styles.tableFooter !== undefined ? props.styles.tableFooter : null : null}>
-            <TableRow>
-              <TablePagination
-                style={props.styles !== undefined ? props.styles.tablePagination !== undefined ? props.styles.tablePagination : null : null}
-                rowsPerPageOptions={rowsPerPageOptions}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                onChangePage={() => { }}
-                count={(obj !== undefined ? obj.length : 0)}
-                SelectProps={{
-                  inputProps: { 'aria-label': 'rows per page' },
-                  native: true
-                }}
-                ActionsComponent={TablePaginationActions}
-              />
+      <div className={classes.tableWrapper}>
+        <Table className={classes.table} style={props.styles !== undefined ? props.styles.table !== undefined ? props.styles.table : null : null}>
+          <TableHead style={props.styles !== undefined ? props.styles.tableHead !== undefined ? props.styles.tableHead : null : null}>
+            <TableRow style={props.styles !== undefined ? props.styles.tableRow !== undefined ? props.styles.tableRow : null : null}>
+              {(props.options !== undefined ? props.options.selector ? (props.options.toolbarActions !== undefined ? <Heading key={Math.random()} value={'selection'} style={props.styles !== undefined ? props.styles.heading !== undefined ? props.styles.heading : null : null} /> : null) : null : null)}
+              {(props.options !== undefined ? props.options.actionLocation === 'start' ? (props.options.actions !== undefined ? renderActionHeaders() : null) : null : null)}
+              {renderHeader()}
+              {(props.options !== undefined ? props.options.actionLocation !== 'start' ? (props.options.actions !== undefined ? renderActionHeaders() : null) : null : null)}
             </TableRow>
-          </TableFooter>}
-      </Table>
+          </TableHead>
+          <TableBody className={classes.tableBody} style={props.styles !== undefined ? props.styles.tableBody !== undefined ? props.styles.tableBody : null : null}>
+            {(obj !== undefined ? getRowsData(obj) : null)}
+            {renderEmptyRows()}
+          </TableBody>
+        </Table>
+      </div>
+      {props.options !== undefined ? props.options.disablePagination ? null :
+        <TablePagination
+          component="div"
+          style={props.styles !== undefined ? props.styles.tablePagination !== undefined ? props.styles.tablePagination : null : null}
+          rowsPerPageOptions={rowsPerPageOptions}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onChangePage={() => { }}
+          count={(obj !== undefined ? obj.length : 0)}
+          SelectProps={{
+            inputProps: { 'aria-label': 'rows per page' },
+            native: true
+          }}
+          ActionsComponent={TablePaginationActions}
+        /> :
+        <TablePagination
+          component="div"
+          style={props.styles !== undefined ? props.styles.tablePagination !== undefined ? props.styles.tablePagination : null : null}
+          rowsPerPageOptions={rowsPerPageOptions}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onChangePage={() => { }}
+          count={(obj !== undefined ? obj.length : 0)}
+          SelectProps={{
+            inputProps: { 'aria-label': 'rows per page' },
+            native: true
+          }}
+          ActionsComponent={TablePaginationActions}
+        />}
     </Paper>
   );
   return content;
