@@ -367,7 +367,7 @@ export const EnhancedTable = (props) => {
     }
     if (emptyRows > 0)
       return (< TableRow style={{ height: 48 * emptyRows }} >
-        <TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} colSpan={(_keys.length)} />
+        <TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} colSpan={(props.options !== undefined ? props.options.selector ? _keys.length + 1 : _keys.length : _keys.length)} />
       </TableRow >);
     else return null;
   }
