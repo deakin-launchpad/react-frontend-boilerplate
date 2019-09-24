@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, TablePagination, Checkbox, IconButton, makeStyles, Toolbar, Button, Grid, Switch, TableFooter } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, TablePagination, Checkbox, IconButton, makeStyles, Toolbar, Button, Grid, Switch } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles'
 import FirstPageIcon from '@material-ui/icons/FirstPage'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
@@ -18,6 +18,15 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     minWidth: 650,
+  },
+  spacer: {
+    flex: '1 1 100%',
+  },
+  title: {
+    flex: '0 0 auto',
+  },
+  actions: {
+    float: 'right'
   }
 }));
 /**
@@ -104,7 +113,6 @@ export const EnhancedTable = (props) => {
       props.options.onFirstButtonClick();
     }
   };
-
   const handleBackButtonClick = () => {
     if (props.options === undefined)
       return setPage(page - 1);
@@ -113,8 +121,7 @@ export const EnhancedTable = (props) => {
     if (typeof props.options.onBackButtonClick === "function") {
       props.options.onBackButtonClick();
     }
-  }
-
+  };
   const handleNextButtonClick = () => {
     if (props.options === undefined)
       return setPage(page + 1);
@@ -123,7 +130,7 @@ export const EnhancedTable = (props) => {
     if (typeof props.options.onNextButtonClick === "function") {
       props.options.onNextButtonClick()
     }
-  }
+  };
   const handleLastPageButtonClick = () => {
     if (props.options === undefined)
       return setPage(Math.max(0, Math.ceil(obj.length / rowsPerPage) - 1));
@@ -132,7 +139,7 @@ export const EnhancedTable = (props) => {
     if (typeof props.options.onLastButtonClick === "function") {
       props.options.onLastButtonClick()
     }
-  }
+  };
   const TablePaginationActions = (props) => {
     const classes = useStyles1();
     const theme = useTheme();
@@ -164,7 +171,7 @@ export const EnhancedTable = (props) => {
         </IconButton>
       </div>
     );
-  }
+  };
   const arrayDiff = (arrayA, arrayB) => {
     var result = [];
     for (var i = 0; i < arrayA.length; i++) {
@@ -173,10 +180,14 @@ export const EnhancedTable = (props) => {
       }
     }
     return result;
-  }
+  };
   useEffect(() => {
     setObj(props.data);
   }, [props.data]);
+  const [selectedItemsNum, setSelectedItems] = useState(0);
+  useEffect(() => {
+    setSelectedItems(selecteditems.length);
+  }, [selecteditems]);
   const [rowsPerPageOptions, setRowsPerPageOptions] = useState([]);
   const [_keys, setKeys] = useState([]);
   useEffect(() => {
@@ -188,58 +199,57 @@ export const EnhancedTable = (props) => {
     setRowsPerPageOptions(_tempArray)
   }, [obj, rowsPerPage]);
   useEffect(() => {
-    const ignoreKeys = async () => {
-      let _keys = await Object.keys(obj[0]);
+    const ignoreKeys = () => {
+      let _keys = Object.keys(obj[0]);
       if (props.options !== undefined)
         if (props.options.ignoreKeys === undefined) {
-          await setKeys(_keys)
-        } else await setKeys(arrayDiff(_keys, props.options.ignoreKeys))
-      else await setKeys(_keys)
+          setKeys(_keys);
+        } else setKeys(arrayDiff(_keys, props.options.ignoreKeys));
+      else setKeys(_keys);
     }
     if (obj !== undefined && obj !== null)
       if (obj.length > 0) {
         ignoreKeys();
       }
-  }, [obj, props.options])
+  }, [obj, props.options]);
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, (obj !== undefined && obj !== null ? obj.length : 0) - page * rowsPerPage);
   const Heading = (props) => {
     return (<TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} align={(props.align !== undefined ? props.align : "left")}>{props.value}</TableCell>);
-  }
+  };
   const renderHeader = () => {
     return _keys.map((key) => {
       return <Heading style={props.styles !== undefined ? props.styles.heading !== undefined ? props.styles.heading : null : null} key={Math.random()} value={key} />;
-    })
-  }
+    });
+  };
   const ActionButtonSwitch = (props) => {
     const [check, setCheck] = useState(false);
     useEffect(() => {
-      setCheck((props.defaultValue))
+      setCheck((props.defaultValue));
     }, [props.defaultValue]);
     return (
       < Switch
         checked={check}
         onChange={(e) => {
-          setCheck(!check)
-          props.function(e)
+          setCheck(!check);
+          props.function(e);
         }}
         value={check}
         inputProps={{ 'aria-label': 'secondary checkbox' }
         }
       />
-    )
-  }
+    );
+  };
   const ActionButton = (props) => {
     return (
       < Button
         variant={"outlined"}
-        onClick={(e) => {
-          props.function(e)
-        }}
+        onClick={(e) => props.function(e)
+        }
       >
         {props.label !== undefined ? props.label : 'Click Me!'}
       </ Button>
-    )
-  }
+    );
+  };
   const breakObject = (obj) => {
     let _keys = Object.keys(obj);
     return _keys.map((value, i) => {
@@ -259,21 +269,20 @@ export const EnhancedTable = (props) => {
         <Typography varient="body1">
           {typeof props.data[key] === 'object' ? breakObject(props.data[key]) : String(props.data[key])}
         </Typography>
-      </TableCell>)
+      </TableCell>);
     });
   };
 
-  const toggleSelectedItem = async (item, value) => {
+  const toggleSelectedItem = (item, value) => {
     let _selectedItems = selecteditems;
     if (value) {
-      let _tempArray = await _selectedItems.filter(value => value !== item);
-      selecteditems = await _tempArray;
+      let _tempArray = _selectedItems.filter(value => value !== item);
+      selecteditems = _tempArray;
     } else {
-      await _selectedItems.push(item);
-      selecteditems = await _selectedItems;
+      _selectedItems.push(item);
+      selecteditems = _selectedItems;
     }
-  }
-
+  };
   const Selector = (props) => {
     const [initData, setInitData] = useState(false);
     return (
@@ -281,31 +290,28 @@ export const EnhancedTable = (props) => {
         <Checkbox
           checked={Boolean(initData)}
           color="secondary"
-          onChange={
-            (e) => {
-              toggleSelectedItem(props.selectedObject, initData)
-              setInitData(!initData)
-            }
+          onChange={() => {
+            toggleSelectedItem(props.selectedObject, initData);
+            setInitData(!initData);
+          }
           }
         />
       </div>
-    )
-  }
-
-
+    );
+  };
   const renderActions = (__obj) => {
     let defaultValue;
     if (props.options.actions !== undefined) {
       return props.options.actions.map(value => {
         defaultValue = value.defaultValueFrom !== undefined ? __obj[value.defaultValueFrom] : false;
         return (<TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} key={Math.random()}>
-          {value.type === "switch" ?
-            < ActionButtonSwitch key={Math.random()} defaultValue={defaultValue} function={(e) => { value.function(e, __obj) }} /> :
-            <ActionButton key={Math.random()} label={value.label} function={(e) => { value.function(e, __obj) }} />
+          {value.type === 'switch' ?
+            < ActionButtonSwitch key={Math.random()} defaultValue={defaultValue} function={(e) => value.function(e, __obj)} /> :
+            <ActionButton key={Math.random()} label={value.label} function={(e) => value.function(e, __obj)} />
           }
         </TableCell>
-        )
-      })
+        );
+      });
     }
   };
   const getRowsData = (data) => {
@@ -345,7 +351,7 @@ export const EnhancedTable = (props) => {
     if (obj === undefined || obj === null)
       return (< TableRow style={{ height: 48 * 5 }} >
         <TableCell colSpan={5} style={{ color: 'red', fontWeight: '500' }}>
-          <Grid containerspacing={0}
+          <Grid container spacing={0}
             align="center"
             justify="center">
             <Grid item>
@@ -356,7 +362,7 @@ export const EnhancedTable = (props) => {
     if (obj.length === 0) {
       return (< TableRow style={{ height: 48 * 5 }} >
         <TableCell colSpan={5} >
-          <Grid containerspacing={0}
+          <Grid container spacing={0}
             align="center"
             justify="center">
             <Grid item>
@@ -371,7 +377,7 @@ export const EnhancedTable = (props) => {
         <TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} colSpan={(props.options !== undefined ? props.options.selector ? _keys.length + 1 : _keys.length : _keys.length)} />
       </TableRow >);
     else return null;
-  }
+  };
 
   function handleChangeRowsPerPage(event) {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -382,12 +388,24 @@ export const EnhancedTable = (props) => {
     if (props.options !== undefined)
       return (
         <Toolbar style={props.styles !== undefined ? props.styles.toolbar !== undefined ? props.styles.toolbar : null : null}>
-          <Grid container alignContent="flex-end" alignItems="flex-end">
+          <div className={classes.title}>
+            {selectedItemsNum !== 0 ?
+              <Typography color="black" variant="tableTitle">
+                {selectedItemsNum} selected
+              </Typography>
+              :
+              <Typography variant="h6" id="tableTitle">
+                {props.title !== undefined ? props.title : 'EnhancedTable'}
+              </Typography>
+            }
+          </div>
+          <div className={classes.spacer} />
+          <Grid container spacing={1} direction="row" justify="flex-end" alignItems="flex-end">
             {props.options.toolbarActions !== undefined ?
-              props.options.toolbarActions.map(value => {
-                return (<Grid item key={Math.random()}>
-                  <Button color="primary" size="small" onClick={(e) => { value.function(e, selecteditems) }} variant="contained">{value.label}</Button>
-                </Grid>)
+              props.options.toolbarActions.map((value, i) => {
+                return (<Grid item key={'toolbarAction' + i}>
+                  <Button color="primary" size="small" onClick={(e) => value.function(e, selecteditems)} variant="contained">{value.label}</Button>
+                </Grid>);
               })
               : ''
             }
@@ -457,5 +475,6 @@ export const EnhancedTable = (props) => {
 
 EnhancedTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
-  options: PropTypes.object
+  options: PropTypes.object,
+  title: PropTypes.string.isRequired
 };
