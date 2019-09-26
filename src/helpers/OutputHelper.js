@@ -4,27 +4,25 @@ class OutputHelper {
     var CSV = '';
     CSV += ReportTitle + '\r\n\n';
     if (ShowLabel) {
-      var row = "";
-      for (var index in arrData[0]) {
+      let row = "";
+      for (let index in arrData[0]) {
         row += index + ',';
       }
       row = row.slice(0, -1);
       CSV += row + '\r\n';
     }
-    for (var i = 0; i < arrData.length; i++) {
-      var row = "";
-      for (var index in arrData[i]) {
+    for (let i = 0; i < arrData.length; i++) {
+      let row = "";
+      for (let index in arrData[i]) {
         row += '"' + arrData[i][index] + '",';
       }
       row.slice(0, row.length - 1);
       CSV += row + '\r\n';
     }
-
-    if (CSV == '') {
+    if (CSV === '') {
       alert("Invalid data");
       return;
     }
-
     var fileName = "_";
     fileName += ReportTitle.replace(/ /g, "_");
     var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
