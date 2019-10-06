@@ -40,13 +40,13 @@ export const BottomNavToolbar = () => {
       _controllerArr = String(value.controller).split('/');
       if (value.isFavourite) {
         if (_pathtoCheck[1] === (_controllerArr[0] === '' ? _controllerArr[1] : _controllerArr[0])) {
-          setValue(counter);
+          return setValue(counter);
         }
         counter++;
       }
     });
     if (_pathtoCheck[1] === 'menu') {
-      setValue(counter + 1);
+      return setValue(LayoutConfig.menuItems.length);
     }
   }, []);
   const renderIcons = () => {
