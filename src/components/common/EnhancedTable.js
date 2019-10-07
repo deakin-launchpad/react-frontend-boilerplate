@@ -251,6 +251,8 @@ export const EnhancedTable = (props) => {
     );
   };
   const breakObject = (obj) => {
+    if (obj === null) return 'null';
+    if (!obj) return '';
     let _keys = Object.keys(obj);
     return _keys.map((value, i) => {
       //TODO : to be fixed disbabled for now
