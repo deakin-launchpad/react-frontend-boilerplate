@@ -11,6 +11,17 @@ import { APIKeys } from 'configurations';
 export const EnhancedEditor = (props) => {
   const [_content, _setContent] = useState('');
   const [editorID, setEditorID] = useState();
+  const [menuBar, setMenuBar] = useState(true);
+  const [height, setHeight] = useState(500);
+  const [toolbar1, setToolbar1] = useState('bold italic underline| fontsizeselect formatselect | bullist numlist |  alignleft aligncenter alignright alignjustify');
+  const [toolbar2, setToolbar2] = useState('link image media | forecolor backcolor | outdent indent');
+  const [removed_menuitems, setRemoved_menuitems] = useState('newdocument wordcount')
+  const plugins = [
+    'advlist autolink lists link image imagetools charmap print hr preview anchor',
+    'searchreplace visualblocks visualchars nonbreaking code fullscreen',
+    'insertdatetime table media directionality emoticons paste code wordcount save'
+  ];
+  const content_css = ['//fonts.googleapis.com/css?family=Lato:300,300i,400,400i'];
   const setContent = (data) => {
     _setContent(data);
     if (props.getContent)
@@ -18,41 +29,45 @@ export const EnhancedEditor = (props) => {
         props.getContent(data);
   };
   useEffect(() => {
-    setEditorID();
-  }, []);
-  useEffect(() => {
     if (props.content)
       _setContent(String(props.content));
     if (props.id)
       setEditorID(String(props.id));
+    if (props.options) {
+      if (props.options.menuBar !== undefined)
+        setMenuBar(props.options.menuBar);
+      if (props.options.height !== undefined && props.options.height !== null)
+        setHeight(props.options.height);
+      if (props.options.toolbar1 !== undefined)
+        setToolbar1(props.options.toolbar1);
+      if (props.options.toolbar2 !== undefined)
+        setToolbar2(props.options.toolbar2);
+      if (props.options.removedMenuItems !== undefined)
+        setRemoved_menuitems(props.options.removedMenuItems);
+    }
   }, [props]);
+  let initObj = { height, plugins, removed_menuitems, content_css, image_advtab: true, toolbar1, toolbar2 };
+  if (!menuBar) Object.assign(initObj, { menubar: false });
   let editor = (<Editor
     apiKey={APIKeys.tinyMCE}
     initialValue={_content}
     id={editorID}
-
-    init={{
-      height: 500,
-      plugins: [
-        'advlist autolink lists link image imagetools charmap print hr preview anchor',
-        'searchreplace visualblocks visualchars nonbreaking code fullscreen',
-        'insertdatetime table media directionality emoticons paste code wordcount save'
-      ],
-      removed_menuitems: 'newdocument wordcount',
-      content_css: ['//fonts.googleapis.com/css?family=Lato:300,300i,400,400i'],
-      image_advtab: true,
-      toolbar1: 'bold italic underline| fontsizeselect formatselect | bullist numlist |  alignleft aligncenter alignright alignjustify  | ',
-      toolbar2: 'link image media | forecolor backcolor | outdent indent |'
-    }}
+    init={initObj}
     onChange={(e) => setContent(e.target.getContent())}
   />
   );
-
   return editor;
 };
 
 EnhancedEditor.propTypes = {
   id: PropTypes.string.isRequired,
   content: PropTypes.node,
-  getContent: PropTypes.func
+  getContent: PropTypes.func,
+  options: PropTypes.shape({
+    menuBar: PropTypes.bool,
+    toolbar1: PropTypes.string,
+    toolbar2: PropTypes.string,
+    removedMenuItems: PropTypes.string,
+    height: PropTypes.number
+  })
 };
