@@ -9,7 +9,7 @@ import { EnhancedTable } from './common/EnhancedTable';
 import { BottomNavToolbar } from './dependants/BottomNavToolbar';
 import { Image } from './common/Media';
 import { HeaderElements } from './helpers/HeaderElements';
-
+import { EnhancedEditor } from './common/EnhancedEditor';
 export {
   EnhancedNotification as Notification,
   notify,
@@ -22,5 +22,6 @@ export {
   EnhancedTable,
   BottomNavToolbar,
   Image,
-  HeaderElements
+  HeaderElements,
+  EnhancedEditor
 };
