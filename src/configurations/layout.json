@@ -12,6 +12,15 @@
       "subMenuItems": []
     },
     {
+      "name": "Example",
+      "type": "button",
+      "icon": "code",
+      "controller": "/examples",
+      "customTitle": "Example Code File",
+      "isFavourite": true,
+      "subMenuItems": []
+    },
+    {
       "name": "Logout",
       "type": "logout",
       "icon": "logout",
