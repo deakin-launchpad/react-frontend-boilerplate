@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { SwipeableDrawer, makeStyles, Typography } from '@material-ui/core';
+
 export const EnhancedDrawer = (props) => {
   const [drawerHeight, setDrawerHeight] = useState('50vh');
   const [drawerWidth, setDrawerWidth] = useState('50vh');
+  const [drawerMargin, setDrawerMargin] = useState(null);
   const useStyles = makeStyles(theme => ({
     container: {
       height: drawerHeight,
       width: drawerWidth,
-      margin: '5%'
+      margin: drawerMargin !== null ? drawerMargin : theme.spacing(2)
     },
     title: {
     }
@@ -19,6 +21,7 @@ export const EnhancedDrawer = (props) => {
   const [title, setTitle] = useState('DrawerTitle');
   const [drawerContent, setDrawerContent] = useState(<p>Please pass content for the drawer</p>);
   const [anchor, setAnchor] = useState('bottom');
+  const [drawerElevation, setDrawerElevation] = useState(16);
   useEffect(() => {
     if (props.title)
       setTitle(props.title);
@@ -33,9 +36,14 @@ export const EnhancedDrawer = (props) => {
         setDrawerHeight(props.options.height);
       if (props.options.width)
         setDrawerWidth(props.options.width);
+      if (props.options.margin)
+        setDrawerMargin(props.options.margin);
+      if (props.options.elevation !== undefined && props.options.elevation !== null)
+        setDrawerElevation(props.options.elevation);
     }
   }, [props]);
   let drawer = (<SwipeableDrawer
+    elevation={drawerElevation}
     anchor={anchor}
     disableBackdropTransition={!iOS} disableDiscovery={iOS}
     open={isOpen}
@@ -67,12 +75,14 @@ export const EnhancedDrawer = (props) => {
 EnhancedDrawer.propTypes = {
   content: PropTypes.node.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  anchor: PropTypes.string,
+  anchor: PropTypes.oneOf('bottom', 'top', 'left', 'right'),
   title: PropTypes.string,
   onClose: PropTypes.func,
   onOpen: PropTypes.func,
   options: PropTypes.shape({
     height: PropTypes.string,
-    width: PropTypes.string
+    width: PropTypes.string,
+    margin: PropTypes.string,
+    elevation: PropTypes.number
   })
 };
