@@ -10,6 +10,7 @@ import { BottomNavToolbar } from './dependants/BottomNavToolbar';
 import { Image } from './common/Media';
 import { HeaderElements } from './helpers/HeaderElements';
 import { EnhancedEditor } from './common/EnhancedEditor';
+import { EnhancedDrawer } from './common/EnhancedDrawer';
 export {
   EnhancedNotification as Notification,
   notify,
@@ -23,5 +24,6 @@ export {
   BottomNavToolbar,
   Image,
   HeaderElements,
-  EnhancedEditor
+  EnhancedEditor,
+  EnhancedDrawer
 };
