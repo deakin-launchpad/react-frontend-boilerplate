@@ -94,28 +94,26 @@ export const Header = () => {
     setOpen(false);
   };
   let content = (
-    <div style={{ display: 'flex', width: '100 %' }}>
-      <header>
-        <AppBar position={LayoutConfig.sideMenu.permanent ? 'fixed' : 'absolute'} className={LayoutConfig.sideMenu.permanent ? (isItDesktop ? classes.appBarShift : classes.appBar) : clsx(classes.appBar, open && classes.appBarShift)}>
-          <Toolbar className={classes.toolbar}>
-            {isItDesktop ? LayoutConfig.sideMenu.permanent ? null : < IconButton
-              edge="start"
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={handleDrawerOpen}
-              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-            >
-              <MenuIcon />
-            </IconButton> : null}
-            {
-              headerElements !== null ? headerElements :
-                <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                  {pageTitle}
-                </Typography>
-            }
-          </Toolbar>
-        </AppBar>
-      </header>
+    <>
+      <AppBar position={LayoutConfig.sideMenu.permanent ? 'fixed' : 'absolute'} className={LayoutConfig.sideMenu.permanent ? (isItDesktop ? classes.appBarShift : classes.appBar) : clsx(classes.appBar, open && classes.appBarShift)}>
+        <Toolbar className={classes.toolbar}>
+          {isItDesktop ? LayoutConfig.sideMenu.permanent ? null : < IconButton
+            edge="start"
+            color="inherit"
+            aria-label="Open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+          >
+            <MenuIcon />
+          </IconButton> : null}
+          {
+            headerElements !== null ? headerElements :
+              <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                {pageTitle}
+              </Typography>
+          }
+        </Toolbar>
+      </AppBar>
       {
         isItDesktop ? <Drawer
           variant="permanent"
@@ -133,7 +131,7 @@ export const Header = () => {
           <SideMenuItems />
         </Drawer> : null
       }
-    </div >
+    </ >
   );
   return content;
 };
