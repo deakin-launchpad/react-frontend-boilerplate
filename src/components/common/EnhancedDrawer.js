@@ -75,7 +75,7 @@ export const EnhancedDrawer = (props) => {
 EnhancedDrawer.propTypes = {
   content: PropTypes.node.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  anchor: PropTypes.oneOf('bottom', 'top', 'left', 'right'),
+  anchor: PropTypes.oneOf(['bottom', 'top', 'left', 'right']),
   title: PropTypes.string,
   onClose: PropTypes.func,
   onOpen: PropTypes.func,
