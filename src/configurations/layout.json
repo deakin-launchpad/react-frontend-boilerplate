@@ -37,5 +37,11 @@
   "sideMenu": {
     "permanent": false,
     "default": "open"
+  },
+  "theme": {
+    "colors": {
+      "primary": "#039be5",
+      "secondary": "#c62828"
+    }
   }
 }
