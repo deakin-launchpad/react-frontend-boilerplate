@@ -7,7 +7,7 @@ import { TextField, Paper, makeStyles, Typography, Button, Box, Grid } from '@ma
 import { LoginContext } from 'contexts';
 import { notify } from 'components';
 import { DevModeConfig } from 'configurations';
-import { API } from 'helpers';
+import { API, useKeyPress } from 'helpers';
 
 
 const useStyles = makeStyles(theme => ({
@@ -88,7 +88,10 @@ export const Login = () => {
         return false;
       }
     }
-  }
+  };
+  useKeyPress('Enter', () => {
+    validationCheck();
+  });
 
   let content = (
     <div>
