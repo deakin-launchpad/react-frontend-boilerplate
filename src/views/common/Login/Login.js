@@ -38,8 +38,8 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1)
   },
   developMessage: {
-    position: "absolute",
-    bottom: "2vh"
+    position: 'absolute',
+    bottom: '2vh'
   }
 }));
 
@@ -72,7 +72,7 @@ export const Login = () => {
       let emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       let emailPatternTest = emailPattern.test(email);
       if (emailPatternTest && pwd) {
-        performLogin()
+        performLogin();
         return true;
       } else if (emailPatternTest === undefined && pwd === undefined) {
         notify('Email or password must not be empty!');
@@ -114,11 +114,11 @@ export const Login = () => {
           <Box mt={5}>
             <Typography variant="body2" color="textSecondary" align="center">
               Developed by Deakin Launchpad
-        </Typography>
+            </Typography>
           </Box>
         </Grid>
       </Grid>
     </div >
   );
   return content;
-}
+};
