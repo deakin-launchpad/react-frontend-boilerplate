@@ -95,7 +95,7 @@ export const Header = () => {
   };
   let content = (
     <>
-      <AppBar position={LayoutConfig.sideMenu.permanent ? 'fixed' : 'absolute'} className={LayoutConfig.sideMenu.permanent ? (isItDesktop ? classes.appBarShift : classes.appBar) : clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar elevation={LayoutConfig.theme !== undefined ? LayoutConfig.theme.appBarElevation !== undefined ? LayoutConfig.theme.appBarElevation : 1 : 1} position={LayoutConfig.sideMenu.permanent ? 'fixed' : 'absolute'} className={LayoutConfig.sideMenu.permanent ? (isItDesktop ? classes.appBarShift : classes.appBar) : clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           {isItDesktop ? LayoutConfig.sideMenu.permanent ? null : < IconButton
             edge="start"
