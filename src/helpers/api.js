@@ -9,6 +9,10 @@ const errorHelper = (error) => {
     notify("Network Error");
     return false;
   }
+  if (error.response.data.message !== "") {
+    notify(error.response.data.message);
+    return false;
+  }
   if (error.response.statusCode === 401) {
     notify("You may have been logged out");
     logout();
