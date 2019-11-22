@@ -25,7 +25,7 @@ export const useKeyPress = (targetKey, callback) => {
       if (key === targetKey) {
         setKeyPressed(true);
       }
-    }
+    };
 
     // If released key is our target key then set to false
     const upHandler = ({ key }) => {
@@ -91,4 +91,37 @@ export const useLocalStorage = (key, initialValue) => {
   };
 
   return [storedValue, setValue];
+};
+
+export const useLocation = () => {
+  /**
+    * Custom hook to return current location
+    * Example Code : 
+    * const [location]=useLocation();
+    **/
+
+  //State to store the location and error
+  const [location, setLocation] = useState({});
+  const [error, setError] = useState(null);
+
+  //This useEffect uses navigator.geolocation.watchposition to reterive browser location
+  useEffect(() => {
+    const geo = navigator.geolocation;
+    if (!geo) {
+      setError('Geolocation is not supported');
+      return;
+    }
+    let watcher = geo.watchPosition(({ coords }) => {
+      setLocation({
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      });
+    }, (error) => {
+      setError(error.message);
+    });
+
+    return () => watcher && geo.clearWatch(watcher);
+  }, []);
+
+  return [location, error];
 };

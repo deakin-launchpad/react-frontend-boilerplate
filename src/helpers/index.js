@@ -2,12 +2,13 @@ import { axiosInstance } from './axiosInstance';
 import API from './api';
 import TextHelper from './TextHelper';
 import OutputHelper from './OutputHelper';
-import { useKeyPress, useLocalStorage } from './CustomHooks';
+import { useKeyPress, useLocalStorage, useLocation } from './CustomHooks';
 export {
   axiosInstance,
   API,
   TextHelper,
   OutputHelper,
   useKeyPress,
-  useLocalStorage
+  useLocalStorage,
+  useLocation
 };
