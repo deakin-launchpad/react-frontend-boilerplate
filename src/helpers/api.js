@@ -4,18 +4,20 @@ import { axiosInstance } from './index';
 /**
  *  @errorHelper :  Function to return error StatusText.
  */
-const errorHelper = (error) => {
+const errorHelper = (error, variant) => {
   if (error.response === undefined) {
     notify("Network Error");
     return false;
   }
-  if (error.response.data.message !== "") {
-    notify(error.response.data.message);
-    return false;
-  }
   if (error.response.statusCode === 401) {
+    if (variant === "login")
+      return notify("Invalid");
     notify("You may have been logged out");
     logout();
+    return false;
+  }
+  if (error.response.data.message !== "") {
+    notify(error.response.data.message);
     return false;
   }
   if (error.response.statusText !== "") {
@@ -32,7 +34,7 @@ class API {
     axiosInstance.post('login', data).then(response => {
       return callback(true)
     }).catch(error => {
-      errorHelper(error)
+      errorHelper(error, "login")
     })
   }
 
