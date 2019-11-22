@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Button, Card, CardContent, CardActions, makeStyles } from '@material-ui/core';
-import { EnhancedEditor, EnhancedDrawer } from 'components';
+import { EnhancedEditor, EnhancedDrawer, EnhancedModal } from 'components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,6 +14,7 @@ export const Example = () => {
   const [contentStorage, setContentStorage] = useState('');
   const [drawerContent] = useState(<p>Example Content</p>);
   const [bottomDrawerStatus, setBottomDrawerStatus] = useState(false);
+  const [modalStatus, setModalStatus] = useState(false);
   let content = (
     <div className={classes.root}>
       <Grid container spacing={1} justify='flex-start' alignItems='flex-start'>
@@ -44,6 +45,30 @@ export const Example = () => {
             <CardActions>
               <Button variant='outlined' onClick={() => { bottomDrawerStatus ? setBottomDrawerStatus(false) : setBottomDrawerStatus(true); }} >
                 Toggle BottomDrawer
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+        <Grid item xs={5}>
+          <Card>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                Bottom Drawer Example
+              </Typography>
+              <EnhancedModal
+                dialogTitle='Example Modal'
+                dialogContent={drawerContent}
+                isOpen={modalStatus}
+                onSubmit={() => { setModalStatus(false); }}
+                onClose={() => { setModalStatus(false); }}
+                options={{
+                  swapButtonColors: false
+                }}
+              />
+            </CardContent>
+            <CardActions>
+              <Button variant='outlined' onClick={() => { modalStatus ? setModalStatus(false) : setModalStatus(true); }} >
+                Toggle Enhanced Modal
               </Button>
             </CardActions>
           </Card>
