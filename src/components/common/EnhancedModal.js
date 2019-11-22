@@ -16,6 +16,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mate
 *          @disableClose : type<Boolean> : disable close Button
 *          @onClose : type<function> : function to perform onClose
 *          @onSubmit : type<function> : function to perfrom onSubmit
+*          @swapButtonColors : type<Boolean> : Swap Action Button Colors
 */
 export const EnhancedModal = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +26,7 @@ export const EnhancedModal = (props) => {
   const [cancelButtonName, setCancelButtonName] = useState('Close');
   const [disableSubmit, setDisableSubmit] = useState(false);
   const [disableClose, setDisableClose] = useState(false);
+  const [swapButtonColors, setSwapButtonColors] = useState(false)
   useEffect(() => {
     if (props.isOpen) {
       setIsOpen(true);
@@ -50,6 +52,8 @@ export const EnhancedModal = (props) => {
         setDisableSubmit(true);
       if (props.options.disableClose)
         setDisableClose(true);
+      if (props.options.swapButtonColors)
+        setSwapButtonColors(props.options.swapButtonColors);
     }
   }, [props]);
   const onClose = () => {
@@ -79,8 +83,8 @@ export const EnhancedModal = (props) => {
       <DialogTitle id="form-dialog-title">{_DialogTitle}</DialogTitle>
       <DialogContent>{_DialogContent}</DialogContent>
       <DialogActions>
-        {disableSubmit !== true && <Button variant="contained" onClick={onSubmit} color="primary">{submitButtonName}</Button>}
-        {disableClose !== true && <Button variant="contained" onClick={onClose} color="secondary">{cancelButtonName}</Button>}
+        {disableSubmit !== true && <Button variant="contained" onClick={onSubmit} color={swapButtonColors ? 'secondary' : 'primary'}>{submitButtonName}</Button>}
+        {disableClose !== true && <Button variant="contained" onClick={onClose} color={swapButtonColors ? 'primary' : 'secondary'}>{cancelButtonName}</Button>}
       </DialogActions>
     </Dialog>
   );
