@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Button, Card, CardContent, CardActions, makeStyles } from '@material-ui/core';
 import { EnhancedEditor, EnhancedDrawer, EnhancedModal } from 'components';
+import { useLocation } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,6 +16,7 @@ export const Example = () => {
   const [drawerContent] = useState(<p>Example Content</p>);
   const [bottomDrawerStatus, setBottomDrawerStatus] = useState(false);
   const [modalStatus, setModalStatus] = useState(false);
+  let [location] = useLocation();
   let content = (
     <div className={classes.root}>
       <Grid container spacing={1} justify='flex-start' alignItems='flex-start'>
@@ -53,7 +55,7 @@ export const Example = () => {
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                Bottom Drawer Example
+                Enhanced Modal Example
               </Typography>
               <EnhancedModal
                 dialogTitle='Example Modal'
@@ -69,6 +71,19 @@ export const Example = () => {
             <CardActions>
               <Button variant='outlined' onClick={() => { modalStatus ? setModalStatus(false) : setModalStatus(true); }} >
                 Toggle Enhanced Modal
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid><Grid item xs={5}>
+          <Card>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                useLocation Example
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button variant='outlined' onClick={() => { console.log(location); }} >
+                Console Current Location
               </Button>
             </CardActions>
           </Card>
