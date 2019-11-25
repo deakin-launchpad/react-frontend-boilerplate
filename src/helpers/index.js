@@ -3,6 +3,7 @@ import API from './api';
 import TextHelper from './TextHelper';
 import OutputHelper from './OutputHelper';
 import { useKeyPress, useLocalStorage, useLocation } from './CustomHooks';
+import { socketInstance, useSocket } from './socket';
 export {
   axiosInstance,
   API,
@@ -10,5 +11,7 @@ export {
   OutputHelper,
   useKeyPress,
   useLocalStorage,
-  useLocation
+  useLocation,
+  socketInstance,
+  useSocket
 };
