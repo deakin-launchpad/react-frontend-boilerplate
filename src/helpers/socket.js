@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import { SocketConfig, DevModeConfig } from 'configurations';
 export var socketInstance = null;
-export const initSocket = () => {
+const initSocket = () => {
   if (socketInstance === null) {
     socketInstance = io(process.env.REACT_APP_BASE_URL, SocketConfig.socketDefaultOptions);
     if (socketInstance) {
