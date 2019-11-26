@@ -48,7 +48,7 @@ class API {
   }
 
   accessTokenLogin = (callback) => {
-    axiosInstance.post('accessTokenLogin', {
+    axiosInstance.post('accessTokenLogin', {}, {
       headers: {
         authorization: "Bearer " + AccessToken
       }
