@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 import { SocketConfig, DevModeConfig } from 'configurations';
 import { useSocket } from './service';
-import { checkLoginStatus } from './util';
+import { socketAuthCallback } from './util';
 
 export var socketInstance = null;
 
@@ -20,5 +20,5 @@ if (SocketConfig.initSocket)
 
 export {
   useSocket,
-  checkLoginStatus
+  socketAuthCallback
 };

@@ -3,7 +3,7 @@ import API from './API/api.js';
 import TextHelper from './data/TextHelper';
 import OutputHelper from './data/OutputHelper';
 import { useKeyPress, useLocalStorage, useLocation } from './hooks';
-import { socketInstance, useSocket, checkLoginStatus } from './socket';
+import { socketInstance, useSocket, socketAuthCallback } from './socket';
 export {
   axiosInstance,
   API,
@@ -14,5 +14,5 @@ export {
   useLocation,
   socketInstance,
   useSocket,
-  checkLoginStatus
+  socketAuthCallback
 };

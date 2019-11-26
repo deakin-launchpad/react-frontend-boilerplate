@@ -11,6 +11,7 @@ import { Image } from './common/Media';
 import { HeaderElements } from './helpers/HeaderElements';
 import { EnhancedEditor } from './common/EnhancedEditor';
 import { EnhancedDrawer } from './common/EnhancedDrawer';
+import { LoginCheck } from './helpers/LoginCheck.js';
 export {
   EnhancedNotification as Notification,
   notify,
@@ -25,5 +26,6 @@ export {
   Image,
   HeaderElements,
   EnhancedEditor,
-  EnhancedDrawer
+  EnhancedDrawer,
+  LoginCheck
 };
