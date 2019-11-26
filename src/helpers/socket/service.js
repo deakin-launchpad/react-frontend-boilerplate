@@ -1,20 +1,7 @@
 
 import { useState, useEffect } from 'react';
-import io from 'socket.io-client';
-import { SocketConfig, DevModeConfig } from 'configurations';
-export var socketInstance = null;
-const initSocket = () => {
-  if (socketInstance === null) {
-    socketInstance = io(process.env.REACT_APP_BASE_URL, SocketConfig.socketDefaultOptions);
-    if (socketInstance) {
-      if (DevModeConfig.visible)
-        console.log('socket initilized');
-      return socketInstance;
-    }
-  } else if (DevModeConfig.visible) console.log('Socket Already Initilized');
-};
-if (SocketConfig.initSocket)
-  initSocket();
+import { socketInstance } from './index';
+
 
 export const useSocket = (variant, event, callback) => {
   /**
@@ -29,6 +16,8 @@ export const useSocket = (variant, event, callback) => {
     _setError(error);
   };
   useEffect(() => {
+    if (socketInstance === null)
+      setError('Socket not initilized! Check Configuration to enable it.');
     if (String(variant).toLowerCase() !== 'on' && String(variant).toLowerCase() !== 'emit' && String(variant).toLowerCase() !== 'off')
       setError('Unsupported Variant Provided! Please use one of "on" "emit" or "off"');
     else {
@@ -49,7 +38,7 @@ export const useSocket = (variant, event, callback) => {
     return [null, { error: error }];
   }
   if (socketInstance === null) {
-    return [initSocket(), null];
+    return [null, { error: error }];
   }
   return [socketInstance, null];
 };
