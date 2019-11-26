@@ -6,15 +6,15 @@ import { LoginContext } from 'contexts';
 
 
 export const LoginCheck = (props) => {
-  const { loginStatus } = useContext(LoginContext);
+  const { accessToken } = useContext(LoginContext);
   useEffect(() => {
-    if (!DevModeConfig.bypassBackend && loginStatus)
+    if (!DevModeConfig.bypassBackend && accessToken)
       API.accessTokenLogin((response) => {
         if (SocketConfig.initSocket)
           if (SocketConfig.accessTokenVerification)
             socketAuthCallback(response);
       });
-  }, [loginStatus]);
+  }, [accessToken]);
   return (<div>{props.children}</div>);
 };
 
