@@ -1,4 +1,5 @@
 {
   "initSocket": false,
-  "socketDefaultOptions": {}
+  "socketDefaultOptions": {},
+  "accessTokenVerification": false
 }
