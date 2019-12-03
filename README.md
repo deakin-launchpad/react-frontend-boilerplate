@@ -78,8 +78,8 @@ The basic configuration of the application is defined in JSON files. In the futu
     2. The Dev mode button allows users to login into an application without entering login credentials. Instead, they can be configured by updating `user & password` keys and will be auto-filled for quick login. This will only work when the application is connected to a server and the user already is registered inside the database.
     3.  During development, the login using server can be skipped by changing `"bypassBackend": false` to `"bypassBackend": true` .
     4. The dev mode button position can be configured using keys namely `verticlePosition` which accepts `top or bottom` value & `horizontalPosition` accepts `left or right` value.
-- Side Menu
-	1. File location `src/configurations/sideMenuItems.json`.
+- Application Layout
+	1. File location `src/configurations/layout.json`.
 	2. The application side menu can be configured easily using a JSON file to avoid writing long lines of code.
 	```
 	{
