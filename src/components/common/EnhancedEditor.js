@@ -46,7 +46,25 @@ export const EnhancedEditor = (props) => {
         setRemoved_menuitems(props.options.removedMenuItems);
     }
   }, [props]);
-  let initObj = { height, plugins, removed_menuitems, content_css, image_advtab: true, toolbar1, toolbar2 };
+
+  let initObj = {
+    height, plugins, removed_menuitems, content_css, image_advtab: true, toolbar1, toolbar2,
+    file_picker_types: 'file image media', images_reuse_filename: true,
+    file_picker_callback: props.imageUpload === undefined ? null : (callback) => {
+      var input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', typeof props.imageUpload.fileTypes === 'string' ? props.imageUpload.fileTypes : '*');
+      input.onchange = function () {
+        if (props.imageUpload.function instanceof Function) {
+          props.imageUpload.function(this.files, (responseImageLink, title) => {
+            callback(responseImageLink, { title: title ? title : Math.random() });
+          });
+        }
+      };
+      input.click();
+    }
+  };
+
   if (!menuBar) Object.assign(initObj, { menubar: false });
   let editor = (<Editor
     apiKey={APIKeys.tinyMCE}
@@ -69,5 +87,9 @@ EnhancedEditor.propTypes = {
     toolbar2: PropTypes.string,
     removedMenuItems: PropTypes.string,
     height: PropTypes.number
+  }),
+  imageUpload: PropTypes.shape({
+    function: PropTypes.func,
+    fileTypes: PropTypes.string
   })
 };
