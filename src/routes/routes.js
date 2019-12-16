@@ -7,13 +7,15 @@ import { LoginContext } from 'contexts';
 import { Login, Register, Home, MobileMenu, FourOFour, Example } from 'views';
 import { Layout } from '../layout';
 import { LayoutConfig } from 'configurations';
+import { LoadingScreen } from 'components';
 
 export const AppRoutes = (props) => {
   const { loginStatus } = useContext(LoginContext);
   let landingPage = (LayoutConfig.landingPage !== undefined ? LayoutConfig.landingPage !== '' ? LayoutConfig.landingPage : '/home' : '/home');
+  if (loginStatus === undefined) return <LoadingScreen />;
   return (
     <Switch>
-      <Route exact path='/' render={() => (((loginStatus) ? <Redirect to={{ pathname: '/login' }} {...props} /> : <Redirect to={{
+      <Route exact path='/' render={() => (((!loginStatus) ? <Redirect to={{ pathname: '/login' }} {...props} /> : <Redirect to={{
         pathname: landingPage
       }} {...props} />))} />
 
