@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, TablePagination, Checkbox, IconButton, makeStyles, Toolbar, Button, Grid, Switch } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles'
-import FirstPageIcon from '@material-ui/icons/FirstPage'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-import LastPageIcon from '@material-ui/icons/LastPage'
+import { useTheme } from '@material-ui/core/styles';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import LastPageIcon from '@material-ui/icons/LastPage';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -94,7 +94,7 @@ const useStyles = makeStyles(theme => ({
 export const EnhancedTable = (props) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [obj, setObj] = useState([]);
   var selecteditems = [];
   const useStyles1 = makeStyles(theme => ({
@@ -128,7 +128,7 @@ export const EnhancedTable = (props) => {
     if (!props.options.disablePaginationDefaults)
       setPage(page + 1);
     if (typeof props.options.onNextButtonClick === "function") {
-      props.options.onNextButtonClick()
+      props.options.onNextButtonClick();
     }
   };
   const handleLastPageButtonClick = () => {
@@ -137,7 +137,7 @@ export const EnhancedTable = (props) => {
     if (!props.options.disablePaginationDefaults)
       setPage(Math.max(0, Math.ceil(obj.length / rowsPerPage) - 1));
     if (typeof props.options.onLastButtonClick === "function") {
-      props.options.onLastButtonClick()
+      props.options.onLastButtonClick();
     }
   };
   const TablePaginationActions = (props) => {
@@ -191,12 +191,12 @@ export const EnhancedTable = (props) => {
   const [rowsPerPageOptions, setRowsPerPageOptions] = useState([]);
   const [_keys, setKeys] = useState([]);
   useEffect(() => {
-    var _tempArray = []
+    var _tempArray = [];
     var _counterLimit = Math.floor((obj !== undefined && obj !== null ? obj.length : 0) / rowsPerPage);
     for (var i = 0; i <= _counterLimit; i++) {
-      _tempArray.push(rowsPerPage * (i + 1))
+      _tempArray.push(rowsPerPage * (i + 1));
     }
-    setRowsPerPageOptions(_tempArray)
+    setRowsPerPageOptions(_tempArray);
   }, [obj, rowsPerPage]);
   useEffect(() => {
     const ignoreKeys = () => {
@@ -251,25 +251,58 @@ export const EnhancedTable = (props) => {
     );
   };
   const breakObject = (obj) => {
-    if (obj === null) return 'null';
-    if (!obj) return '';
-    let _keys = Object.keys(obj);
-    return _keys.map((value, i) => {
-      //TODO : to be fixed disbabled for now
-      if (typeof obj[value] === 'object' || false) {
-        console.log('hello');
-        return breakObject(value);
-      } else
-        return (
-          <span key={Math.random()}><strong>{value}</strong>: {obj[value]}{_keys.length > i ? <br /> : null}</span>
-        );
-    });
+    if (obj === null || obj === undefined) return 'No Data';
+    if (!Array.isArray(obj)) return null;
+    if (obj[0] === undefined) return 'No Data';
+    if (obj[0] === null) return 'No Data';
+    if (obj[0] instanceof Object) {
+      let _keys = Object.keys(obj[0]);
+      return (
+        <Table>
+          <TableHead>
+            <TableRow>
+              {_keys.map((value) => {
+                return (
+                  <TableCell key={Math.random()}>
+                    {value}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {
+              obj.map(value => {
+                return (<TableRow key={Math.random()}>{
+                  _keys.map((valueA) => {
+                    return (<TableCell key={Math.random()}>
+                      <Typography varient="body1">
+                        {Array.isArray(value[valueA]) ? breakObject(value[valueA]) : String(value[valueA])}
+                      </Typography>
+                    </TableCell>);
+                  })
+                }
+                </TableRow>)
+              })}
+          </TableBody>
+        </Table>
+      );
+    }
+    else
+      return (obj.map((value, i) => {
+        return (<>
+          <Typography>
+            {value}
+          </Typography>
+          {i < obj.length - 1 ? <br /> : null}
+        </>);
+      }));
   };
   const RenderRow = (props) => {
     return props.keys.map((key) => {
       return (<TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} key={Math.random()}>
         <Typography varient="body1">
-          {typeof props.data[key] === 'object' ? breakObject(props.data[key]) : String(props.data[key])}
+          {Array.isArray(props.data[key]) ? breakObject(props.data[key]) : String(props.data[key])}
         </Typography>
       </TableCell>);
     });
