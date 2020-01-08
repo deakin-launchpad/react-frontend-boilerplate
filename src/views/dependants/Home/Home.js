@@ -1,17 +1,14 @@
 import React, { useEffect, useContext } from 'react';
-import { Grid, Typography, IconButton } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Image, HeaderElements } from 'components';
 import { LayoutContext } from 'contexts';
 export const Home = () => {
-  const { setHeaderElements, pageTitle } = useContext(LayoutContext)
+  const { setHeaderElements, pageTitle } = useContext(LayoutContext);
   useEffect(() => {
     setHeaderElements(<HeaderElements>
       <Typography>
         {pageTitle}
       </Typography>
-      <IconButton>
-        <i className="material-icons"></i>
-      </IconButton>
     </HeaderElements>);
   }, [pageTitle, setHeaderElements]);
   return (<Grid container justify='flex-start' direction='column' alignItems='center'>

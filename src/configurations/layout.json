@@ -12,6 +12,15 @@
       "subMenuItems": []
     },
     {
+      "name": "Example",
+      "type": "button",
+      "icon": "code",
+      "controller": "/examples",
+      "customTitle": "Example Code File",
+      "isFavourite": true,
+      "subMenuItems": []
+    },
+    {
       "name": "Logout",
       "type": "logout",
       "icon": "logout",
@@ -28,5 +37,12 @@
   "sideMenu": {
     "permanent": false,
     "default": "open"
+  },
+  "theme": {
+    "colors": {
+      "primary": "#039be5",
+      "secondary": "#c62828"
+    },
+    "appBarElevation": 1
   }
 }

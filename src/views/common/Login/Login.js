@@ -7,7 +7,7 @@ import { TextField, Paper, makeStyles, Typography, Button, Box, Grid } from '@ma
 import { LoginContext } from 'contexts';
 import { notify } from 'components';
 import { DevModeConfig } from 'configurations';
-import { API } from 'helpers';
+import { API, useKeyPress } from 'helpers';
 
 
 const useStyles = makeStyles(theme => ({
@@ -38,8 +38,8 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1)
   },
   developMessage: {
-    position: "absolute",
-    bottom: "2vh"
+    position: 'absolute',
+    bottom: '2vh'
   }
 }));
 
@@ -57,14 +57,14 @@ export const Login = () => {
       let details = {
         username: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.user : '') : emailId),
         password: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.password : '') : password)
-      }
-      API.login(details, setLoginStatus)
+      };
+      API.login(details, setLoginStatus);
     }
-  }
+  };
 
   const validationCheck = () => {
     if (devMode) {
-      return performLogin()
+      return performLogin();
     }
     if (!loginStatus) {
       const email = emailId;
@@ -72,7 +72,7 @@ export const Login = () => {
       let emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       let emailPatternTest = emailPattern.test(email);
       if (emailPatternTest && pwd) {
-        performLogin()
+        performLogin();
         return true;
       } else if (emailPatternTest === undefined && pwd === undefined) {
         notify('Email or password must not be empty!');
@@ -88,12 +88,15 @@ export const Login = () => {
         return false;
       }
     }
-  }
+  };
+  useKeyPress('Enter', () => {
+    validationCheck();
+  });
 
   let content = (
     <div>
       <Grid container spacing={0} justify="center">
-        <Grid className={classes.loginBox} item xs={10} lg={2}>
+        <Grid className={classes.loginBox} item xs={10} sm={6} md={4} lg={3} xl={2}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h5">
               {pageHeading}
@@ -110,12 +113,12 @@ export const Login = () => {
         <Grid item xs={12} className={classes.developMessage}>
           <Box mt={5}>
             <Typography variant="body2" color="textSecondary" align="center">
-              Developed by Deakin LaunchpaP
-        </Typography>
+              Developed by Deakin Launchpad
+            </Typography>
           </Box>
         </Grid>
       </Grid>
     </div >
   );
   return content;
-}
+};

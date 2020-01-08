@@ -5,17 +5,21 @@
 
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction, Icon, makeStyles } from '@material-ui/core';
+import { BottomNavigation, BottomNavigationAction, Icon, makeStyles, Paper } from '@material-ui/core';
 import { LayoutConfig } from 'configurations';
 import { API } from 'helpers';
 import { LayoutContext } from 'contexts';
 
+let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     position: 'fixed',
-    bottom: '0',
+    bottom: '0'
+  },
+  iOSPadding: {
+    height: iOS ? theme.spacing(2) : 0
   },
   list: {
     width: 250,
@@ -23,7 +27,7 @@ const useStyles = makeStyles({
   fullList: {
     width: 'auto',
   },
-});
+}));
 
 export const BottomNavToolbar = () => {
   const classes = useStyles();
@@ -40,13 +44,13 @@ export const BottomNavToolbar = () => {
       _controllerArr = String(value.controller).split('/');
       if (value.isFavourite) {
         if (_pathtoCheck[1] === (_controllerArr[0] === '' ? _controllerArr[1] : _controllerArr[0])) {
-          setValue(counter);
+          return setValue(counter);
         }
         counter++;
       }
     });
     if (_pathtoCheck[1] === 'menu') {
-      setValue(counter + 1);
+      return setValue(LayoutConfig.menuItems.length);
     }
   }, []);
   const renderIcons = () => {
@@ -60,18 +64,20 @@ export const BottomNavToolbar = () => {
     );
   };
 
-  return (
+  return (<Paper className={classes.root}>
     <BottomNavigation
       showLabels
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
       }}
-      className={classes.root}
+
     >
       {renderIcons()}
       {LayoutConfig.displayMobileMenuHam ? <BottomNavigationAction onClick={() => { setPageTitle(menuButtonLabel); }} component={Link} to={'/menu'} label={menuButtonLabel} icon={<Icon>menu</Icon>} /> : null}
+
     </BottomNavigation>
-  );
+    <div className={classes.iOSPadding} />
+  </Paper>);
 };
 

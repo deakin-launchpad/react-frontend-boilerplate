@@ -2,7 +2,7 @@
  *  Created by Sanchit Dang
  ***/
 import React, { createContext, useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
 /**
  * @AccessToken 
  * @LoginStatus 
@@ -19,7 +19,7 @@ export const logout = async (init) => {
   if (init !== undefined)
     await init();
   logoutFunction();
-}
+};
 
 export const LoginContext = createContext();
 export const LoginProvider = props => {
@@ -50,13 +50,16 @@ export const LoginProvider = props => {
     }
   };
   const logoutUser = async (init) => {
+    if (init instanceof Function) {
+      init();
+    }
     window.localStorage.setItem('loginStatus', false);
     LoginStatus = false;
     _setLoginStatus(false);
   };
   useEffect(() => {
     logoutFunction = logoutUser;
-  }, [])
+  }, []);
   const setDevMode = (data) => {
     window.localStorage.setItem('devMode', data);
     DevMode = data;
@@ -74,7 +77,7 @@ export const LoginProvider = props => {
           setLoginStatus(true);
           setAccessToken(accessToken);
         } else {
-          setLoginStatus(false)
+          setLoginStatus(false);
         }
   }, [accessToken]);
   useEffect(() => {
@@ -92,6 +95,10 @@ export const LoginProvider = props => {
     if (!accessToken) {
       setLoginStatus(false);
     }
-  }, [devMode, accessToken])
-  return (<LoginContext.Provider value={{ loginStatus, accessToken, devMode, setAccessToken, setLoginStatus, setDevMode }}>{children}</LoginContext.Provider>)
-}
+  }, [devMode, accessToken]);
+  return (<LoginContext.Provider value={{ loginStatus, accessToken, devMode, setAccessToken, setLoginStatus, setDevMode }}>{children}</LoginContext.Provider>);
+};
+
+LoginProvider.propTypes = {
+  children: PropTypes.node
+};

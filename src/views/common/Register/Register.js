@@ -70,7 +70,7 @@ export const Register = () => {
         spacing={0}
         justify="center"
       >
-        <Grid className={classes.registerBox} item xs={10}>
+        <Grid className={classes.registerBox} item xs={10} sm={6} md={4} lg={3} xl={2}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h5">
               {pageHeading}
@@ -91,7 +91,7 @@ export const Register = () => {
           <Box mt={5}>
             <Typography variant="body2" color="textSecondary" align="center">
               Developed by Deakin Launchpad
-        </Typography>
+            </Typography>
           </Box>
         </Grid>
       </Grid>
