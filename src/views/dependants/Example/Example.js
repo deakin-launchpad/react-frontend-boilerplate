@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Button, Card, CardContent, CardActions, makeStyles } from '@material-ui/core';
-import { EnhancedEditor, EnhancedDrawer, EnhancedModal } from 'components';
+import { EnhancedEditor, EnhancedDrawer, EnhancedModal, VideoCall } from 'components';
 import { useLocation } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(1)
   }
-}))
+}));
 
 export const Example = () => {
   const classes = useStyles();
@@ -86,6 +86,17 @@ export const Example = () => {
                 Console Current Location
               </Button>
             </CardActions>
+          </Card>
+        </Grid>
+        <Grid item xs={5}>
+          <Card>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                Video Call Example
+              </Typography>
+              <VideoCall />
+
+            </CardContent>
           </Card>
         </Grid>
       </Grid>
