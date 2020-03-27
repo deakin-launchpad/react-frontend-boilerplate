@@ -60,19 +60,25 @@ export const MobileMenu = () => {
   let isItDesktop = useMediaQuery('(min-width:600px) or (min-height:600px)');
   if (isItDesktop)
     return <Redirect to='/' />;
+  const headerRenderStatus = () => {
+    if (isItDesktop)
+      return layoutConfiguration.header.visibleOnDesktop;
+    else
+      return layoutConfiguration.header.visibleOnMobile;
+  };
   let content = (
     <div className={classes.root}>
       <List disablePadding
-        className={layoutConfiguration.displayMobileHeader ? classes.menuMobile : classes.menu}
+        className={headerRenderStatus() ? classes.menuMobile : classes.menu}
         component="nav"
         subheader={
-          layoutConfiguration.displayMobileHeader ? null : (<ListSubheader className={classes.menuTitle} component="div" id="menuTitle">
+          !headerRenderStatus() && (<ListSubheader className={classes.menuTitle} component="div" id="menuTitle">
             <Typography variant="h5">
               {menuButtonLabel}
             </Typography>
           </ListSubheader>)
         }>
-        {layoutConfiguration.displayMobileHeader ? null : <Divider className={classes.menuTitleDivider} />}
+        {headerRenderStatus() ? null : <Divider className={classes.menuTitleDivider} />}
         {
           items.map((value, i) => {
             if (!value.isFavourite) {
@@ -94,7 +100,7 @@ export const MobileMenu = () => {
           })
         }
       </List>
-    </div>
+    </div >
   );
   return content;
 };

@@ -45,13 +45,21 @@ export const Layout = (props) => {
       }
     }
   });
+
+  const headerRenderStatus = () => {
+    if (isItDesktop)
+      return layoutConfiguration.header.visibleOnDesktop;
+    else
+      return layoutConfiguration.header.visibleOnMobile;
+  };
+
   let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
   let content = (
     <MuiThemeProvider theme={applicationTheme} >
       <div className={classes.root}>
-        {isItDesktop ? <Header /> : layoutConfiguration.bottomMobileNavigation ? layoutConfiguration.displayMobileHeader ? <Header /> : null : <Header />}
+        {headerRenderStatus() && <Header />}
         <main className={isItDesktop ? classes.content : classes.mobileContent}>
-          <div className={isItDesktop ? classes.appBarSpacer : layoutConfiguration.displayMobileHeader ? classes.appBarSpacer : null} />
+          <div className={isItDesktop ? classes.appBarSpacer : headerRenderStatus() ? classes.appBarSpacer : null} />
           {props.children}
           <div className={isItDesktop ? null : layoutConfiguration.bottomMobileNavigation ? classes.appBarSpacer : null} />
           <div className={classes.iOSPadding} />
