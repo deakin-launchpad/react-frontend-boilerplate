@@ -1,5 +1,4 @@
 {
-  "headerWelcomeText": "Hello WORLD!",
   "landingPage": "/home",
   "menuItems": [
     {
@@ -30,6 +29,13 @@
       "subMenuItems": []
     }
   ],
+  "header": {
+    "visibleOnDesktop": true,
+    "visibleOnMobile": true,
+    "useCustomColor": false,
+    "color": "primary",
+    "customColorCode": ""
+  },
   "bottomMobileNavigation": true,
   "displayMobileMenuHam": true,
   "displayMobileHeader": true,

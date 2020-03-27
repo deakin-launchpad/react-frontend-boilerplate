@@ -1,16 +1,7 @@
-import React, { useEffect, useContext } from 'react';
+import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
-import { Image, HeaderElements } from 'components';
-import { LayoutContext } from 'contexts';
+import { Image } from 'components';
 export const Home = () => {
-  const { setHeaderElements, pageTitle } = useContext(LayoutContext);
-  useEffect(() => {
-    setHeaderElements(<HeaderElements>
-      <Typography>
-        {pageTitle}
-      </Typography>
-    </HeaderElements>);
-  }, [pageTitle, setHeaderElements]);
   return (<Grid container justify='flex-start' direction='column' alignItems='center'>
     <Grid item xs={12} xl={2} lg={4} md={6} sm={8}>
       <Image src={'https://upload.wikimedia.org/wikipedia/commons/8/88/Mini-Robot.png'} />

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { List, Icon, ListItem, ListItemText, ListSubheader, Divider, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
 import { Link, Redirect } from 'react-router-dom';
-import { LayoutConfig } from 'configurations';
 import { API } from 'helpers';
+import { LayoutContext } from 'contexts';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,15 +40,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const MobileMenu = () => {
+  const { layoutConfiguration } = useContext(LayoutContext);
   const classes = useStyles();
-  const items = LayoutConfig.menuItems;
-  let menuButtonLabel = (LayoutConfig.menuButtonLabel !== undefined ?
-    LayoutConfig.menuButtonLabel !== '' ? LayoutConfig.menuButtonLabel : 'menu'
+  const items = layoutConfiguration.menuItems;
+  let menuButtonLabel = (layoutConfiguration.menuButtonLabel !== undefined ?
+    layoutConfiguration.menuButtonLabel !== '' ? layoutConfiguration.menuButtonLabel : 'menu'
     : 'menu');
   let logoutButton = (data, key) => {
     return (<div key={'menu_button' + key}>
       {items.length > 0 ? <Divider /> : null}
-      <ListItem onClick={() => { API.logoutUser() }} button className={classes.logoutButton} >
+      <ListItem onClick={() => { API.logoutUser(); }} button className={classes.logoutButton} >
         <Icon>
           {data.icon !== undefined ? data.icon : 'logout'}
         </Icon>
@@ -62,16 +63,16 @@ export const MobileMenu = () => {
   let content = (
     <div className={classes.root}>
       <List disablePadding
-        className={LayoutConfig.displayMobileHeader ? classes.menuMobile : classes.menu}
+        className={layoutConfiguration.displayMobileHeader ? classes.menuMobile : classes.menu}
         component="nav"
         subheader={
-          LayoutConfig.displayMobileHeader ? null : (<ListSubheader className={classes.menuTitle} component="div" id="menuTitle">
+          layoutConfiguration.displayMobileHeader ? null : (<ListSubheader className={classes.menuTitle} component="div" id="menuTitle">
             <Typography variant="h5">
               {menuButtonLabel}
             </Typography>
           </ListSubheader>)
         }>
-        {LayoutConfig.displayMobileHeader ? null : <Divider className={classes.menuTitleDivider} />}
+        {layoutConfiguration.displayMobileHeader ? null : <Divider className={classes.menuTitleDivider} />}
         {
           items.map((value, i) => {
             if (!value.isFavourite) {

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles, useMediaQuery, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import { Header, BottomNavToolbar } from 'components';
 import { LayoutConfig } from 'configurations';
+import { LayoutContext } from 'contexts';
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 const useStyles = makeStyles(theme => ({
@@ -31,15 +32,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Layout = (props) => {
+  const { layoutConfiguration } = useContext(LayoutContext);
   const classes = useStyles();
 
   let applicationTheme = createMuiTheme({
     palette: {
       primary: {
-        main: LayoutConfig.theme !== undefined ? LayoutConfig.theme.colors !== undefined ? LayoutConfig.theme.colors.primary !== undefined ? LayoutConfig.theme.colors.primary : null : null : null
+        main: layoutConfiguration.theme !== undefined ? layoutConfiguration.theme.colors !== undefined ? layoutConfiguration.theme.colors.primary !== undefined ? LayoutConfig.theme.colors.primary : null : null : null
       },
       secondary: {
-        main: LayoutConfig.theme !== undefined ? LayoutConfig.theme.colors !== undefined ? LayoutConfig.theme.colors.secondary !== undefined ? LayoutConfig.theme.colors.secondary : null : null : null
+        main: layoutConfiguration.theme !== undefined ? layoutConfiguration.theme.colors !== undefined ? layoutConfiguration.theme.colors.secondary !== undefined ? layoutConfiguration.theme.colors.secondary : null : null : null
       }
     }
   });
@@ -47,14 +49,14 @@ export const Layout = (props) => {
   let content = (
     <MuiThemeProvider theme={applicationTheme} >
       <div className={classes.root}>
-        {isItDesktop ? <Header /> : LayoutConfig.bottomMobileNavigation ? LayoutConfig.displayMobileHeader ? <Header /> : null : <Header />}
+        {isItDesktop ? <Header /> : layoutConfiguration.bottomMobileNavigation ? layoutConfiguration.displayMobileHeader ? <Header /> : null : <Header />}
         <main className={isItDesktop ? classes.content : classes.mobileContent}>
-          <div className={isItDesktop ? classes.appBarSpacer : LayoutConfig.displayMobileHeader ? classes.appBarSpacer : null} />
+          <div className={isItDesktop ? classes.appBarSpacer : layoutConfiguration.displayMobileHeader ? classes.appBarSpacer : null} />
           {props.children}
-          <div className={isItDesktop ? null : LayoutConfig.bottomMobileNavigation ? classes.appBarSpacer : null} />
+          <div className={isItDesktop ? null : layoutConfiguration.bottomMobileNavigation ? classes.appBarSpacer : null} />
           <div className={classes.iOSPadding} />
         </main>
-        {isItDesktop ? null : LayoutConfig.bottomMobileNavigation ? <BottomNavToolbar /> : null}
+        {isItDesktop ? null : layoutConfiguration.bottomMobileNavigation ? <BottomNavToolbar /> : null}
       </div>
     </MuiThemeProvider>
   );

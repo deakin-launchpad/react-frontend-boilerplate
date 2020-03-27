@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import { LayoutConfig } from 'configurations';
 export const LayoutContext = createContext();
 
@@ -7,6 +8,8 @@ export const LayoutProvider = (props) => {
   const [pageTitle, setPageTitle] = useState('');
   const [headerElements, setHeaderElements] = useState(null);
   let _pathtoCheck = String(window.location.pathname).split('/');
+  const [layoutConfiguration, setConfiguration] = useState(LayoutConfig);
+
   useEffect(() => {
     let _controllerArr;
     LayoutConfig.menuItems.forEach(value => {
@@ -19,5 +22,14 @@ export const LayoutProvider = (props) => {
       setPageTitle('Menu');
     }
   }, [_pathtoCheck]);
-  return <LayoutContext.Provider value={{ pageTitle, setPageTitle, headerElements, setHeaderElements }} >{children}</LayoutContext.Provider>
-}
+
+  const changeConfiguration = (data) => {
+    setConfiguration({ ...layoutConfiguration, data });
+  };
+
+  return <LayoutContext.Provider value={{ pageTitle, setPageTitle, headerElements, setHeaderElements, layoutConfiguration, changeConfiguration }} >{children}</LayoutContext.Provider>;
+};
+
+LayoutProvider.propTypes = {
+  children: PropTypes.node
+};
