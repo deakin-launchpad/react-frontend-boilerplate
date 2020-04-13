@@ -23,8 +23,8 @@ export const LayoutProvider = (props) => {
     }
   }, [_pathtoCheck]);
 
-  const changeConfiguration = (data) => {
-    setConfiguration({ ...layoutConfiguration, data });
+  const changeConfiguration = (item, data) => {
+    setConfiguration({ ...layoutConfiguration, [item]: data });
   };
 
   return <LayoutContext.Provider value={{ pageTitle, setPageTitle, headerElements, setHeaderElements, layoutConfiguration, changeConfiguration }} >{children}</LayoutContext.Provider>;
