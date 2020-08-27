@@ -1,78 +1,51 @@
-import { AccessToken, logout } from 'contexts/helpers'
-import { notify } from 'components'
-import { axiosInstance } from '../index';
-/**
- *  @errorHelper :  Function to return error StatusText.
- */
-const errorHelper = (error, variant) => {
-  if (error.response === undefined) {
-    notify("Network Error");
-    logout();
-    return false;
-  }
-  if (error.response.statusCode === 401) {
-    if (variant === "login")
-      return notify("Invalid Credentials");
-    notify("You may have been logged out");
-    logout();
-    return false;
-  }
-  if (error.response.data.statusCode === 401) {
-    if (variant === "login")
-      return notify("Invalid Credentials");
-    notify("You may have been logged out");
-    logout();
-    return false;
-  }
-  if (error.response.status === 401) {
-    if (variant === "login")
-      return notify("Invalid Credentials");
-    notify("You may have been logged out");
-    logout();
-    return false;
-  }
-  if (error.response.data.message !== "") {
-    notify(error.response.data.message);
-    return false;
-  }
-  if (error.response.statusText !== "") {
-    notify(error.response.statusText);
-    return false;
-  }
-}
-
-const performCallback = (callback, data) => {
-  if (callback instanceof Function) {
-    if (data !== undefined)
-      return callback(data);
-    callback();
-  }
-};
+import { AccessToken, logout } from 'contexts/helpers';
+import { axiosInstance, errorHelper, generateSuccess } from './axiosInstance';
 
 class API {
-  displayAccessToken = () => {
-    console.log(AccessToken)
+  displayAccessToken() {
+    console.log(AccessToken);
   }
 
-  login = (data, callback) => {
-    axiosInstance.post('login', data).then(response => {
-      return performCallback(callback, true)
-    }).catch(error => {
-      errorHelper(error, "login")
-    })
+  /**
+   * @author Sanchit Dang
+   * @description Login API endpoint
+   * @param {Object} loginDetails Login details for the user
+   * @returns {Object} responseObject
+   */
+  login(loginDetails) {
+    return axiosInstance.post('login', loginDetails).then(response => {
+      return generateSuccess(response.accessToken);
+    }).catch(error => errorHelper(error, "login"));
   }
 
-  accessTokenLogin = (callback) => {
-    axiosInstance.post('accessTokenLogin', {}, {
+  /**
+  * @author Sanchit Dang
+  * @description AccessToken Login API endpoint
+  * @returns {Object} responseObject
+  */
+  accessTokenLogin() {
+    return axiosInstance.post('accessTokenLogin', {}, {
       headers: {
         authorization: "Bearer " + AccessToken
       }
-    }).then(response => performCallback(callback, AccessToken)).catch(error => errorHelper(error));
+    }).then(() => generateSuccess(AccessToken)).catch(error => errorHelper(error));
   }
 
-  logoutUser = (callback) => {
-    logout();
-    performCallback(callback);
+
+  /**
+  * @author Sanchit Dang
+  * @description logoutUser Login API endpoint
+  * @returns {Object} responseObject
+  */
+  logoutUser() {
+    return axiosInstance.put('logout', {}, {
+      headers: {
+        authorization: "Bearer " + AccessToken
+      }
+    }).then(() => {
+      logout();
+      return generateSuccess(true);
+    }).catch(error => errorHelper(error));
   }
 }
 const instance = new API();

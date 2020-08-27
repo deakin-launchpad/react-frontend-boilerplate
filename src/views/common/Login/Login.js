@@ -7,7 +7,7 @@ import { TextField, Paper, makeStyles, Typography, Button, Box, Grid } from '@ma
 import { LoginContext } from 'contexts';
 import { notify } from 'components';
 import { DevModeConfig } from 'configurations';
-import { API, useKeyPress } from 'helpers';
+import { API, useKeyPress, TextHelper } from 'helpers';
 
 
 const useStyles = makeStyles(theme => ({
@@ -48,17 +48,19 @@ export const Login = () => {
   const [pageHeading] = useState('Login');
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');
-  const { devMode, loginStatus, setLoginStatus, setAccessToken } = useContext(LoginContext);
-  const performLogin = () => {
+  const { devMode, loginStatus, setAccessToken } = useContext(LoginContext);
+  const performLogin = async () => {
     if (DevModeConfig.bypassBackend) {
-      setLoginStatus(true);
       setAccessToken('dummyToken');
     } else {
       let details = {
         username: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.user : '') : emailId),
         password: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.password : '') : password)
       };
-      API.login(details, setLoginStatus);
+      let apiResponse = API.login(details);
+      if (apiResponse.success) {
+        setAccessToken(apiResponse.data);
+      }
     }
   };
 
@@ -67,23 +69,20 @@ export const Login = () => {
       return performLogin();
     }
     if (!loginStatus) {
-      const email = emailId;
-      const pwd = password;
-      let emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      let emailPatternTest = emailPattern.test(email);
-      if (emailPatternTest && pwd) {
+      const emailValidationResult = TextHelper.validateEmail(emailId);
+      if (emailValidationResult && password) {
         performLogin();
         return true;
-      } else if (emailPatternTest === undefined && pwd === undefined) {
-        notify('Email or password must not be empty!');
+      } else if (emailId === "" && password === "") {
+        notify('Email and password must not be empty!');
         return false;
-      } else if (!emailPatternTest) {
+      } else if (emailId) {
         notify('Email must not be empty!');
         return false;
-      } else if (!emailPatternTest && email.length > 0) {
+      } else if (!emailValidationResult && emailId.length > 0) {
         notify('Invalid email!');
         return false;
-      } else if (!pwd) {
+      } else if (!password) {
         notify('Password must not be empty!');
         return false;
       }
