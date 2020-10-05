@@ -1,7 +1,7 @@
 /***
  *  Created by Sanchit Dang
  ***/
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { TextField, Paper, makeStyles, Typography, Button, Box, Grid } from '@material-ui/core';
 import { LoginContext } from 'contexts';
@@ -49,7 +49,8 @@ export const Login = () => {
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');
   const { devMode, loginStatus, setAccessToken } = useContext(LoginContext);
-  const performLogin = async () => {
+
+  const performLogin = useCallback(() => {
     if (DevModeConfig.bypassBackend) {
       setAccessToken('dummyToken');
     } else {
@@ -62,9 +63,9 @@ export const Login = () => {
         setAccessToken(apiResponse.data);
       }
     }
-  };
+  }, [devMode, emailId, password, setAccessToken]);
 
-  const validationCheck = () => {
+  const validationCheck = useCallback(() => {
     if (devMode) {
       return performLogin();
     }
@@ -87,7 +88,8 @@ export const Login = () => {
         return false;
       }
     }
-  };
+  }, [devMode, emailId, loginStatus, password, performLogin]);
+
   useKeyPress('Enter', () => {
     validationCheck();
   });

@@ -29,10 +29,3 @@ export const AppRoutes = (props) => {
     </Switch >
   );
 };
-
-/**
- * Changelog 26/09/2019 - Sanchit Dang
- * - use loginStatus variable instead of stateVariable
- * - <Layout/> has to be used alongside every inner view
- * - removed use of trigger404 function
- */
