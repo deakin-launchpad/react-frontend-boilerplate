@@ -29,37 +29,31 @@ const useStyles = makeStyles(theme => ({
     float: 'right'
   }
 }));
+
 /**
- * Props to send are as follows
- * @data : type<Object> : Accepts data for the table to display
- * @options : type<Object> : options for the Table
- *     @disablePagination : type<Boolean> : disable pagination and adds scroll.
- *     @disablePaginationDefaults : type<Boolean> : disable the deafault function for pagination buttons
- *     @onFirstButtonClick @onBackButtonClick @onNextButtonClick @onLastButtonClick  : type<Function> : extention function PaginationsButtons
- *     @ignoreKeys : type<Array> : send the keys you want to ignore
- *     @actions : type<Array of objects> : array to set actions per row basis
- *         @name : type<String> : name of the action to be displayed in Table header
- *         @label :  type<String> : label for the action button
- *         @type : type<String> : switch or button
- *         @defaultValueFrom : type<String> : key name from the object to set defaultValue of switch
- *         @function : type<function> : function to be performed by switch(onChange) and button(onClick) : params (event,rowData)
- *    @toolbarActions :  type<Array of objects> : array to set actions on selected items
- *         @label : type<string> : Button Label
- *         @function : type<function> : function to be performed by toolbar button(onClick) : params (event,selectedItemData)
- *@styles : type<Object> : Accepts StyleInfo about the Table styles are following: 
- *    @table 
- *    @tableCell
- *    @heading
- *    @toolbar
- *    @paper
- *    @tableRow
- *    @tableHead
- *    @tableBody
- *    @tableFooter
- *    @tablePagination
  * 
+ * @param {Object[]} props.data Accepts data for the table to display.
+ * @param {Object} props.options options for the Table.
+ * @param {Boolean} props.options.disablePagination disable pagination and adds scroll.
+ * @param {Boolean} props.options.disablePaginationDefaults disable the default function for pagination buttons.
+ * @param {Function} props.options.onFirstButtonClick extention function PaginationsButtons.
+ * @param {Function} props.options.onBackButtonClick extention function PaginationsButtons.
+ * @param {Function} props.options.onNextButtonClick extention function PaginationsButtons.
+ * @param {Function} props.options.onLastButtonClick extention function PaginationsButtons.
+ * @param {Array} props.options.ignoreKeys send the keys you want to ignore.
+ * @param {Objects[]} props.options.actions array to set actions per row basis.
+ * @param {String} props.options.actions.name name of the action to be displayed in Table header.
+ * @param {String} props.options.actions.label label for the action button.
+ * @param {String} props.options.actions.type switch or button.
+ * @param {String} props.options.actions.defaultValueFrom key name from the object to set defaultValue of switch.
+ * @param {Function} props.options.actions.function function to be performed by switch(onChange) and button(onClick) : params (event,rowData).
+ * @param {Objects[]} props.options.toolbarActions array to set actions on selected items.
+ * @param {String} props.options.toolbarActions.label Button Label.
+ * @param {Function} props.options.toolbarActions.function function to be performed by toolbar button(onClick) : params (event,selectedItemData).
+ * @param {Object} props.styles Accepts StyleInfo about the Table styles are following: table, tableCell, heading, toolbar, paper, tableRow, tableHead, tableBody, tableFooter, tablePagination.
  * 
- *  Example Code : <EnhancedTable data={data} options={{
+ * @example
+ * Example Code : <EnhancedTable data={data} options={{
       disablePagination: true,
       selector: true,
       toolbarActions: [{
@@ -510,6 +504,26 @@ export const EnhancedTable = (props) => {
 
 EnhancedTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
-  options: PropTypes.object,
+  options: PropTypes.shape({
+    disablePagination: PropTypes.bool,
+    disablePaginationDefaults: PropTypes.bool,
+    onFirstButtonClick: PropTypes.func,
+    onBackButtonClick: PropTypes.func,
+    onNextButtonClick: PropTypes.func,
+    onLastButtonClick: PropTypes.func,
+    ignoreKeys: PropTypes.array,
+    actions: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      label: PropTypes.string,
+      type: PropTypes.oneOf(['switch','button']),
+      defaultValueFrom: PropTypes.string,
+      function: PropTypes.func
+    })),
+    toolbarActions: PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.string,
+      function: PropTypes.func
+    })),
+  }),
+  styles: PropTypes.oneOf(["table", "tableCell", "heading", "toolbar", "paper", "tableRow", "tableHead", "tableBody", "tableFooter", "tablePagination"]),
   title: PropTypes.string.isRequired
 };
