@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
-import { LoginContext } from 'contexts'
-import { FormControlLabel, Switch, makeStyles } from '@material-ui/core'
-import { DevModeConfig } from 'configurations'
+import React, { useContext } from 'react';
+import { LoginContext } from 'contexts';
+import { FormControlLabel, Switch, makeStyles } from '@material-ui/core';
+import { DevModeConfig } from 'configurations';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -26,7 +26,7 @@ export const DevModeSwitch = () => {
       setDevMode(false);
     else
       setDevMode(true);
-  }
+  };
   let content = (
     <FormControlLabel className={classes.devModeToggle}
       control={

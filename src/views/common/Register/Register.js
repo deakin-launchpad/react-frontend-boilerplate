@@ -61,7 +61,7 @@ export const Register = () => {
     if (emailPatternTest) {
       return register();
     }
-  }
+  };
 
   let content = (
     <div>
@@ -98,4 +98,4 @@ export const Register = () => {
     </div >
   );
   return content;
-}
+};

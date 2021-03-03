@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, TablePagination, Checkbox, IconButton, makeStyles, Toolbar, Button, Grid, Switch } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
@@ -90,7 +90,7 @@ export const EnhancedTable = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [obj, setObj] = useState([]);
-  var selecteditems = [];
+  var selecteditems = useMemo(() => [], []);
   const useStyles1 = makeStyles(theme => ({
     root: {
       flexShrink: 0,
@@ -134,7 +134,7 @@ export const EnhancedTable = (props) => {
       props.options.onLastButtonClick();
     }
   };
-  const TablePaginationActions = (props) => {
+  const TablePaginationActions = () => {
     const classes = useStyles1();
     const theme = useTheme();
     return (
@@ -200,7 +200,7 @@ export const EnhancedTable = (props) => {
           setKeys(_keys);
         } else setKeys(arrayDiff(_keys, props.options.ignoreKeys));
       else setKeys(_keys);
-    }
+    };
     if (obj !== undefined && obj !== null)
       if (obj.length > 0) {
         ignoreKeys();
@@ -209,6 +209,11 @@ export const EnhancedTable = (props) => {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, (obj !== undefined && obj !== null ? obj.length : 0) - page * rowsPerPage);
   const Heading = (props) => {
     return (<TableCell style={props.styles !== undefined ? props.styles.tableCell !== undefined ? props.styles.tableCell : null : null} align={(props.align !== undefined ? props.align : "left")}>{props.value}</TableCell>);
+  };
+  Heading.propTypes = {
+    styles: PropTypes.object,
+    align: PropTypes.string,
+    value: PropTypes.any
   };
   const renderHeader = () => {
     return _keys.map((key) => {
@@ -233,6 +238,10 @@ export const EnhancedTable = (props) => {
       />
     );
   };
+  ActionButtonSwitch.propTypes = {
+    defaultValue: PropTypes.any.isRequired,
+    function: PropTypes.func.isRequired
+  };
   const ActionButton = (props) => {
     return (
       < Button
@@ -243,6 +252,10 @@ export const EnhancedTable = (props) => {
         {props.label !== undefined ? props.label : 'Click Me!'}
       </ Button>
     );
+  };
+  ActionButton.propTypes = {
+    label: PropTypes.string.isRequired,
+    function: PropTypes.func.isRequired
   };
   const breakObject = (obj) => {
     if (obj === null || obj === undefined) return 'No Data';
@@ -276,7 +289,7 @@ export const EnhancedTable = (props) => {
                     </TableCell>);
                   })
                 }
-                </TableRow>)
+                </TableRow>);
               })}
           </TableBody>
         </Table>
@@ -328,6 +341,9 @@ export const EnhancedTable = (props) => {
       </div>
     );
   };
+  Selector.propTypes = {
+    selectedObject: PropTypes.any
+  };
   const renderActions = (__obj) => {
     let defaultValue;
     if (props.options.actions !== undefined) {
@@ -356,7 +372,7 @@ export const EnhancedTable = (props) => {
               <RenderRow key={Math.random()} page={page} data={row} keys={_keys} />
               {(props.options !== undefined ? props.options.actionLocation !== "start" ? (props.options.actions !== undefined ? renderActions(obj[index]) : null) : null : null)}
             </TableRow>);
-        })
+        });
     return data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
       return (
         <TableRow key={Math.random()}>
@@ -367,14 +383,14 @@ export const EnhancedTable = (props) => {
           <RenderRow key={Math.random()} page={page} data={row} keys={_keys} />
           {(props.options !== undefined ? props.options.actionLocation !== 'start' ? (props.options.actions !== undefined ? renderActions(obj[index]) : null) : null : null)}
         </TableRow>);
-    })
-  }
+    });
+  };
 
   const renderActionHeaders = () => {
     return props.options.actions.map(value => {
       return <Heading style={props.styles !== undefined ? props.styles.heading !== undefined ? props.styles.heading : null : null} key={Math.random()} value={value.name} />;
     });
-  }
+  };
 
   const renderEmptyRows = () => {
     if (obj === undefined || obj === null)
@@ -414,33 +430,31 @@ export const EnhancedTable = (props) => {
   }
 
   const createBar = () => {
-    if (props.options !== undefined)
-      return (
-        <Toolbar style={props.styles !== undefined ? props.styles.toolbar !== undefined ? props.styles.toolbar : null : null}>
-          <div className={classes.title}>
-            {selectedItemsNum !== 0 ?
-              <Typography color="black" variant="tableTitle">
-                {selectedItemsNum} selected
-              </Typography>
-              :
-              <Typography variant="h6" id="tableTitle">
-                {props.title !== undefined ? props.title : 'EnhancedTable'}
-              </Typography>
-            }
-          </div>
-          <div className={classes.spacer} />
-          <Grid container spacing={1} direction="row" justify="flex-end" alignItems="flex-end">
-            {props.options.toolbarActions !== undefined ?
-              props.options.toolbarActions.map((value, i) => {
-                return (<Grid item key={'toolbarAction' + i}>
-                  <Button color="primary" size="small" onClick={(e) => value.function(e, selecteditems)} variant="contained">{value.label}</Button>
-                </Grid>);
-              })
-              : ''
-            }
-          </Grid>
-        </Toolbar>);
-    return null;
+    return (
+      <Toolbar style={props.styles !== undefined ? props.styles.toolbar !== undefined ? props.styles.toolbar : null : null}>
+        <div className={classes.title}>
+          {selectedItemsNum !== 0 ?
+            <Typography color="black" variant="tableTitle">
+              {selectedItemsNum} selected
+            </Typography>
+            :
+            <Typography variant="h6" id="tableTitle">
+              {props.title !== undefined ? props.title : 'EnhancedTable'}
+            </Typography>
+          }
+        </div>
+        <div className={classes.spacer} />
+        {props.options && <Grid container spacing={1} direction="row" justify="flex-end" alignItems="flex-end">
+          {props.options.toolbarActions !== undefined ?
+            props.options.toolbarActions.map((value, i) => {
+              return (<Grid item key={'toolbarAction' + i}>
+                <Button color="primary" size="small" onClick={(e) => value.function(e, selecteditems)} variant="contained">{value.label}</Button>
+              </Grid>);
+            })
+            : ''
+          }
+        </Grid>}
+      </Toolbar>);
   };
 
   if (typeof obj === 'object') {
@@ -499,7 +513,7 @@ export const EnhancedTable = (props) => {
     return content;
   }
   else
-    return <div>INVALID DATA! DATA YOU ARE SENDING IS NOT AN ARRAY OF OBJECTS</div>
+    return <div>INVALID DATA! DATA YOU ARE SENDING IS NOT AN ARRAY OF OBJECTS</div>;
 };
 
 EnhancedTable.propTypes = {
@@ -515,7 +529,7 @@ EnhancedTable.propTypes = {
     actions: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
       label: PropTypes.string,
-      type: PropTypes.oneOf(['switch','button']),
+      type: PropTypes.oneOf(['switch', 'button']),
       defaultValueFrom: PropTypes.string,
       function: PropTypes.func
     })),

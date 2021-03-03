@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Typography, Button, Card, CardContent, CardActions, makeStyles } from '@material-ui/core';
 import { EnhancedEditor, EnhancedDrawer, EnhancedModal, VideoCall } from 'components';
 import { useLocation } from 'helpers';
+import { EnhancedTable } from 'components/index';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -95,9 +96,17 @@ export const Example = () => {
                 Video Call Example
               </Typography>
               <VideoCall />
-
             </CardContent>
           </Card>
+        </Grid>
+        <Grid item xs={5}>
+          <EnhancedTable data={[{
+            Name: 'DeadPool',
+            Age: 5
+          }, {
+            Name: 'Logan',
+            Age: 10
+          }]} />
         </Grid>
       </Grid>
     </div>);

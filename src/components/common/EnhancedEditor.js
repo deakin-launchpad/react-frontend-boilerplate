@@ -15,7 +15,7 @@ export const EnhancedEditor = (props) => {
   const [height, setHeight] = useState(500);
   const [toolbar1, setToolbar1] = useState('bold italic underline| fontsizeselect formatselect | bullist numlist |  alignleft aligncenter alignright alignjustify');
   const [toolbar2, setToolbar2] = useState('link image media | forecolor backcolor | outdent indent');
-  const [removed_menuitems, setRemoved_menuitems] = useState('newdocument wordcount')
+  const [removed_menuitems, setRemoved_menuitems] = useState('newdocument wordcount');
   const plugins = [
     'advlist autolink lists link image imagetools charmap print hr preview anchor',
     'searchreplace visualblocks visualchars nonbreaking code fullscreen',

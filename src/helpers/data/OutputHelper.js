@@ -1,6 +1,6 @@
 class OutputHelper {
-  JSONToCSV = (JSONData, ReportTitle, ShowLabel) => {
-    var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+  JSONToCSV(JSONData, ReportTitle, ShowLabel) {
+    var arrData = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData;
     var CSV = '';
     CSV += ReportTitle + '\r\n\n';
     if (ShowLabel) {

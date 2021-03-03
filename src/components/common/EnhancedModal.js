@@ -26,7 +26,7 @@ export const EnhancedModal = (props) => {
   const [cancelButtonName, setCancelButtonName] = useState('Close');
   const [disableSubmit, setDisableSubmit] = useState(false);
   const [disableClose, setDisableClose] = useState(false);
-  const [swapButtonColors, setSwapButtonColors] = useState(false)
+  const [swapButtonColors, setSwapButtonColors] = useState(false);
   useEffect(() => {
     if (props.isOpen) {
       setIsOpen(true);
@@ -89,4 +89,4 @@ export const EnhancedModal = (props) => {
     </Dialog>
   );
   return content;
-}
+};
