@@ -40,7 +40,7 @@ export const generateError = (errorMessage) => {
 export const generateErrorAndNotify = (errorMessage) => {
   notify(errorMessage);
   return {
-    success: true,
+    success: false,
     data: errorMessage
   };
 };
