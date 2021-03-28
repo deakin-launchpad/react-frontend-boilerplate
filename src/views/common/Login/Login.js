@@ -4,11 +4,10 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { TextField, Paper, makeStyles, Typography, Button, Box, Grid } from '@material-ui/core';
-import { LoginContext } from 'contexts';
+import { LoginContext, DeviceInfoContext } from 'contexts';
 import { notify } from 'components';
 import { DevModeConfig } from 'configurations';
 import { API, useKeyPress, TextHelper } from 'helpers';
-
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -49,21 +48,27 @@ export const Login = () => {
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');
   const { devMode, loginStatus, setAccessToken } = useContext(LoginContext);
+  const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
 
-  const performLogin = useCallback(() => {
+  const performLogin = useCallback(async () => {
     if (DevModeConfig.bypassBackend) {
       setAccessToken('dummyToken');
     } else {
       let details = {
-        username: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.user : '') : emailId),
-        password: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.password : '') : password)
+        emailId: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.user : '') : emailId),
+        password: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.password : '') : password),
+        deviceData: {
+          deviceType: 'WEB',
+          deviceName: deviceName,
+          deviceUUID: deviceUUID
+        }
       };
-      let apiResponse = API.login(details);
+      let apiResponse = await API.login(details);
       if (apiResponse.success) {
         setAccessToken(apiResponse.data);
       }
     }
-  }, [devMode, emailId, password, setAccessToken]);
+  }, [devMode, emailId, password, setAccessToken, deviceUUID, deviceName]);
 
   const validationCheck = useCallback(() => {
     if (devMode) {
