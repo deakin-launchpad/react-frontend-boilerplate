@@ -1,0 +1,9 @@
+{
+  "dbName": "boilerplate",
+  "drop": true,
+  "stores": [
+    "generic",
+    "GENERIC2"
+  ],
+  "easter": false
+}
