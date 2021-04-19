@@ -21,7 +21,7 @@ export const Example = () => {
   let content = (
     <Box className={classes.root} sx={LayoutConfig.defaultContainerSX}>
       <Grid container spacing={1} justifyContent='flex-start' alignItems='flex-start'>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">Text Editor Example</Typography>
@@ -32,7 +32,7 @@ export const Example = () => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -52,7 +52,7 @@ export const Example = () => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -75,7 +75,8 @@ export const Example = () => {
               </Button>
             </CardActions>
           </Card>
-        </Grid><Grid item xs={6}>
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -89,7 +90,7 @@ export const Example = () => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -99,7 +100,7 @@ export const Example = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <EnhancedTable data={[{
             Name: 'DeadPool',
             Age: 5

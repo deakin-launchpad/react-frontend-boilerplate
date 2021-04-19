@@ -127,7 +127,7 @@ export const Header = () => {
               <ChevronLeftIcon />
             </IconButton>}
           </div>
-          <Divider />
+          {!layoutConfiguration.sideMenu.permanent && < Divider />}
           <SideMenuItems />
         </Drawer> : null
       }

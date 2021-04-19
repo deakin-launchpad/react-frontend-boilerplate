@@ -46,14 +46,19 @@ export const Login = () => {
       display: 'flex', flexDirection: 'column',
       minHeight: '100vh'
     }} >
-      <Container maxWidth="sm" sx={{ py: '80px' }}  >
+      <Container maxWidth="sm" sx={{
+        py: {
+          xs: '80px',
+          sm: window.screen.availHeight / 50
+        }
+      }}  >
         <Card>
           <CardContent sx={{ display: 'flex', flexDirection: 'column', p: 4 }} >
             <Box sx={{
-              alignItems: 'center', display: 'flex', justifyContent: 'space-between', mb: 3
+              alignItems: 'center', display: 'flex', justifyContent: 'space-between', mb: 3,
             }}>
               <div>
-                <Typography color="textPrimary" gutterBottom variant="h4" >
+                <Typography color="textPrimary"  variant="h4" >
                   {pageHeading}
                 </Typography>
               </div>

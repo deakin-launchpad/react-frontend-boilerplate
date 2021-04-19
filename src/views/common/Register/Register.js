@@ -2,38 +2,20 @@
  *  Created by Sanchit Dang
  ***/
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { TextField, makeStyles, Typography, Button, Box, Divider, Container, Card, CardContent } from '@material-ui/core';
+import { TextField, makeStyles, Typography, Button, Box, Divider, Container, Card, CardContent, Link, createStyles } from '@material-ui/core';
 import { notify } from 'components';
+import { Link as RouterLink } from 'react-router-dom';
 
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: theme.spacing(6),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: theme.spacing(3)
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  registerBox: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(2)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  buttons: {
-    marginTop: theme.spacing(1)
-  },
+const useStyles = makeStyles(() => createStyles({
   developMessage: {
-    position: "absolute",
-    bottom: "1vh"
+    position: 'absolute',
+    bottom: '2vh',
+    margin: 'auto',
+    width: '100%'
   }
 }));
+
 
 export const Register = () => {
   const classes = useStyles();
@@ -68,7 +50,9 @@ export const Register = () => {
     <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" onChange={e => setEmailId(e.target.value)} />
     <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" onChange={e => setPassword(e.target.value)} autoComplete="current-password" />
     <TextField variant="outlined" margin="normal" required fullWidth name="confirmPassword" label="Confirm Password" type="password" id="confirmPassword" onChange={e => setConfirmPassword(e.target.value)} autoComplete="current-password" />
-    <Button fullWidth variant="contained" color="primary" className={classes.buttons} onClick={validationCheck}>Register</Button>
+    <Box sx={{ mt: 2 }}>
+      <Button fullWidth variant="contained" color="primary" onClick={validationCheck}>Register</Button>
+    </Box>
   </form>);
   let content = (
     <Box
@@ -114,16 +98,6 @@ export const Register = () => {
                   Register on the internal platform
                 </Typography>
               </div>
-              <Box
-                sx={{
-                  height: 32,
-                  '& > img': {
-                    maxHeight: '100%',
-                    width: 'auto'
-                  }
-                }}
-              >
-              </Box>
             </Box>
             <Box
               sx={{
@@ -136,6 +110,7 @@ export const Register = () => {
             <Divider sx={{ my: 3 }} />
             <Link
               color="textSecondary"
+              component={RouterLink}
               to="/login"
               variant="body2"
             >
@@ -144,6 +119,11 @@ export const Register = () => {
           </CardContent>
         </Card>
       </Container>
+      <Box mt={5}>
+        <Typography className={classes.developMessage} variant="body2" color="textSecondary" align="center">
+          Developed by Deakin Launchpad
+        </Typography>
+      </Box>
     </Box>
 
   );
