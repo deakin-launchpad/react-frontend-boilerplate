@@ -3,7 +3,7 @@
  ***/
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TextField, makeStyles, Typography, Button, Box, Grid, Paper } from '@material-ui/core';
+import { TextField, makeStyles, Typography, Button, Box, Divider, Container, Card, CardContent } from '@material-ui/core';
 import { notify } from 'components';
 
 
@@ -62,40 +62,90 @@ export const Register = () => {
       return register();
     }
   };
-
+  let form = (<form noValidate>
+    <TextField variant="outlined" margin="normal" required fullWidth id="firstName" label="First Name" name="firstName" autoComplete="email" onChange={e => setFirstName(e.target.value)} autoFocus />
+    <TextField variant="outlined" margin="normal" required fullWidth id="lastName" label="Last Name" name="lastName" autoComplete="email" onChange={e => setLastName(e.target.value)} />
+    <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" onChange={e => setEmailId(e.target.value)} />
+    <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" onChange={e => setPassword(e.target.value)} autoComplete="current-password" />
+    <TextField variant="outlined" margin="normal" required fullWidth name="confirmPassword" label="Confirm Password" type="password" id="confirmPassword" onChange={e => setConfirmPassword(e.target.value)} autoComplete="current-password" />
+    <Button fullWidth variant="contained" color="primary" className={classes.buttons} onClick={validationCheck}>Register</Button>
+  </form>);
   let content = (
-    <div>
-      <Grid
-        container
-        spacing={0}
-        justify="center"
+    <Box
+      sx={{
+        backgroundColor: 'background.default',
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh'
+      }}
+    >
+      <Container
+        maxWidth="sm"
+        sx={{ py: '80px' }}
       >
-        <Grid className={classes.registerBox} item xs={10} sm={6} md={4} lg={3} xl={2}>
-          <Paper className={classes.paper}>
-            <Typography component="h1" variant="h5">
-              {pageHeading}
-            </Typography>
-            <form noValidate>
-              <TextField variant="outlined" margin="normal" required fullWidth id="firstName" label="First Name" name="firstName" autoComplete="email" onChange={e => setFirstName(e.target.value)} autoFocus />
-              <TextField variant="outlined" margin="normal" required fullWidth id="lastName" label="Last Name" name="lastName" autoComplete="email" onChange={e => setLastName(e.target.value)} />
-              <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" onChange={e => setEmailId(e.target.value)} />
-              <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" onChange={e => setPassword(e.target.value)} autoComplete="current-password" />
-              <TextField variant="outlined" margin="normal" required fullWidth name="confirmPassword" label="Confirm Password" type="password" id="confirmPassword" onChange={e => setConfirmPassword(e.target.value)} autoComplete="current-password" />
-              <Button fullWidth variant="contained" color="primary" className={classes.buttons} onClick={validationCheck}>Register</Button>
-              <Button fullWidth variant="contained" color="primary" className={classes.buttons} component={Link} to='/login'>Back</Button>
-            </form>
-          </Paper>
-        </Grid>
+        <Card>
+          <CardContent
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              p: 4
+            }}
+          >
+            <Box
+              sx={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'space-between',
+                mb: 3
+              }}
+            >
+              <div>
+                <Typography
+                  color="textPrimary"
+                  gutterBottom
+                  variant="h4"
+                >
+                  {pageHeading}
+                </Typography>
+                <Typography
+                  color="textSecondary"
+                  variant="body2"
+                >
+                  Register on the internal platform
+                </Typography>
+              </div>
+              <Box
+                sx={{
+                  height: 32,
+                  '& > img': {
+                    maxHeight: '100%',
+                    width: 'auto'
+                  }
+                }}
+              >
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                flexGrow: 1,
+                mt: 3
+              }}
+            >
+              {form}
+            </Box>
+            <Divider sx={{ my: 3 }} />
+            <Link
+              color="textSecondary"
+              to="/login"
+              variant="body2"
+            >
+              Having an account
+            </Link>
+          </CardContent>
+        </Card>
+      </Container>
+    </Box>
 
-        <Grid item xs={12} className={classes.developMessage}>
-          <Box mt={5}>
-            <Typography variant="body2" color="textSecondary" align="center">
-              Developed by Deakin Launchpad
-            </Typography>
-          </Box>
-        </Grid>
-      </Grid>
-    </div >
   );
   return content;
 };

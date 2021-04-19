@@ -2,7 +2,6 @@
  *  Created by Sanchit Dang
  ***/
 import React, { useEffect } from 'react';
-import './styles/App.scss';
 import { withRouter } from 'react-router-dom';
 import './helpers/database/idb';
 import { MuiThemeProvider } from '@material-ui/core';

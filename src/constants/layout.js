@@ -42,16 +42,10 @@ class Layout {
     this.displayMobileMenuHam = true;
     this.menuButtonLabel = "Menu";
     this.sideMenu = {
-      "permanent": false,
+      "permanent": true,
       "default": "open"
     };
-    this.theme = {
-      "colors": {
-        "primary": "#039be5",
-        "secondary": "#c62828"
-      },
-      "appBarElevation": 1
-    };
+   
     this.defaultContainerSX = {
       backgroundColor: 'background.default',
       display: 'flex', flexDirection: 'column',
