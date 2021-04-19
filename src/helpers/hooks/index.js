@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useState } from 'react';
+import { useLocation  } from 'react-router-dom';
 
 export const useKeyPress = (targetKey, callback) => {
   /**
@@ -93,7 +94,7 @@ export const useLocalStorage = (key, initialValue) => {
   return [storedValue, setValue];
 };
 
-export const useLocation = () => {
+export const useGeoLocation = () => {
   /**
     * Custom hook to return current location
     * Example Code : 
@@ -124,4 +125,14 @@ export const useLocation = () => {
   }, []);
 
   return [location, error];
+};
+
+export const useScrollReset = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  return null;
 };

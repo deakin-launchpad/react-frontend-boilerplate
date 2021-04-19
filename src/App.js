@@ -5,7 +5,6 @@ import React, { useEffect } from 'react';
 import './styles/App.scss';
 import { withRouter } from 'react-router-dom';
 import './helpers/database/idb';
-import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
 
 import { AppRoutes } from './bricks/index';
 import { ContextManager } from 'contexts';
@@ -20,11 +19,9 @@ const App = (props) => {
   return (
     <ContextManager>
       <LoginCheck>
-        <StyledEngineProvider injectFirst>
-          <AppRoutes {...props} />
-          {DeveloperConfig.visible ? <DevModeSwitch /> : ''}
-          <Notification />
-        </StyledEngineProvider>
+        <AppRoutes {...props} />
+        {DeveloperConfig.visible ? <DevModeSwitch /> : ''}
+        <Notification />
       </LoginCheck>
     </ContextManager>
   );

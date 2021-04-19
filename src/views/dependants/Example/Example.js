@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Button, Card, CardContent, CardActions, makeStyles } from '@material-ui/core';
 import { EnhancedEditor, EnhancedDrawer, EnhancedModal, VideoCall } from 'components';
-import { useLocation } from 'helpers';
+import { useGeoLocation } from 'helpers';
 import { EnhancedTable } from 'components/index';
 
 const useStyles = makeStyles(theme => ({
@@ -17,7 +17,7 @@ export const Example = () => {
   const [drawerContent] = useState(<p>Example Content</p>);
   const [bottomDrawerStatus, setBottomDrawerStatus] = useState(false);
   const [modalStatus, setModalStatus] = useState(false);
-  let [location] = useLocation();
+  let [location] = useGeoLocation();
   let content = (
     <div className={classes.root}>
       <Grid container spacing={1} justifyContent='flex-start' alignItems='flex-start'>
