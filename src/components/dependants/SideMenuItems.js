@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { LayoutContext } from 'contexts';
+import { Icon as ParentIcon } from '@material-ui/core';
+import { InlineIcon } from '@iconify/react-with-api';
 import { API } from 'helpers';
 
 export const SideMenuItems = withRouter(() => {
@@ -10,9 +12,9 @@ export const SideMenuItems = withRouter(() => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const menuitemsController = (value, key) => {
     switch (value.type) {
-    case 'button': return renderMenuButton(value.name, value.icon, value.controller, value.customTitle, key);
-    case 'logout': return renderLogoutButton(value.name, value.icon, key);
-    default: return null;
+      case 'button': return renderMenuButton(value.name, value.icon, value.controller, value.customTitle, key);
+      case 'logout': return renderLogoutButton(value.name, value.icon, key);
+      default: return null;
     }
   };
   useEffect(() => {
@@ -46,10 +48,14 @@ export const SideMenuItems = withRouter(() => {
         return setPageTitle((customTitle === undefined || customTitle === '' ? name : customTitle));
       }}>
         <ListItemIcon>
-          <i className="material-icons">{icon}</i>
+          <ParentIcon style={{
+            margin: '0 0 6px 5px'
+          }}>
+            <InlineIcon icon={icon} />
+          </ParentIcon>
         </ListItemIcon>
         <ListItemText primary={name} />
-      </ListItem>
+      </ListItem >
     );
   };
 
@@ -59,7 +65,11 @@ export const SideMenuItems = withRouter(() => {
         API.logoutUser();
       }}>
         <ListItemIcon>
-          <i className="material-icons">{icon}</i>
+          <ParentIcon style={{
+            margin: '0 0 6px 5px'
+          }}>
+            <InlineIcon icon={icon} />
+          </ParentIcon>
         </ListItemIcon>
         <ListItemText primary={name} />
       </ListItem>
@@ -70,8 +80,7 @@ export const SideMenuItems = withRouter(() => {
     <List>
       {menuItems.map((value, i) => {
         return menuitemsController(value, i);
-      }
-      )}
+      })}
     </List>
   );
 });

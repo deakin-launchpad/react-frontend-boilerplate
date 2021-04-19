@@ -18,8 +18,9 @@ plugins:
   - react-hooks
 rules:
   indent:
-    - error
+    - warn
     - 2
+    - SwitchCase: 1
   linebreak-style:
     - error
     - unix

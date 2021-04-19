@@ -13,8 +13,8 @@ class API {
    * @returns {Object} responseObject
    */
   login(loginDetails) {
-    return axiosInstance.post('login', loginDetails).then(response => {
-      return generateSuccess(response.accessToken);
+    return axiosInstance.post('admin/login', loginDetails).then(response => {
+      return generateSuccess(response.data.data.accessToken);
     }).catch(error => errorHelper(error, "login"));
   }
 

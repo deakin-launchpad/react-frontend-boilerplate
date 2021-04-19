@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
-import { APIKeys } from 'configurations';
+import { APIKeys } from 'constants/index';
 
 /**
  * Created by Sanchit Dang.
  * This Editor is a wrapper on TinyMCE-React (https://github.com/tinymce/tinymce-react)
- * Use apiKeys from configurations to change apiKey
+ * Use apiKeys from constants to change apiKey
 */
 export const EnhancedEditor = (props) => {
   const [_content, _setContent] = useState('');
@@ -67,7 +67,7 @@ export const EnhancedEditor = (props) => {
 
   if (!menuBar) Object.assign(initObj, { menubar: false });
   let editor = (<Editor
-    apiKey={APIKeys.tinyMCE}
+    apiKey={APIKeys.tinyMCE.key}
     initialValue={_content}
     id={editorID}
     init={initObj}

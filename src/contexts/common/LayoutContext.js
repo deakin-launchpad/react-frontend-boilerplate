@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { LayoutConfig } from 'configurations';
+import { LayoutConfig } from 'constants/index';
 export const LayoutContext = createContext();
 
 export const LayoutProvider = (props) => {

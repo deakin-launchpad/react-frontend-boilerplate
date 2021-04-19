@@ -20,7 +20,7 @@ export const Example = () => {
   let [location] = useLocation();
   let content = (
     <div className={classes.root}>
-      <Grid container spacing={1} justify='flex-start' alignItems='flex-start'>
+      <Grid container spacing={1} justifyContent='flex-start' alignItems='flex-start'>
         <Grid item xs={5}>
           <Card>
             <CardContent>

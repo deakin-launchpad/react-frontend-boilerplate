@@ -444,7 +444,7 @@ export const EnhancedTable = (props) => {
           }
         </div>
         <div className={classes.spacer} />
-        {props.options && <Grid container spacing={1} direction="row" justify="flex-end" alignItems="flex-end">
+        {props.options && <Grid container spacing={1} direction="row" justifyContent="flex-end" alignItems="flex-end">
           {props.options.toolbarActions !== undefined ?
             props.options.toolbarActions.map((value, i) => {
               return (<Grid item key={'toolbarAction' + i}>

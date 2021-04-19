@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import clsx from 'clsx';
-import { AppBar, Toolbar, Typography, makeStyles, Drawer, Divider, IconButton, useMediaQuery } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, makeStyles, Drawer, Divider, IconButton, useMediaQuery, createStyles } from '@material-ui/core';
 import { LayoutContext } from 'contexts';
 import { SideMenuItems } from './SideMenuItems';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -9,7 +9,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 export const Header = () => {
   let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
   const drawerWidth = 240;
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles(theme => createStyles({
     toolbar: {
       paddingRight: 24, // keep right padding when drawer closed
     },

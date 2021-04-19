@@ -5,13 +5,13 @@
 
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction, Icon, makeStyles, Paper } from '@material-ui/core';
+import { BottomNavigation, BottomNavigationAction, Icon, makeStyles, Paper, createStyles } from '@material-ui/core';
 import { API } from 'helpers';
 import { LayoutContext } from 'contexts';
 
 let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => createStyles({
   root: {
     width: '100%',
     position: 'fixed',

@@ -74,12 +74,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The basic configuration of the application is defined in JSON files. In the future, these files can be used to define application configuration during development. The config files are already created with basic configuration to start with.
 - Dev Mode
-    1. File location: `src/configurations/devMode.json`.
+    1. File location: `src/constants/devMode.json`.
     2. The Dev mode button allows users to login into an application without entering login credentials. Instead, they can be configured by updating `user & password` keys and will be auto-filled for quick login. This will only work when the application is connected to a server and the user already is registered inside the database.
     3.  During development, the login using server can be skipped by changing `"bypassBackend": false` to `"bypassBackend": true` .
     4. The dev mode button position can be configured using keys namely `verticlePosition` which accepts `top or bottom` value & `horizontalPosition` accepts `left or right` value.
 - Application Layout
-	1. File location `src/configurations/layout.json`.
+	1. File location `src/constants/layout.json`.
 	2. The application side menu can be configured easily using a JSON file to avoid writing long lines of code.
 	```
 	{
@@ -100,7 +100,7 @@ The basic configuration of the application is defined in JSON files. In the futu
     3. The boilerplate provides the basic configuration for idb where the main configurable key is `dbName`. The name provided in the file will be used for storage in the client browser.
 
 - Socket
-	1. File Location `src/configurations/socket.json`
+	1. File Location `src/constants/socket.json`
 	2. The boilerplate already has socket client which can be enabled by changing `"initSocket": false` to `"initSocket": true`
 	3. If the socket requires to use the access token verification it can also be enabled by changing `"accessTokenVerification":false` to `"accessTokenVerification":true`
 	4. Any other socket options can be defined on the `"socketDefaultOptions"` variable in the configuration.

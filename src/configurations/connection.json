@@ -1,8 +1,0 @@
-{
-  "useAccessTokenVerificationAPI":false,
-  "socket":{
-    "initSocket": false,
-    "socketDefaultOptions": {},
-    "accessTokenVerification": false
-  }
-}

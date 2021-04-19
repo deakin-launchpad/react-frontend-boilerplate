@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "name": "React Boilerplate",
+      "path": "."
+    }
+  ],
+  "extensions": {
+    "recommendations": [
+      "VisualStudioExptTeam.vscodeintellicode",
+      "dbaeumer.vscode-eslint",
+      "dsznajder.es7-react-js-snippets",
+      "eamodio.gitlens",
+      "pkief.material-icon-theme"
+    ],
+    "unwantedRecommendations": [
+      "esbenp.prettier-vscode"
+    ]
+  },
+  "settings": {
+    "[javascript]": {
+      "editor.tabSize": 2,
+      "editor.autoIndent": "full",
+    }
+  }
+}

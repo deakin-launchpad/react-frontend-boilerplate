@@ -4,12 +4,13 @@
 import React, { useEffect } from 'react';
 import './styles/App.scss';
 import { withRouter } from 'react-router-dom';
-import './database/idb';
-import { CssBaseline } from '@material-ui/core';
-import { AppRoutes } from './routes/routes';
+import './helpers/database/idb';
+import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
+
+import { AppRoutes } from './bricks/index';
 import { ContextManager } from 'contexts';
 import { Notification, DevModeSwitch, LoginCheck } from 'components';
-import { DevModeConfig } from 'configurations';
+import { DeveloperConfig } from 'constants/index';
 
 
 const App = (props) => {
@@ -19,10 +20,11 @@ const App = (props) => {
   return (
     <ContextManager>
       <LoginCheck>
-        <CssBaseline />
-        <AppRoutes {...props} />
-        {DevModeConfig.visible ? <DevModeSwitch /> : ''}
-        <Notification />
+        <StyledEngineProvider injectFirst>
+          <AppRoutes {...props} />
+          {DeveloperConfig.visible ? <DevModeSwitch /> : ''}
+          <Notification />
+        </StyledEngineProvider>
       </LoginCheck>
     </ContextManager>
   );

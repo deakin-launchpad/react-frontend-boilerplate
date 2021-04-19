@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Container, TextField, Button, Grid, CardMedia } from '@material-ui/core';
 import Video from 'twilio-video';
-import { APIKeys } from 'configurations';
+import { APIKeys } from 'constants/index';
 
 
 const Lobby = ({

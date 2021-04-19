@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { LoginContext } from 'contexts';
 import { FormControlLabel, Switch, makeStyles } from '@material-ui/core';
-import { DevModeConfig } from 'configurations';
+import { DeveloperConfig } from 'constants/index';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -11,8 +11,8 @@ const useStyles = makeStyles(theme => ({
   },
   devModeToggle: {
     position: 'fixed',
-    bottom: (DevModeConfig.verticlePosition === 'top' ? '94vh' : '2vh'),
-    right: (DevModeConfig.horizontalPosition === 'right' ? '1vw' : '64vw'),
+    bottom: (DeveloperConfig.verticlePosition === 'top' ? '94vh' : '2vh'),
+    right: (DeveloperConfig.horizontalPosition === 'right' ? '1vw' : '64vw'),
     zIndex: 99999,
     opacity: 0.8
   }
@@ -31,7 +31,7 @@ export const DevModeSwitch = () => {
     <FormControlLabel className={classes.devModeToggle}
       control={
         <Switch checked={Boolean(devMode)} value={Boolean(devMode)} onChange={() => { devModeStatusToggle(); }} />}
-      label={(DevModeConfig.label !== undefined ? DevModeConfig.label : 'God Mode')}
+      label={(DeveloperConfig.label !== undefined ? DeveloperConfig.label : 'God Mode')}
     />
   );
   return content;

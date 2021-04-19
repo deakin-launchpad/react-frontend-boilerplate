@@ -3,13 +3,13 @@
  ***/
 import React, { useState, useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { TextField, Paper, makeStyles, Typography, Button, Box, Grid } from '@material-ui/core';
+import { TextField, Paper, makeStyles, Typography, Button, Box, Grid, createStyles } from '@material-ui/core';
 import { LoginContext, DeviceInfoContext } from 'contexts';
 import { notify } from 'components';
-import { DevModeConfig } from 'configurations';
 import { API, useKeyPress, TextHelper } from 'helpers';
+import { ConnectionConfig, DeveloperConfig } from 'constants/index';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => createStyles({
   '@global': {
     body: {
       backgroundColor: theme.palette.common.dark,
@@ -51,12 +51,12 @@ export const Login = () => {
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
 
   const performLogin = useCallback(async () => {
-    if (DevModeConfig.bypassBackend) {
+    if (ConnectionConfig.bypassBackend) {
       setAccessToken('dummyToken');
     } else {
       let details = {
-        emailId: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.user : '') : emailId),
-        password: (devMode ? (DevModeConfig.devDetails !== undefined ? DevModeConfig.devDetails.password : '') : password),
+        emailId: (devMode ? (DeveloperConfig.devDetails !== undefined ? DeveloperConfig.devDetails.user : '') : emailId),
+        password: (devMode ? (DeveloperConfig.devDetails !== undefined ? DeveloperConfig.devDetails.password : '') : password),
         deviceData: {
           deviceType: 'WEB',
           deviceName: deviceName,
@@ -101,7 +101,7 @@ export const Login = () => {
 
   let content = (
     <div>
-      <Grid container spacing={0} justify="center">
+      <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid className={classes.loginBox} item xs={10} sm={6} md={4} lg={3} xl={2}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h5">
