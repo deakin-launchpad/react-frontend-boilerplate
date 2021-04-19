@@ -3,8 +3,8 @@
  * Helper file for custom hooks
  */
 
-import { useEffect, useState } from 'react';
-import { useLocation  } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const useKeyPress = (targetKey, callback) => {
   /**
@@ -135,4 +135,14 @@ export const useScrollReset = () => {
   }, [location.pathname]);
 
   return null;
+};
+
+export const useIsMountedRef = () => {
+  const isMounted = useRef(true);
+
+  useEffect(() => () => {
+    isMounted.current = false;
+  }, []);
+
+  return isMounted;
 };

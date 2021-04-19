@@ -13,6 +13,8 @@ import { EnhancedEditor } from './common/EnhancedEditor';
 import { EnhancedDrawer } from './common/EnhancedDrawer';
 import { LoginCheck } from './helpers/LoginCheck.js';
 import { VideoCall } from './common/VideoCall';
+import { LoginForm } from './dependants/login/loginForm';
+import { GlobalStyles } from './helpers/GlobalStyles';
 export {
   EnhancedNotification as Notification,
   notify,
@@ -29,5 +31,7 @@ export {
   EnhancedEditor,
   EnhancedDrawer,
   LoginCheck,
-  VideoCall
+  VideoCall,
+  LoginForm,
+  GlobalStyles
 };

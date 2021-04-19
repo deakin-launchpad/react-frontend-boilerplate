@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Button, Card, CardContent, CardActions, makeStyles } from '@material-ui/core';
+import { Grid, Typography, Button, Card, CardContent, CardActions, makeStyles, createStyles, Box } from '@material-ui/core';
 import { EnhancedEditor, EnhancedDrawer, EnhancedModal, VideoCall } from 'components';
 import { useGeoLocation } from 'helpers';
 import { EnhancedTable } from 'components/index';
+import { LayoutConfig } from 'constants/index';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => createStyles({
   root: {
-    marginTop: theme.spacing(1),
-    marginLeft: theme.spacing(1)
+    padding: theme.spacing(2),
   }
 }));
 
@@ -19,9 +19,9 @@ export const Example = () => {
   const [modalStatus, setModalStatus] = useState(false);
   let [location] = useGeoLocation();
   let content = (
-    <div className={classes.root}>
+    <Box className={classes.root} sx={LayoutConfig.defaultContainerSX}>
       <Grid container spacing={1} justifyContent='flex-start' alignItems='flex-start'>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">Text Editor Example</Typography>
@@ -32,7 +32,7 @@ export const Example = () => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -52,7 +52,7 @@ export const Example = () => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -75,7 +75,7 @@ export const Example = () => {
               </Button>
             </CardActions>
           </Card>
-        </Grid><Grid item xs={5}>
+        </Grid><Grid item xs={6}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -89,7 +89,7 @@ export const Example = () => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -99,7 +99,7 @@ export const Example = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <EnhancedTable data={[{
             Name: 'DeadPool',
             Age: 5
@@ -109,6 +109,6 @@ export const Example = () => {
           }]} />
         </Grid>
       </Grid>
-    </div>);
+    </Box>);
   return content;
 };

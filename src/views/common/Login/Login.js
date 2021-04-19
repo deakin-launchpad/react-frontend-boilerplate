@@ -2,129 +2,83 @@
  *  Created by Sanchit Dang
  ***/
 import React, { useState, useContext, useCallback } from 'react';
-import { Link } from 'react-router-dom';
-import { TextField, Paper, makeStyles, Typography, Button, Box, Grid, createStyles } from '@material-ui/core';
+import { makeStyles, Typography, Box, createStyles, Container, Card, CardContent, Divider, Link } from '@material-ui/core';
 import { LoginContext, DeviceInfoContext } from 'contexts';
-import { notify } from 'components';
-import { API, useKeyPress, TextHelper } from 'helpers';
-import { ConnectionConfig, DeveloperConfig } from 'constants/index';
+import { LoginForm } from 'components';
+import { API } from 'helpers';
+import { ConnectionConfig } from 'constants/index';
+import { Link as RouterLink } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => createStyles({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.dark,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: theme.spacing(4)
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  loginBox: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(10)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  buttons: {
-    marginTop: theme.spacing(1)
-  },
+const useStyles = makeStyles(() => createStyles({
   developMessage: {
     position: 'absolute',
-    bottom: '2vh'
+    bottom: '2vh',
+    margin: 'auto',
+    width: '100%'
   }
 }));
 
 export const Login = () => {
   const classes = useStyles();
   const [pageHeading] = useState('Login');
-  const [emailId, setEmailId] = useState('');
-  const [password, setPassword] = useState('');
-  const { devMode, loginStatus, setAccessToken } = useContext(LoginContext);
+  const { setAccessToken } = useContext(LoginContext);
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
 
-  const performLogin = useCallback(async () => {
+  const performLogin = useCallback(async (loginValues) => {
     if (ConnectionConfig.bypassBackend) {
       setAccessToken('dummyToken');
     } else {
       let details = {
-        emailId: (devMode ? (DeveloperConfig.devDetails !== undefined ? DeveloperConfig.devDetails.user : '') : emailId),
-        password: (devMode ? (DeveloperConfig.devDetails !== undefined ? DeveloperConfig.devDetails.password : '') : password),
-        deviceData: {
+        ...loginValues, deviceData: {
           deviceType: 'WEB',
           deviceName: deviceName,
           deviceUUID: deviceUUID
         }
       };
-      let apiResponse = await API.login(details);
-      if (apiResponse.success) {
-        setAccessToken(apiResponse.data);
-      }
+      return API.login(details,);
     }
-  }, [devMode, emailId, password, setAccessToken, deviceUUID, deviceName]);
+  }, [setAccessToken, deviceUUID, deviceName]);
 
-  const validationCheck = useCallback(() => {
-    if (devMode) {
-      return performLogin();
-    }
-    if (!loginStatus) {
-      const emailValidationResult = TextHelper.validateEmail(emailId);
-      if (emailValidationResult && password) {
-        performLogin();
-        return true;
-      } else if (emailId === "" && password === "") {
-        notify('Email and password must not be empty!');
-        return false;
-      } else if (emailId) {
-        notify('Email must not be empty!');
-        return false;
-      } else if (!emailValidationResult && emailId.length > 0) {
-        notify('Invalid email!');
-        return false;
-      } else if (!password) {
-        notify('Password must not be empty!');
-        return false;
-      }
-    }
-  }, [devMode, emailId, loginStatus, password, performLogin]);
-
-  useKeyPress('Enter', () => {
-    validationCheck();
-  });
 
   let content = (
-    <div>
-      <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <Grid className={classes.loginBox} item xs={10} sm={6} md={4} lg={3} xl={2}>
-          <Paper className={classes.paper}>
-            <Typography component="h1" variant="h5">
-              {pageHeading}
-            </Typography>
-            <form noValidate>
-              <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" onChange={e => setEmailId(e.target.value)} autoFocus />
-              <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" onChange={e => setPassword(e.target.value)} autoComplete="current-password" />
-              <Button fullWidth variant="contained" color="primary" className={classes.buttons} onClick={validationCheck}>Login</Button>
-              <Button fullWidth variant="contained" color="primary" className={classes.buttons} component={Link} to='/register'>Sign Up</Button>
-            </form>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12} className={classes.developMessage}>
-          <Box mt={5}>
-            <Typography variant="body2" color="textSecondary" align="center">
-              Developed by Deakin Launchpad
-            </Typography>
-          </Box>
-        </Grid>
-      </Grid>
-    </div >
+    <Box sx={{
+      backgroundColor: 'background.default',
+      display: 'flex', flexDirection: 'column',
+      minHeight: '100vh'
+    }} >
+      <Container maxWidth="sm" sx={{ py: '80px' }}  >
+        <Card>
+          <CardContent sx={{ display: 'flex', flexDirection: 'column', p: 4 }} >
+            <Box sx={{
+              alignItems: 'center', display: 'flex', justifyContent: 'space-between', mb: 3
+            }}>
+              <div>
+                <Typography color="textPrimary" gutterBottom variant="h4" >
+                  {pageHeading}
+                </Typography>
+              </div>
+            </Box>
+            <Box sx={{ flexGrow: 1, mt: 3 }} >
+              <LoginForm login={performLogin} />
+            </Box>
+            <Divider sx={{ my: 3 }} />
+            <Link
+              color="textSecondary"
+              component={RouterLink}
+              to="/register"
+              variant="body2"
+            >
+              Create new account
+            </Link>
+          </CardContent>
+        </Card>
+      </Container>
+      <Box mt={5}>
+        <Typography className={classes.developMessage} variant="body2" color="textSecondary" align="center">
+          Developed by Deakin Launchpad
+        </Typography>
+      </Box>
+    </Box>
   );
   return content;
 };

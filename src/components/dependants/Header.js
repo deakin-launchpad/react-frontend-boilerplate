@@ -59,9 +59,9 @@ export const Header = () => {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      width: theme.spacing(7),
+      width: theme.spacing(6),
       [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9),
+        width: theme.spacing(7.9),
       },
     },
     container: {
@@ -95,8 +95,7 @@ export const Header = () => {
   let content = (
     <>
       <AppBar elevation={layoutConfiguration.theme !== undefined ? layoutConfiguration.theme.appBarElevation !== undefined ? layoutConfiguration.theme.appBarElevation : 1 : 1} position={layoutConfiguration.sideMenu.permanent ? 'fixed' : 'absolute'} className={layoutConfiguration.sideMenu.permanent ? (isItDesktop ? classes.appBarShift : classes.appBar) : clsx(classes.appBar, open && classes.appBarShift)}
-        color={layoutConfiguration.header.useCustomColor ? null : undefined !== layoutConfiguration.header.color ? layoutConfiguration.header.color : "primaryZ"}
-      >
+        color={layoutConfiguration.header.useCustomColor ? null : undefined !== layoutConfiguration.header.color ? layoutConfiguration.header.color : "primary"} >
         <Toolbar className={classes.toolbar}>
           {isItDesktop ? layoutConfiguration.sideMenu.permanent ? null : < IconButton
             edge="start"

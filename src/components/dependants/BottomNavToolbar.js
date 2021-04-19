@@ -5,9 +5,10 @@
 
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction, Icon, makeStyles, Paper, createStyles } from '@material-ui/core';
+import { BottomNavigation, BottomNavigationAction, makeStyles, Paper, createStyles, Icon as ParentIcon } from '@material-ui/core';
 import { API } from 'helpers';
 import { LayoutContext } from 'contexts';
+import { InlineIcon } from '@iconify/react-with-api';
 
 let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 
@@ -57,8 +58,12 @@ export const BottomNavToolbar = () => {
       return layoutConfiguration.menuItems.map((item, key) => {
         if (item.isFavourite) {
           if (item.type === 'logout')
-            return <BottomNavigationAction onClick={() => { API.logoutUser(); }} label={item.name} icon={<Icon>{item.icon}</Icon>} key={key} />;
-          return <BottomNavigationAction onClick={() => { setPageTitle(item.customTitle ? item.customTitle : item.name); }} component={Link} to={item.controller} label={item.name} icon={<Icon>{item.icon}</Icon>} key={key} />;
+            return <BottomNavigationAction onClick={() => { API.logoutUser(); }} label={item.name} icon={<ParentIcon>
+              <InlineIcon icon={item.icon} />
+            </ParentIcon>} key={key} />;
+          return <BottomNavigationAction onClick={() => { setPageTitle(item.customTitle ? item.customTitle : item.name); }} component={Link} to={item.controller} label={item.name} icon={<ParentIcon>
+            <InlineIcon icon={item.icon} />
+          </ParentIcon>} key={key} />;
         } return null;
       }
       );
@@ -75,7 +80,10 @@ export const BottomNavToolbar = () => {
 
     >
       {renderIcons()}
-      {layoutConfiguration.displayMobileMenuHam ? <BottomNavigationAction onClick={() => { setPageTitle(menuButtonLabel); }} component={Link} to={'/menu'} label={menuButtonLabel} icon={<Icon>menu</Icon>} /> : null}
+      {layoutConfiguration.displayMobileMenuHam ? <BottomNavigationAction
+        onClick={() => { setPageTitle(menuButtonLabel); }} component={Link} to={'/menu'} label={menuButtonLabel} icon={<ParentIcon>
+          <InlineIcon icon='bytesize:menu' />
+        </ParentIcon>} /> : null}
 
     </BottomNavigation>
     <div className={classes.iOSPadding} />

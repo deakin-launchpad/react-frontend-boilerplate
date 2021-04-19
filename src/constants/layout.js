@@ -52,6 +52,11 @@ class Layout {
       },
       "appBarElevation": 1
     };
+    this.defaultContainerSX = {
+      backgroundColor: 'background.default',
+      display: 'flex', flexDirection: 'column',
+      minHeight: '100vh'
+    };
   }
 }
 

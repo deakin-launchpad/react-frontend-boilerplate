@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { makeStyles, useMediaQuery, createMuiTheme, MuiThemeProvider, createStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery, createStyles } from '@material-ui/core';
 import { Header, BottomNavToolbar } from 'components';
-import { LayoutConfig } from 'constants/index';
 import { LayoutContext } from 'contexts';
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -35,16 +34,7 @@ export const Layout = (props) => {
   const { layoutConfiguration } = useContext(LayoutContext);
   const classes = useStyles();
 
-  let applicationTheme = createMuiTheme({
-    palette: {
-      primary: {
-        main: layoutConfiguration.theme !== undefined ? layoutConfiguration.theme.colors !== undefined ? layoutConfiguration.theme.colors.primary !== undefined ? LayoutConfig.theme.colors.primary : null : null : null
-      },
-      secondary: {
-        main: layoutConfiguration.theme !== undefined ? layoutConfiguration.theme.colors !== undefined ? layoutConfiguration.theme.colors.secondary !== undefined ? layoutConfiguration.theme.colors.secondary : null : null : null
-      }
-    }
-  });
+
 
   const headerRenderStatus = () => {
     if (isItDesktop)
@@ -55,18 +45,17 @@ export const Layout = (props) => {
 
   let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
   let content = (
-    <MuiThemeProvider theme={applicationTheme} >
-      <div className={classes.root}>
-        {headerRenderStatus() && <Header />}
-        <main className={isItDesktop ? classes.content : classes.mobileContent}>
-          <div className={isItDesktop ? classes.appBarSpacer : headerRenderStatus() ? classes.appBarSpacer : null} />
-          {props.children}
-          <div className={isItDesktop ? null : layoutConfiguration.bottomMobileNavigation ? classes.appBarSpacer : null} />
-          <div className={classes.iOSPadding} />
-        </main>
-        {isItDesktop ? null : layoutConfiguration.bottomMobileNavigation ? <BottomNavToolbar /> : null}
-      </div>
-    </MuiThemeProvider>
+
+    <div className={classes.root}>
+      {headerRenderStatus() && <Header />}
+      <main className={isItDesktop ? classes.content : classes.mobileContent}>
+        <div className={isItDesktop ? classes.appBarSpacer : headerRenderStatus() ? classes.appBarSpacer : null} />
+        {props.children}
+        <div className={isItDesktop ? null : layoutConfiguration.bottomMobileNavigation ? classes.appBarSpacer : null} />
+        <div className={classes.iOSPadding} />
+      </main>
+      {isItDesktop ? null : layoutConfiguration.bottomMobileNavigation ? <BottomNavToolbar /> : null}
+    </div>
   );
   return content;
 };

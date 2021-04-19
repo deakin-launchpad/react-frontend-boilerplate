@@ -5,7 +5,7 @@ class Developer {
     this.verticlePosition = "bottom";
     this.horizontalPosition = "right";
     this.devDetails = {
-      "user": "sanchit",
+      "user": "sanchit@user.com",
       "password": "password"
     };
 
