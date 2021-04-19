@@ -1,4 +1,4 @@
-## React Front end Boilerplate
+# React frontend boilerplate
 
 In order to use the boilerplate you will need NodeJS to be installed on your system.
 
@@ -73,13 +73,14 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ## Configuration
 
 The basic configuration of the application is defined in JSON files. In the future, these files can be used to define application configuration during development. The config files are already created with basic configuration to start with.
-- Dev Mode
+
+- Developer Settings
     1. File location: `src/constants/devMode.json`.
-    2. The Dev mode button allows users to login into an application without entering login credentials. Instead, they can be configured by updating `user & password` keys and will be auto-filled for quick login. This will only work when the application is connected to a server and the user already is registered inside the database.
-    3.  During development, the login using server can be skipped by changing `"bypassBackend": false` to `"bypassBackend": true` .
+    2. The Dev mode button allows users to login into an application without entering login credentials. Instead, they can be configured by updating `user & password` keys and will be auto-filled for quick login. This will only work when the application is connected to a server and the user already is registered inside the database.  
     4. The dev mode button position can be configured using keys namely `verticlePosition` which accepts `top or bottom` value & `horizontalPosition` accepts `left or right` value.
-- Application Layout
-	1. File location `src/constants/layout.json`.
+
+- Layout Settings
+	1. File location `src/constants/layout.js`.
 	2. The application side menu can be configured easily using a JSON file to avoid writing long lines of code.
 	```
 	{
@@ -87,23 +88,24 @@ The basic configuration of the application is defined in JSON files. In the futu
 			{
 				"name": Name of button,
 				"type": "button",
-				"icon": "home", // COMMENT: Add icon name you would like to display
+				"icon": "mdi:home", // COMMENT: Add icon name you would like to display
 				"controller": "/home", // COMMENT: Add path name to you view
 				"customTitle": "This is my custom title" // COMMENT: The title will be displayed along with icon in side menu
 	}
 	```
-	3. You can find icon names from [Material Icons](https://material.io/resources/icons/?style=baseline).
+	3. You can find icon names from [Iconify.design](https://iconify.design/icon-sets/).
 
-- IDB config
-	1. File location `src/database/idb/config.json`.
+- IndexedDB settings
+	1. File location `src/helpers/database/idb/config.json`.
     2. The idb uses IndexedDB API to store a significant amount of structured data, including files/blobs.
     3. The boilerplate provides the basic configuration for idb where the main configurable key is `dbName`. The name provided in the file will be used for storage in the client browser.
 
-- Socket
-	1. File Location `src/constants/socket.json`
-	2. The boilerplate already has socket client which can be enabled by changing `"initSocket": false` to `"initSocket": true`
-	3. If the socket requires to use the access token verification it can also be enabled by changing `"accessTokenVerification":false` to `"accessTokenVerification":true`
-	4. Any other socket options can be defined on the `"socketDefaultOptions"` variable in the configuration.
+- Connection Settings
+	1. File Location `src/constants/connection.js`
+	2. During development, the login using server can be skipped by changing `"bypassBackend": false` to `"bypassBackend": true` .
+	3. The boilerplate already has socket client which can be enabled by changing `"initSocket": false` to `"initSocket": true`
+	4. If the socket requires to use the access token verification it can also be enabled by changing `"accessTokenVerification":false` to `"accessTokenVerification":true`
+	5. Any other socket options can be defined on the `"socketDefaultOptions"` variable in the configuration.
  
 
 ## Available Scripts
