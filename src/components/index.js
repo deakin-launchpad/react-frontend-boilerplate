@@ -15,6 +15,8 @@ import { LoginCheck } from './helpers/LoginCheck.js';
 import { VideoCall } from './common/VideoCall';
 import { LoginForm } from './dependants/login/loginForm';
 import { GlobalStyles } from './helpers/GlobalStyles';
+import { SsoLogin } from './dependants/login/ssoLogin';
+
 export {
   EnhancedNotification as Notification,
   notify,
@@ -33,5 +35,6 @@ export {
   LoginCheck,
   VideoCall,
   LoginForm,
-  GlobalStyles
+  GlobalStyles,
+  SsoLogin
 };

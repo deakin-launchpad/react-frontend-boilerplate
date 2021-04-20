@@ -6,7 +6,6 @@ import { Box, Button, FormHelperText, TextField } from '@material-ui/core';
 import { LoginContext } from 'contexts';
 import { DeveloperConfig } from 'constants/index';
 
-
 export const LoginForm = (props) => {
   const { devMode, setAccessToken } = useContext(LoginContext);
 

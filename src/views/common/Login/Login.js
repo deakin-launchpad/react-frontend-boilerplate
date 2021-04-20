@@ -4,7 +4,7 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { makeStyles, Typography, Box, createStyles, Container, Card, CardContent, Divider, Link } from '@material-ui/core';
 import { LoginContext, DeviceInfoContext } from 'contexts';
-import { LoginForm } from 'components';
+import { LoginForm, SsoLogin } from 'components';
 import { API } from 'helpers';
 import { ConnectionConfig } from 'constants/index';
 import { Link as RouterLink } from 'react-router-dom';
@@ -25,6 +25,7 @@ export const Login = () => {
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
 
   const performLogin = useCallback(async (loginValues) => {
+    console.log('calling perform login');
     if (ConnectionConfig.bypassBackend) {
       setAccessToken('dummyToken');
     } else {
@@ -58,13 +59,16 @@ export const Login = () => {
               alignItems: 'center', display: 'flex', justifyContent: 'space-between', mb: 3,
             }}>
               <div>
-                <Typography color="textPrimary"  variant="h4" >
+                <Typography color="textPrimary" variant="h4" >
                   {pageHeading}
                 </Typography>
               </div>
             </Box>
             <Box sx={{ flexGrow: 1, mt: 3 }} >
               <LoginForm login={performLogin} />
+              <Box sx={{ mt: 2 }}>
+                <SsoLogin />
+              </Box>
             </Box>
             <Divider sx={{ my: 3 }} />
             <Link

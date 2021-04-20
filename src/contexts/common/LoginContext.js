@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
  */
 
 export var AccessToken = localStorage.getItem('accessToken');
+export var SSOToken = localStorage.getItem('ssoToken');
 export var LoginStatus = (localStorage.getItem('loginStatus') === true ? true : undefined);
 export var DevMode = (localStorage.getItem('devMode') === true ? true : undefined);
 let logoutFunction;
@@ -27,6 +28,7 @@ export const LoginProvider = props => {
   const [devMode, _setDevMode] = useState((DevMode !== '' ? DevMode : false));
   const [loginStatus, _setLoginStatus] = useState(LoginStatus);
   const [accessToken, _setAccessToken] = useState(AccessToken);
+  const [ssoToken, _setSSOToken] = useState(SSOToken);
 
   /**
   * Functions 
@@ -49,6 +51,7 @@ export const LoginProvider = props => {
       _setLoginStatus(false);
     }
   };
+
   const logoutUser = async (init) => {
     if (init instanceof Function) {
       init();
@@ -69,6 +72,12 @@ export const LoginProvider = props => {
     AccessToken = data;
     window.localStorage.setItem('accessToken', data);
     _setAccessToken(data);
+  };
+
+  const setSSOToken = (data) => {
+    SSOToken = data;
+    window.localStorage.setItem('ssoToken', data);
+    _setSSOToken(data);
   };
   useEffect(() => {
     if (accessToken !== undefined)
@@ -96,7 +105,16 @@ export const LoginProvider = props => {
       setLoginStatus(false);
     }
   }, [devMode, accessToken]);
-  return (<LoginContext.Provider value={{ loginStatus, accessToken, devMode, setAccessToken, setLoginStatus, setDevMode }}>{children}</LoginContext.Provider>);
+  return (<LoginContext.Provider value={{
+    loginStatus,
+    accessToken,
+    devMode,
+    setAccessToken,
+    setLoginStatus,
+    setDevMode,
+    ssoToken,
+    setSSOToken
+  }}>{children}</LoginContext.Provider>);
 };
 
 LoginProvider.propTypes = {

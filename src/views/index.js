@@ -2,6 +2,7 @@
  *  Created by Sanchit Dang
  ***/
 import { Login } from './common/Login/Login';
+import { AuthCallback } from './common/Login/AuthCallback';
 import { FourOFour } from './common/FourOFour/FourOFour';
 import { Register } from './common/Register/Register';
 import { Home } from './dependants/Home/Home';
@@ -13,5 +14,6 @@ export {
   Register,
   Home,
   MobileMenu,
-  FourOFour
+  FourOFour,
+  AuthCallback
 };
