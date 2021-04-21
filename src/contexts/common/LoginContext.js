@@ -80,15 +80,15 @@ export const LoginProvider = props => {
     _setSSOToken(data);
   };
   useEffect(() => {
-    if (accessToken !== undefined)
-      if (accessToken !== null)
-        if (accessToken) {
+    if (accessToken !== undefined || ssoToken !== undefined)
+      if (accessToken !== null || ssoToken !== null)
+        if (accessToken || ssoToken) {
           setLoginStatus(true);
           setAccessToken(accessToken);
         } else {
           setLoginStatus(false);
         }
-  }, [accessToken]);
+  }, [accessToken, ssoToken]);
   useEffect(() => {
     if (loginStatus !== undefined)
       if (loginStatus !== null)
@@ -101,10 +101,10 @@ export const LoginProvider = props => {
         _setDevMode(false);
   }, []);
   useEffect(() => {
-    if (!accessToken) {
+    if (!accessToken && !ssoToken) {
       setLoginStatus(false);
     }
-  }, [devMode, accessToken]);
+  }, [devMode, accessToken, ssoToken]);
   return (<LoginContext.Provider value={{
     loginStatus,
     accessToken,

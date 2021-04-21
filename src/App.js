@@ -20,7 +20,7 @@ const App = (props) => {
     direction: 'ltr',
     responsiveFontSizes: true,
     roundedCorners: true, 
-    theme: THEMES.LIGHT
+    theme: THEMES.NATURE
   });
   return (
     <ContextManager>

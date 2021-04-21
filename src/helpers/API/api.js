@@ -47,6 +47,12 @@ class API {
       return generateSuccess(true);
     }).catch(error => errorHelper(error));
   }
+
+  authenticateSSO(ssoToken) {
+    return axiosInstance.get(`sso/auth/validate/${ssoToken}`)
+      .then((response) => generateSuccess(response.data.data))
+      .catch(error => errorHelper(error));
+  }
 }
 const instance = new API();
 export default instance;

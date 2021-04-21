@@ -9,7 +9,7 @@ class API {
       "twilioAPIsecret": ""
     };
     this.jwt = {
-      url: 'https://rapid.test.aaf.edu.au/jwt/authnrequest/research/kVPhr2s6AbkazeLxGeyksQ?entityID=https://signon-dev.deakin.edu.au/idp/shibboleth'
+      url: 'https://rapid.test.aaf.edu.au/jwt/authnrequest/research/HuP9vbv2Sv3RivbqPCIzFg?entityID=https://signon-dev.deakin.edu.au/idp/shibboleth'
     };
   }
 }
