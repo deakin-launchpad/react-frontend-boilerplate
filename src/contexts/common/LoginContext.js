@@ -1,7 +1,7 @@
 /***
  *  Created by Sanchit Dang
  ***/
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 /**
  * @AccessToken 
@@ -12,7 +12,6 @@ import PropTypes from 'prop-types';
  */
 
 export var AccessToken = localStorage.getItem('accessToken');
-export var SSOToken = localStorage.getItem('ssoToken');
 export var LoginStatus = (localStorage.getItem('loginStatus') === true ? true : undefined);
 export var DevMode = (localStorage.getItem('devMode') === true ? true : undefined);
 let logoutFunction;
@@ -28,7 +27,6 @@ export const LoginProvider = props => {
   const [devMode, _setDevMode] = useState((DevMode !== '' ? DevMode : false));
   const [loginStatus, _setLoginStatus] = useState(LoginStatus);
   const [accessToken, _setAccessToken] = useState(AccessToken);
-  const [ssoToken, _setSSOToken] = useState(SSOToken);
 
   /**
   * Functions 
@@ -56,7 +54,7 @@ export const LoginProvider = props => {
     if (init instanceof Function) {
       init();
     }
-    window.localStorage.setItem('loginStatus', false);
+    window.localStorage.clear();
     LoginStatus = false;
     _setLoginStatus(false);
   };
@@ -68,43 +66,41 @@ export const LoginProvider = props => {
     DevMode = data;
     _setDevMode(data);
   };
-  const setAccessToken = (data) => {
+  const setAccessToken = useCallback((data) => {
     AccessToken = data;
     window.localStorage.setItem('accessToken', data);
     _setAccessToken(data);
-  };
+  }, [_setAccessToken]);
 
-  const setSSOToken = (data) => {
-    SSOToken = data;
-    window.localStorage.setItem('ssoToken', data);
-    _setSSOToken(data);
-  };
+
+
+
   useEffect(() => {
-    if (accessToken !== undefined || ssoToken !== undefined)
-      if (accessToken !== null || ssoToken !== null)
-        if (accessToken || ssoToken) {
+    if (accessToken !== undefined)
+      if (accessToken !== null)
+        if (accessToken) {
           setLoginStatus(true);
           setAccessToken(accessToken);
         } else {
           setLoginStatus(false);
         }
-  }, [accessToken, ssoToken]);
+  }, [accessToken, setAccessToken]);
   useEffect(() => {
     if (loginStatus !== undefined)
       if (loginStatus !== null)
         if (!loginStatus)
           setAccessToken('');
-  }, [loginStatus]);
+  }, [loginStatus, setAccessToken]);
   useEffect(() => {
     if (DevMode !== undefined)
       if (DevMode !== 'true')
         _setDevMode(false);
   }, []);
   useEffect(() => {
-    if (!accessToken && !ssoToken) {
+    if (!accessToken) {
       setLoginStatus(false);
     }
-  }, [devMode, accessToken, ssoToken]);
+  }, [devMode, accessToken]);
   return (<LoginContext.Provider value={{
     loginStatus,
     accessToken,
@@ -112,8 +108,6 @@ export const LoginProvider = props => {
     setAccessToken,
     setLoginStatus,
     setDevMode,
-    ssoToken,
-    setSSOToken
   }}>{children}</LoginContext.Provider>);
 };
 

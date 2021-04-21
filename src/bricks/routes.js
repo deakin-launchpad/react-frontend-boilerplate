@@ -19,7 +19,7 @@ export const AppRoutes = (props) => {
       <Route exact path='/' render={() => (((!loginStatus) ? <Redirect to={{ pathname: '/login' }} {...props} /> : <Redirect to={{
         pathname: landingPage
       }} {...props} />))} />
-      <Route exact path='/auth/callback/:ssoToken' render={(props) => loginStatus ? <Layout> <AuthCallback {...props} /> </Layout> : <Redirect to={{ pathname: landingPage }} />} />
+      <Route exact path='/auth/callback/:ssoToken' render={(props) => <AuthCallback {...props} />} />
       <Route exact path='/login' render={() => ((!loginStatus ? <Login  {...props} /> : <Redirect to={{ pathname: landingPage }} {...props} />))} />
       <Route exact path='/register' render={() => ((!loginStatus ? <Register {...props} /> : <Redirect to={{ pathname: landingPage }} {...props} />))} />
       <Route exact path='/home' render={() => ((loginStatus === false ? <Redirect to={{ pathname: '/login' }} {...props} /> : <Layout><Home {...props} /></Layout>))} />

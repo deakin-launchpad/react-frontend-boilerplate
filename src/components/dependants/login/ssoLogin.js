@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import { APIKeys } from 'constants/index';
 
 export const SsoLogin = () => {
-  return <Button component={'a'} href={APIKeys.jwt.url} color="primary" target="_blank" rel="noopener noreferrer"
+  return <Button component={'a'} href={APIKeys.jwt.url} color="primary"
     fullWidth
     size="large"
     variant="contained"

@@ -1,18 +1,20 @@
+import React, { useEffect } from 'react';
 import { LoginContext } from 'contexts/index';
 import { API } from 'helpers/index';
-import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
+import { LoadingScreen } from 'components/index';
 
 export const AuthCallback = withRouter((props) => {
-  const [state, setState] = React.useState();
-  const { setSSOToken } = React.useContext(LoginContext);
+  const { accessToken, loginStatus, setAccessToken } = React.useContext(LoginContext);
   useEffect(() => {
     (async () => {
       const response = await API.authenticateSSO(props.match.params.ssoToken);
-      setState(response.data);
+      if (response.success) {
+        setAccessToken(response.data.ssoString);
+      }
     })();
 
-  }, [props, setSSOToken]);
-
-  return <>Auth Callback {JSON.stringify(state)}</>;
+  }, [props, setAccessToken]);
+  if (accessToken === undefined && loginStatus === false) return <LoadingScreen />;
+  return <Redirect to='/' />;
 });
