@@ -32,6 +32,11 @@ export const LoginForm = (props) => {
       });
     },
     onSubmit: async (values, { setStatus, setSubmitting }) => {
+      if (devMode)
+        values = {
+          emailId: DeveloperConfig.devDetails.user,
+          password: DeveloperConfig.devDetails.password
+        };
       const response = await props.login(values);
       if (response.success) {
         setAccessToken(response.accessToken);
