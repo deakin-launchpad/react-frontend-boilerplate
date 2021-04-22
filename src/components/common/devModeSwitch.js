@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { LoginContext } from 'contexts';
-import { FormControlLabel, Switch, makeStyles } from '@material-ui/core';
+import { FormControlLabel, Switch, makeStyles, Typography } from '@material-ui/core';
 import { DeveloperConfig } from 'constants/index';
 
 const useStyles = makeStyles(theme => ({
@@ -30,8 +30,15 @@ export const DevModeSwitch = () => {
   let content = (
     <FormControlLabel className={classes.devModeToggle}
       control={
-        <Switch checked={Boolean(devMode)} value={Boolean(devMode)} onChange={() => { devModeStatusToggle(); }} />}
-      label={(DeveloperConfig.label !== undefined ? DeveloperConfig.label : 'God Mode')}
+        <Switch
+          checked={Boolean(devMode)}
+          value={Boolean(devMode)}
+          onChange={() => { devModeStatusToggle(); }}
+        />}
+      label={<Typography variant="body1" color="textSecondary"     >
+        {(DeveloperConfig.label !== undefined ? DeveloperConfig.label : 'God Mode')}
+      </Typography>
+      }
     />
   );
   return content;

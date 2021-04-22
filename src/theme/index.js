@@ -1,7 +1,12 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import merge from 'lodash/merge';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { THEMES } from '../constants/theme';
 import { lightShadows, darkShadows } from './shadows';
+import { LoadingScreen } from 'components/index';
+import { LayoutContext } from 'contexts/index';
+import { MuiThemeProvider } from '@material-ui/core';
 
 const baseOptions = {
   direction: 'ltr',
@@ -231,4 +236,23 @@ export const createTheme = (config = {}) => {
   }
 
   return theme;
+};
+
+
+export const ThemeProvider = ({ children }) => {
+  const [appTheme, changeAppTheme] = React.useState();
+  const layoutContext = React.useContext(LayoutContext);
+  React.useEffect(() => {
+    if (layoutContext !== undefined)
+      if (layoutContext.currentTheme !== undefined)
+        changeAppTheme(createTheme(layoutContext.currentTheme));
+  }, [layoutContext]);
+  if (appTheme === undefined) return <LoadingScreen />;
+  return <MuiThemeProvider theme={appTheme} >
+    {children}
+  </MuiThemeProvider>;
+};
+
+ThemeProvider.propTypes = {
+  children: PropTypes.node.isRequired
 };
