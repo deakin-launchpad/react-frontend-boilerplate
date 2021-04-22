@@ -49,7 +49,7 @@ class Layout {
     this.defaultContainerSX = {
       backgroundColor: 'background.default',
       display: 'flex', flexDirection: 'column',
-      minHeight: '100vh'
+      minHeight: 'calc(100% - 64px)'
     };
   }
 }
