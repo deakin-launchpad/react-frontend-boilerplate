@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 import { TextField, makeStyles, Typography, Button, Box, Divider, Container, Card, CardContent, Link, createStyles } from '@material-ui/core';
 import { notify } from 'components';
 import { Link as RouterLink } from 'react-router-dom';
+import { DeviceInfoContext } from 'contexts/index';
+import { API } from 'helpers/index';
 
 
 const useStyles = makeStyles(() => createStyles({
@@ -19,6 +21,7 @@ const useStyles = makeStyles(() => createStyles({
 
 export const Register = () => {
   const classes = useStyles();
+  const { deviceData } = React.useContext(DeviceInfoContext);
   const [pageHeading] = useState('Register');
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');
@@ -26,6 +29,14 @@ export const Register = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const register = () => {
+    // TODO : Update Register API
+    API.register({
+      deviceData,
+      emailId,
+      password,
+      firstName,
+      lastName
+    });
   };
   const validationCheck = () => {
     if (emailId.length < 0 || password.length < 0 || confirmPassword.length < 0 || firstName.length < 0 || lastName.length < 0

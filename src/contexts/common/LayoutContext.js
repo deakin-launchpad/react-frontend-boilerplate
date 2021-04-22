@@ -14,7 +14,7 @@ export const LayoutProvider = (props) => {
     direction: 'ltr',
     responsiveFontSizes: true,
     roundedCorners: true,
-    theme: THEMES.DARK
+    theme: THEMES.LIGHT
   });
   useEffect(() => {
     let _controllerArr;

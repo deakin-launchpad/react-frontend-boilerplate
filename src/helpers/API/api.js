@@ -49,7 +49,7 @@ class API {
   }
 
   /**
-   * 
+   * @author Sanchit Dang
    * @param {Object} data 
    * @param {String} data.ssoToken 
    * @param {Object} data.deviceData 
@@ -60,6 +60,17 @@ class API {
    */
   async authenticateSSO(data) {
     return axiosInstance.post(`sso/auth/validate`, data)
+      .then((response) => generateSuccess(response.data.data))
+      .catch(error => errorHelper(error));
+  }
+
+  /**
+   * 
+   * @param {Object} data 
+   * @returns {Promise<Object>}
+   */
+  async register(data) {
+    return axiosInstance.post(`register`, data)
       .then((response) => generateSuccess(response.data.data))
       .catch(error => errorHelper(error));
   }

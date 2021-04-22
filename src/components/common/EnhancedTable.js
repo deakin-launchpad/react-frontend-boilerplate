@@ -52,8 +52,7 @@ const useStyles = makeStyles(theme => ({
  * @param {Function} props.options.toolbarActions.function function to be performed by toolbar button(onClick) : params (event,selectedItemData).
  * @param {Object} props.styles Accepts StyleInfo about the Table styles are following: table, tableCell, heading, toolbar, paper, tableRow, tableHead, tableBody, tableFooter, tablePagination.
  * 
- * @example
- * Example Code : <EnhancedTable data={data} options={{
+ * @example <EnhancedTable data={data} options={{
       disablePagination: true,
       selector: true,
       toolbarActions: [{

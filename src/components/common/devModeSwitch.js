@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { LoginContext } from 'contexts';
 import { FormControlLabel, Switch, makeStyles, Typography } from '@material-ui/core';
 import { DeveloperConfig } from 'constants/index';
+import { LayoutContext, LoginContext } from 'contexts/index';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -21,12 +21,13 @@ const useStyles = makeStyles(theme => ({
 export const DevModeSwitch = () => {
   const classes = useStyles();
   const { devMode, setDevMode } = useContext(LoginContext);
-  const devModeStatusToggle = () => {
-    if (devMode)
-      setDevMode(false);
-    else
-      setDevMode(true);
-  };
+  const { setCurrentTheme } = useContext(LayoutContext);
+  const devModeStatusToggle = React.useCallback(() => {
+    setDevMode(current => {
+      setCurrentTheme(X => { return { ...X, theme: !current ? 'DARK' : 'LIGHT' }; });
+      return !current;
+    });
+  }, [setDevMode, setCurrentTheme]);
   let content = (
     <FormControlLabel className={classes.devModeToggle}
       control={
@@ -35,7 +36,7 @@ export const DevModeSwitch = () => {
           value={Boolean(devMode)}
           onChange={() => { devModeStatusToggle(); }}
         />}
-      label={<Typography variant="body1" color="textSecondary"     >
+      label={<Typography variant="body1" color="text"     >
         {(DeveloperConfig.label !== undefined ? DeveloperConfig.label : 'God Mode')}
       </Typography>
       }

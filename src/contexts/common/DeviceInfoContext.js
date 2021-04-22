@@ -20,10 +20,23 @@ export const DeviceInfoProvider = (props) => {
     setDeviceInfo(deviceDetect());
   }, []);
 
+  const deviceData = React.useMemo(() => {
+    if (deviceInfo === undefined || deviceUUID === undefined) return undefined;
+    return {
+      deviceType: 'WEB',
+      deviceName: `${deviceInfo.browserName} ${deviceInfo.browserMajorVersion} on ${deviceInfo.osName} ${deviceInfo.osVersion}`,
+      deviceUUID: deviceUUID + ''
+    };
+  }, [deviceUUID, deviceInfo]);
+
   if (deviceUUID === undefined || deviceInfo === undefined)
     return <LoadingScreen loadingText='loading device info' />;
 
-  return <DeviceInfoContext.Provider value={{ deviceUUID, deviceInfo, deviceName: `${deviceInfo.browserName} ${deviceInfo.browserMajorVersion} on ${deviceInfo.osName} ${deviceInfo.osVersion}` }} >{props.children}</DeviceInfoContext.Provider>;
+  return <DeviceInfoContext.Provider value={{
+    deviceData,
+    deviceUUID, deviceInfo,
+    deviceName: `${deviceInfo.browserName} ${deviceInfo.browserMajorVersion} on ${deviceInfo.osName} ${deviceInfo.osVersion}`
+  }} >{props.children}</DeviceInfoContext.Provider>;
 };
 
 DeviceInfoProvider.propTypes = {
