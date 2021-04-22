@@ -11,7 +11,7 @@ export const axiosInstance = axios.create({
 /**
  * @author Sanchit Dang
  * @param {any} data Response to send
- * @returns {Object}
+ * @returns {Object} response
  */
 export const generateSuccess = (data) => {
   return {

@@ -35,9 +35,9 @@ class API {
   /**
   * @author Sanchit Dang
   * @description logoutUser Login API endpoint
-  * @returns {Object} responseObject
+  * @returns {Promise<Object>} responseObject
   */
-  logoutUser() {
+  async logoutUser() {
     return axiosInstance.put('logout', {}, {
       headers: {
         authorization: "Bearer " + AccessToken
@@ -46,6 +46,22 @@ class API {
       logout();
       return generateSuccess(true);
     }).catch(error => errorHelper(error));
+  }
+
+  /**
+   * 
+   * @param {Object} data 
+   * @param {String} data.ssoToken 
+   * @param {Object} data.deviceData 
+   * @param {String} data.deviceData.deviceName
+   * @param {String} data.deviceData.deviceType
+   * @param {String} data.deviceData.deviceUUID
+   * @returns {Promise<Object>}
+   */
+  async authenticateSSO(data) {
+    return axiosInstance.post(`sso/auth/validate`, data)
+      .then((response) => generateSuccess(response.data.data))
+      .catch(error => errorHelper(error));
   }
 }
 const instance = new API();

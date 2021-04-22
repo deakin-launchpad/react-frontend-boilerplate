@@ -4,34 +4,26 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import './helpers/database/idb';
-import { MuiThemeProvider } from '@material-ui/core';
 import { AppRoutes } from './bricks/index';
 import { ContextManager } from 'contexts';
 import { Notification, DevModeSwitch, LoginCheck, GlobalStyles } from 'components';
-import { DeveloperConfig, THEMES } from 'constants/index';
-import { createTheme } from 'theme/index';
+import { DeveloperConfig } from 'constants/index';
+import { ThemeProvider } from 'theme';
 
 const App = (props) => {
   useEffect(() => {
     document.title = process.env.REACT_APP_NAME;
   }, []);
-  let applicationTheme = createTheme({
-    compact: false,
-    direction: 'ltr',
-    responsiveFontSizes: true,
-    roundedCorners: true, 
-    theme: THEMES.LIGHT
-  });
   return (
     <ContextManager>
-      <LoginCheck>
-        <MuiThemeProvider theme={applicationTheme} >
+      <ThemeProvider>
+        <LoginCheck>
           <AppRoutes {...props} />
-        </MuiThemeProvider>
-        <GlobalStyles />
-        {DeveloperConfig.visible ? <DevModeSwitch /> : ''}
-        <Notification />
-      </LoginCheck>
+          <GlobalStyles />
+          {DeveloperConfig.visible ? <DevModeSwitch /> : ''}
+          <Notification />
+        </LoginCheck>
+      </ThemeProvider>
     </ContextManager>
   );
 };

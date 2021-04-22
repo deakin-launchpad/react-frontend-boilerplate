@@ -6,7 +6,6 @@ import { Box, Button, FormHelperText, TextField } from '@material-ui/core';
 import { LoginContext } from 'contexts';
 import { DeveloperConfig } from 'constants/index';
 
-
 export const LoginForm = (props) => {
   const { devMode, setAccessToken } = useContext(LoginContext);
 
@@ -27,12 +26,12 @@ export const LoginForm = (props) => {
         emailId: Yup.string().email('Must be a valid Email').max(255)
           .required('Email is required'),
         password: Yup
-          .string()
+          .string().min(6)
           .max(255)
           .required('Password is required')
       });
     },
-    onSubmit: async (values, { setErrors, setStatus, setSubmitting }) => {
+    onSubmit: async (values, { setStatus, setSubmitting }) => {
       const response = await props.login(values);
       if (response.success) {
         setAccessToken(response.accessToken);
@@ -40,7 +39,6 @@ export const LoginForm = (props) => {
         setSubmitting(false);
       } else {
         setStatus({ success: false });
-        setErrors({ submit: response.data });
         setSubmitting(false);
       }
     },

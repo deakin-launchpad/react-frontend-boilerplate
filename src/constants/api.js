@@ -8,6 +8,9 @@ class API {
       "twilioAPIkey": "",
       "twilioAPIsecret": ""
     };
+    this.jwt = {
+      url: 'https://rapid.test.aaf.edu.au/jwt/authnrequest/research/HuP9vbv2Sv3RivbqPCIzFg?entityID=https://signon-dev.deakin.edu.au/idp/shibboleth'
+    };
   }
 }
 

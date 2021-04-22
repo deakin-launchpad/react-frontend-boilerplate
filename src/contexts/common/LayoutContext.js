@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { LayoutConfig } from 'constants/index';
+import { LayoutConfig, THEMES } from 'constants/index';
 export const LayoutContext = createContext();
 
 export const LayoutProvider = (props) => {
@@ -9,7 +9,13 @@ export const LayoutProvider = (props) => {
   const [headerElements, setHeaderElements] = useState(null);
   let _pathtoCheck = String(window.location.pathname).split('/');
   const [layoutConfiguration, setConfiguration] = useState(LayoutConfig);
-
+  const [currentTheme, setCurrentTheme] = useState({
+    compact: false,
+    direction: 'ltr',
+    responsiveFontSizes: true,
+    roundedCorners: true,
+    theme: THEMES.DARK
+  });
   useEffect(() => {
     let _controllerArr;
     LayoutConfig.menuItems.forEach(value => {
@@ -27,7 +33,12 @@ export const LayoutProvider = (props) => {
     setConfiguration({ ...layoutConfiguration, [item]: data });
   };
 
-  return <LayoutContext.Provider value={{ pageTitle, setPageTitle, headerElements, setHeaderElements, layoutConfiguration, changeConfiguration }} >{children}</LayoutContext.Provider>;
+  return <LayoutContext.Provider value={{
+    pageTitle, setPageTitle,
+    headerElements, setHeaderElements,
+    layoutConfiguration, changeConfiguration,
+    currentTheme, setCurrentTheme
+  }} >{children}</LayoutContext.Provider>;
 };
 
 LayoutProvider.propTypes = {
