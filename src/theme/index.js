@@ -247,7 +247,7 @@ export const ThemeProvider = ({ children }) => {
       if (layoutContext.currentTheme !== undefined)
         changeAppTheme(createTheme(layoutContext.currentTheme));
   }, [layoutContext]);
-  if (appTheme === undefined) return <LoadingScreen />;
+  if (appTheme === undefined) return <LoadingScreen loadingText='loading theme' />;
   return <MuiThemeProvider theme={appTheme} >
     {children}
   </MuiThemeProvider>;

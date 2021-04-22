@@ -45,7 +45,7 @@ class Layout {
       "permanent": true,
       "default": "open"
     };
-   
+
     this.defaultContainerSX = {
       backgroundColor: 'background.default',
       display: 'flex', flexDirection: 'column',

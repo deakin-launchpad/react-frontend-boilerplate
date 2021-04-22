@@ -20,7 +20,8 @@ export const DeviceInfoProvider = (props) => {
     setDeviceInfo(deviceDetect());
   }, []);
 
-  if (deviceUUID === undefined || deviceInfo === undefined) return <LoadingScreen loadingText='loading device info' />;
+  if (deviceUUID === undefined || deviceInfo === undefined)
+    return <LoadingScreen loadingText='loading device info' />;
 
   return <DeviceInfoContext.Provider value={{ deviceUUID, deviceInfo, deviceName: `${deviceInfo.browserName} ${deviceInfo.browserMajorVersion} on ${deviceInfo.osName} ${deviceInfo.osVersion}` }} >{props.children}</DeviceInfoContext.Provider>;
 };

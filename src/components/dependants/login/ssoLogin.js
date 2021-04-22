@@ -9,7 +9,11 @@ export const SsoLogin = () => {
       backgroundColor: 'rgb(0, 125, 155)'
     }}
     fullWidth
+    type='button'
     size="large"
+    onClick={(e) => {
+      e.stopPropagation();
+    }}
     variant="contained"
   >Login With Deakin</Button>;
 };

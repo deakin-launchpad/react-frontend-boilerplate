@@ -47,7 +47,7 @@ export const LoginForm = (props) => {
   let form = (
     <form noValidate onSubmit={formik.handleSubmit}>
       <TextField
-        autoFocus
+
         error={formik.touched.emailId && Boolean(formik.errors.emailId)}
         fullWidth
         helperText={formik.touched.emailId && formik.errors.emailId}

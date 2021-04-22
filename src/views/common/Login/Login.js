@@ -25,7 +25,6 @@ export const Login = () => {
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
 
   const performLogin = useCallback(async (loginValues) => {
-    console.log('calling perform login');
     if (ConnectionConfig.bypassBackend) {
       setAccessToken('dummyToken');
     } else {
@@ -66,10 +65,10 @@ export const Login = () => {
             </Box>
             <Box sx={{ flexGrow: 1, mt: 3 }} >
               <LoginForm login={performLogin} />
-              <Box sx={{ mt: 2 }}>
-                <SsoLogin />
-              </Box>
             </Box>
+            {ConnectionConfig.useDeakinSSO && <Box sx={{ mt: 2 }}>
+              <SsoLogin />
+            </Box>}
             <Divider sx={{ my: 3 }} />
             <Link
               color="textSecondary"

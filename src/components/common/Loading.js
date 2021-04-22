@@ -9,7 +9,11 @@ const useStyles = makeStyles(() => ({
 }));
 export const LoadingScreen = (props) => {
   let classes = useStyles();
-  return (<Grid container spacing={0} direction={'column'} justifyContent="center" alignItems="center" className={classes.root}>
+  return (<Grid style={{
+    height: '100vh',
+    width: '100%',
+    margin: 'auto auto'
+  }} container spacing={0} direction={'column'} justifyContent="center" alignItems="center" className={classes.root}>
     < Grid item className={classes.loadingCircle}>
       <CircularProgress disableShrink />
     </Grid>
