@@ -52,7 +52,7 @@ export const BottomNavToolbar = () => {
     if (_pathtoCheck[1] === 'menu') {
       return setValue(layoutConfiguration.menuItems.length);
     }
-  }, [layoutConfiguration]);
+  }, [currentUserRole, layoutConfiguration]);
   const renderIcons = () => {
     if (undefined !== layoutConfiguration)
       return layoutConfiguration.menuItems.map((item, key) => {
