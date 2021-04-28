@@ -7,8 +7,8 @@ class Connection {
       "accessTokenVerification": false
     };
     this.bypassBackend = false;
-    this.useDeakinSSO = true;
-    this.useACL = true;
+    this.useDeakinSSO = false;
+    this.useACL = false;
   }
 }
 
