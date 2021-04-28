@@ -18,6 +18,11 @@ class API {
     }).catch(error => errorHelper(error, "login"));
   }
 
+  getUserRole() {
+    return axiosInstance.get(`userRole`).then(response => generateSuccess(response))
+      .catch(error => errorHelper(error));
+  }
+
   /**
   * @author Sanchit Dang
   * @description AccessToken Login API endpoint

@@ -3,7 +3,7 @@
  ***/
 import React, { useState, useContext, useCallback } from 'react';
 import { makeStyles, Typography, Box, createStyles, Container, Card, CardContent, Divider, Link } from '@material-ui/core';
-import { LoginContext, DeviceInfoContext } from 'contexts';
+import { LoginContext, DeviceInfoContext, LayoutContext } from 'contexts';
 import { LoginForm, SsoLogin } from 'components';
 import { API } from 'helpers';
 import { ConnectionConfig } from 'constants/index';
@@ -23,10 +23,12 @@ export const Login = () => {
   const [pageHeading] = useState('Login');
   const { setAccessToken } = useContext(LoginContext);
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
+  const { setCurrentUserRole } = useContext(LayoutContext);
 
   const performLogin = useCallback(async (loginValues) => {
     if (ConnectionConfig.bypassBackend) {
       setAccessToken('dummyToken');
+
     } else {
       let details = {
         ...loginValues, deviceData: {
@@ -35,10 +37,17 @@ export const Login = () => {
           deviceUUID: deviceUUID
         }
       };
-      return API.login(details,);
+      return API.login(details);
     }
   }, [setAccessToken, deviceUUID, deviceName]);
 
+  const getUserRole = useCallback(async () => {
+    const response = await API.getUserRole();
+    if (response.success) {
+      setCurrentUserRole(response.data);
+      return true;
+    } else return false;
+  }, [setCurrentUserRole]);
 
   let content = (
     <Box sx={{
@@ -64,7 +73,7 @@ export const Login = () => {
               </div>
             </Box>
             <Box sx={{ flexGrow: 1, mt: 3 }} >
-              <LoginForm login={performLogin} />
+              <LoginForm login={performLogin} onSuccess={getUserRole} />
             </Box>
             {ConnectionConfig.useDeakinSSO && <Box sx={{ mt: 2 }}>
               <SsoLogin />

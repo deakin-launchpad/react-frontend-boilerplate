@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, FormHelperText, TextField } from '@material-ui/core';
 import { LoginContext } from 'contexts';
-import { DeveloperConfig } from 'constants/index';
+import { ConnectionConfig, DeveloperConfig } from 'constants/index';
 
 export const LoginForm = (props) => {
   const { devMode, setAccessToken } = useContext(LoginContext);
@@ -39,8 +39,17 @@ export const LoginForm = (props) => {
         };
       const response = await props.login(values);
       if (response.success) {
-        setAccessToken(response.accessToken);
-        setStatus({ success: true });
+        if (!(props.onSuccess instanceof Function) || !ConnectionConfig.useACL) {
+          setAccessToken(response.accessToken);
+          setStatus({ success: true });
+        } else {
+          const response = await props.onSuccess();
+          if (response) {
+            setAccessToken(response.accessToken);
+            setStatus({ success: true });
+          }
+          else setStatus({ success: false });
+        }
         setSubmitting(false);
       } else {
         setStatus({ success: false });
@@ -105,4 +114,5 @@ export const LoginForm = (props) => {
 
 LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
 };
