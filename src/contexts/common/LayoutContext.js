@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { LayoutConfig, THEMES } from 'constants/index';
+import { LoadingScreen } from 'components/index';
 export const LayoutContext = createContext();
 
 export const LayoutProvider = (props) => {
@@ -9,6 +10,8 @@ export const LayoutProvider = (props) => {
   const [headerElements, setHeaderElements] = useState(null);
   let _pathtoCheck = String(window.location.pathname).split('/');
   const [layoutConfiguration, setConfiguration] = useState(LayoutConfig);
+  const [currentUserRole, setCurrentUserRole] = useState('DEFAULT');
+
   const [currentTheme, setCurrentTheme] = useState({
     compact: false,
     direction: 'ltr',
@@ -18,7 +21,7 @@ export const LayoutProvider = (props) => {
   });
   useEffect(() => {
     let _controllerArr;
-    LayoutConfig.menuItems.forEach(value => {
+    LayoutConfig.getMenuItems(currentUserRole).forEach(value => {
       _controllerArr = String(value.controller).split('/');
       if (_pathtoCheck[1] === _controllerArr[1]) {
         setPageTitle((value.customTitle === undefined || value.customTitle === '' ? value.name : value.customTitle));
@@ -27,16 +30,18 @@ export const LayoutProvider = (props) => {
     if (_pathtoCheck[1] === 'menu') {
       setPageTitle('Menu');
     }
-  }, [_pathtoCheck]);
+  }, [_pathtoCheck, currentUserRole]);
 
   const changeConfiguration = (item, data) => {
     setConfiguration({ ...layoutConfiguration, [item]: data });
   };
 
+  if (currentUserRole === undefined) return <LoadingScreen />;
   return <LayoutContext.Provider value={{
     pageTitle, setPageTitle,
     headerElements, setHeaderElements,
     layoutConfiguration, changeConfiguration,
+    currentUserRole, setCurrentUserRole,
     currentTheme, setCurrentTheme
   }} >{children}</LayoutContext.Provider>;
 };

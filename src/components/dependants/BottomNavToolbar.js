@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => createStyles({
 export const BottomNavToolbar = () => {
   const classes = useStyles();
   const [value, setValue] = useState(null);
-  const { setPageTitle, layoutConfiguration } = useContext(LayoutContext);
+  const { setPageTitle, layoutConfiguration, currentUserRole } = useContext(LayoutContext);
   let menuButtonLabel = (layoutConfiguration.menuButtonLabel !== undefined ?
     layoutConfiguration.menuButtonLabel !== '' ? layoutConfiguration.menuButtonLabel : 'menu'
     : 'menu');
@@ -40,7 +40,7 @@ export const BottomNavToolbar = () => {
     let counter = 0;
     let _pathtoCheck = String(window.location.pathname).split('/');
     let _controllerArr;
-    layoutConfiguration.menuItems.forEach(value => {
+    layoutConfiguration.getMenuItems(currentUserRole).forEach(value => {
       _controllerArr = String(value.controller).split('/');
       if (value.isFavourite) {
         if (_pathtoCheck[1] === (_controllerArr[0] === '' ? _controllerArr[1] : _controllerArr[0])) {

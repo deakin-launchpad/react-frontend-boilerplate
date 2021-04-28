@@ -1,36 +1,57 @@
 
+class MenuItem {
+  /**
+   * 
+   * @param {Object} data 
+   * @param {String} data.name
+   * @param {String} data.type
+   * @param {String} data.icon
+   * @param {String} data.controller
+   * @param {String} data.customTitle
+   * @param {boolean} data.isFavourite
+   */
+  constructor(data) {
+    this.id = data.id;
+    this.name = data.name;
+    this.type = data.type;
+    this.icon = data.icon;
+    this.controller = data.helpingAttribute;
+    this.customTitle = data.customTitle;
+    this.isFavourite = data.isFavourite;
+  }
+}
+
 class Layout {
   constructor() {
     this.landingPage = "/home";
-    this.menuItems = [
-      {
-        "name": "Home",
-        "type": "button",
-        "icon": "ant-design:home-filled",
-        "controller": "/home",
-        "customTitle": "Welcome to Boiler Plate",
-        "isFavourite": true,
-        "subMenuItems": []
-      },
-      {
-        "name": "Example",
-        "type": "button",
-        "icon": "bytesize:code",
-        "controller": "/examples",
-        "customTitle": "Example Code File",
-        "isFavourite": true,
-        "subMenuItems": []
-      },
-      {
-        "name": "Logout",
-        "type": "logout",
-        "icon": "fe:logout",
-        "controller": "",
-        "customTitle": "Welcome to Boiler Plate",
-        "isFavourite": false,
-        "subMenuItems": []
-      }
-    ];
+    this.menuItems = {
+      DEFAULT: [
+        new MenuItem({
+          "name": "Home",
+          "type": "button",
+          "icon": "ant-design:home-filled",
+          "controller": "/home",
+          "customTitle": "Welcome to Boiler Plate",
+          "isFavourite": true
+        }),
+        new MenuItem({
+          "name": "Example",
+          "type": "button",
+          "icon": "bytesize:code",
+          "controller": "/examples",
+          "customTitle": "Example Code File",
+          "isFavourite": true
+        }),
+        new MenuItem({
+          "name": "Logout",
+          "type": "logout",
+          "icon": "fe:logout",
+          "controller": "",
+          "customTitle": "Welcome to Boiler Plate",
+          "isFavourite": false
+        })
+      ],
+    };
     this.header = {
       "visibleOnDesktop": true,
       "visibleOnMobile": true,
@@ -51,6 +72,17 @@ class Layout {
       display: 'flex', flexDirection: 'column',
       minHeight: 'calc(100% - 64px)'
     };
+  }
+
+  /**
+   * 
+   * @param {String} userType 
+   * @returns {Array<MenuItem>}
+   */
+  getMenuItems(userType) {
+    switch (userType.toLowerCase()) {
+      default: return this.menuItems.DEFAULT;
+    }
   }
 }
 

@@ -8,6 +8,7 @@ class Connection {
     };
     this.bypassBackend = false;
     this.useDeakinSSO = true;
+    this.useACL = true;
   }
 }
 

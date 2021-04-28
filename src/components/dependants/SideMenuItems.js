@@ -5,10 +5,10 @@ import { LayoutContext } from 'contexts';
 import { Icon as ParentIcon } from '@material-ui/core';
 import { InlineIcon } from '@iconify/react-with-api';
 import { API } from 'helpers';
+import { LayoutConfig } from 'constants/index';
 
 export const SideMenuItems = withRouter(() => {
-  const { setPageTitle, layoutConfiguration } = useContext(LayoutContext);
-  const menuItems = layoutConfiguration.menuItems !== undefined ? layoutConfiguration.menuItems : [];
+  const { setPageTitle, layoutConfiguration, currentUserRole } = useContext(LayoutContext);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const menuitemsController = (value, key) => {
     switch (value.type) {
@@ -78,7 +78,7 @@ export const SideMenuItems = withRouter(() => {
 
   return (
     <List>
-      {menuItems.map((value, i) => {
+      {LayoutConfig.getMenuItems(currentUserRole).map((value, i) => {
         return menuitemsController(value, i);
       })}
     </List>
