@@ -2,7 +2,8 @@
  *  Created by Sanchit Dang
  ***/
 import React, { useState } from 'react';
-import { TextField, makeStyles, Typography, Button, Box, Divider, Container, Card, CardContent, Link, createStyles } from '@material-ui/core';
+import { TextField, Typography, Button, Box, Divider, Container, Card, CardContent, Link } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/styles';
 import { notify } from 'components';
 import { Link as RouterLink } from 'react-router-dom';
 import { DeviceInfoContext } from 'contexts/index';

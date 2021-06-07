@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { makeStyles, useMediaQuery, createStyles } from '@material-ui/core';
+import { useMediaQuery } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/styles';
 import { Header, BottomNavToolbar } from 'components';
 import { LayoutContext } from 'contexts';
 

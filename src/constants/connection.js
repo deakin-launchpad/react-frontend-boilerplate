@@ -6,7 +6,7 @@ class Connection {
       "socketDefaultOptions": {},
       "accessTokenVerification": false
     };
-    this.bypassBackend = false;
+    this.bypassBackend = true;
     this.useDeakinSSO = false;
     this.useACL = false;
   }

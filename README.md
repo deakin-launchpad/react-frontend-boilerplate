@@ -1,4 +1,4 @@
-# React frontend boilerplate
+# React frontend boilerplate 2.0.1
 
 In order to use the boilerplate you will need NodeJS to be installed on your system.
 
@@ -89,7 +89,7 @@ The basic configuration of the application is defined in JSON files. In the futu
 				"name": Name of button,
 				"type": "button",
 				"icon": "mdi:home", // COMMENT: Add icon name you would like to display
-				"controller": "/home", // COMMENT: Add path name to you view
+				"helpingAttribute": "/home", // COMMENT: Add path name to you view
 				"customTitle": "This is my custom title" // COMMENT: The title will be displayed along with icon in side menu
 	}
 	```

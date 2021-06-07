@@ -22,7 +22,7 @@ export const LayoutProvider = (props) => {
   useEffect(() => {
     let _controllerArr;
     LayoutConfig.getMenuItems(currentUserRole).forEach(value => {
-      _controllerArr = String(value.controller).split('/');
+      _controllerArr = String(value.helpingAttribute).split('/');
       if (_pathtoCheck[1] === _controllerArr[1]) {
         setPageTitle((value.customTitle === undefined || value.customTitle === '' ? value.name : value.customTitle));
       }

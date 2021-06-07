@@ -12,7 +12,7 @@ export const SideMenuItems = withRouter(() => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const menuitemsController = (value, key) => {
     switch (value.type) {
-      case 'button': return renderMenuButton(value.name, value.icon, value.controller, value.customTitle, key);
+      case 'button': return renderMenuButton(value.name, value.icon, value.helpingAttribute, value.customTitle, key);
       case 'logout': return renderLogoutButton(value.name, value.icon, key);
       default: return null;
     }
@@ -22,8 +22,8 @@ export const SideMenuItems = withRouter(() => {
       let counter = 0;
       let _pathtoCheck = String(window.location.pathname).split('/');
       let _controllerArr;
-      layoutConfiguration.menuItems.forEach(value => {
-        _controllerArr = String(value.controller).split('/');
+      layoutConfiguration.getMenuItems(currentUserRole).forEach(value => {
+        _controllerArr = String(value.helpingAttribute).split('/');
         if (value.isFavourite) {
           if (_pathtoCheck[1] === (_controllerArr[0] === '' ? _controllerArr[1] : _controllerArr[0])) {
             setSelectedIndex(counter);
@@ -35,7 +35,7 @@ export const SideMenuItems = withRouter(() => {
         setSelectedIndex(counter + 1);
       }
     }
-  }, [layoutConfiguration]);
+  }, [currentUserRole, layoutConfiguration]);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);

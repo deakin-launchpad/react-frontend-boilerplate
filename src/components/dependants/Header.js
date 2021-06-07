@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import clsx from 'clsx';
-import { AppBar, Toolbar, Typography, makeStyles, Drawer, Divider, IconButton, useMediaQuery, createStyles } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Drawer, Divider, IconButton, useMediaQuery } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/styles';
 import { LayoutContext } from 'contexts';
 import { SideMenuItems } from './SideMenuItems';
 import MenuIcon from '@material-ui/icons/Menu';

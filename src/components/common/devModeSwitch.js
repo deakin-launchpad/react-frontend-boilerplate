@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { FormControlLabel, Switch, makeStyles, Typography } from '@material-ui/core';
+import { FormControlLabel, Switch, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { DeveloperConfig } from 'constants/index';
 import { LayoutContext, LoginContext } from 'contexts/index';
 

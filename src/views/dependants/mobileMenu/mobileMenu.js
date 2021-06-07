@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { List, Icon, ListItem, ListItemText, ListSubheader, Divider, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
+import { List, Icon, ListItem, ListItemText, ListSubheader, Divider, Typography, useMediaQuery } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { Link, Redirect } from 'react-router-dom';
 import { API } from 'helpers';
 import { LayoutContext } from 'contexts';
@@ -86,7 +87,7 @@ export const MobileMenu = () => {
                 return logoutButton(value, i);
               return (
                 <div key={'menu_button' + i}>
-                  <ListItem button component={Link} className={classes.listItem} to={value.controller}>
+                  <ListItem button component={Link} className={classes.listItem} to={value.helpingAttribute}>
                     <Icon>
                       {value.icon}
                     </Icon>

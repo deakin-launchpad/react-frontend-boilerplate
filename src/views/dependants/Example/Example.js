@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Button, Card, CardContent, CardActions, makeStyles, createStyles, Box } from '@material-ui/core';
+import { Grid, Typography, Button, Card, CardContent, CardActions, Box } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/styles';
 import { EnhancedEditor, EnhancedDrawer, EnhancedModal, VideoCall } from 'components';
 import { useGeoLocation } from 'helpers';
 import { EnhancedTable } from 'components/index';

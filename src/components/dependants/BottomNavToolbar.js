@@ -5,7 +5,8 @@
 
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction, makeStyles, Paper, createStyles, Icon as ParentIcon } from '@material-ui/core';
+import { BottomNavigation, BottomNavigationAction, Paper, Icon as ParentIcon } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/styles';
 import { API } from 'helpers';
 import { LayoutContext } from 'contexts';
 import { InlineIcon } from '@iconify/react-with-api';
@@ -41,7 +42,7 @@ export const BottomNavToolbar = () => {
     let _pathtoCheck = String(window.location.pathname).split('/');
     let _controllerArr;
     layoutConfiguration.getMenuItems(currentUserRole).forEach(value => {
-      _controllerArr = String(value.controller).split('/');
+      _controllerArr = String(value.helpingAttribute).split('/');
       if (value.isFavourite) {
         if (_pathtoCheck[1] === (_controllerArr[0] === '' ? _controllerArr[1] : _controllerArr[0])) {
           return setValue(counter);
@@ -55,13 +56,13 @@ export const BottomNavToolbar = () => {
   }, [currentUserRole, layoutConfiguration]);
   const renderIcons = () => {
     if (undefined !== layoutConfiguration)
-      return layoutConfiguration.menuItems.map((item, key) => {
+      return layoutConfiguration.getMenuItems(currentUserRole).map((item, key) => {
         if (item.isFavourite) {
           if (item.type === 'logout')
             return <BottomNavigationAction onClick={() => { API.logoutUser(); }} label={item.name} icon={<ParentIcon>
               <InlineIcon icon={item.icon} />
             </ParentIcon>} key={key} />;
-          return <BottomNavigationAction onClick={() => { setPageTitle(item.customTitle ? item.customTitle : item.name); }} component={Link} to={item.controller} label={item.name} icon={<ParentIcon>
+          return <BottomNavigationAction onClick={() => { setPageTitle(item.customTitle ? item.customTitle : item.name); }} component={Link} to={item.helpingAttribute} label={item.name} icon={<ParentIcon>
             <InlineIcon icon={item.icon} />
           </ParentIcon>} key={key} />;
         } return null;

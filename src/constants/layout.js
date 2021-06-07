@@ -6,7 +6,7 @@ class MenuItem {
    * @param {String} data.name
    * @param {String} data.type
    * @param {String} data.icon
-   * @param {String} data.controller
+   * @param {String} data.helpingAttribute
    * @param {String} data.customTitle
    * @param {boolean} data.isFavourite
    */
@@ -15,7 +15,7 @@ class MenuItem {
     this.name = data.name;
     this.type = data.type;
     this.icon = data.icon;
-    this.controller = data.helpingAttribute;
+    this.helpingAttribute = data.helpingAttribute;
     this.customTitle = data.customTitle;
     this.isFavourite = data.isFavourite;
   }
@@ -30,7 +30,7 @@ class Layout {
           "name": "Home",
           "type": "button",
           "icon": "ant-design:home-filled",
-          "controller": "/home",
+          "helpingAttribute": "/home",
           "customTitle": "Welcome to Boiler Plate",
           "isFavourite": true
         }),
@@ -38,7 +38,7 @@ class Layout {
           "name": "Example",
           "type": "button",
           "icon": "bytesize:code",
-          "controller": "/examples",
+          "helpingAttribute": "/examples",
           "customTitle": "Example Code File",
           "isFavourite": true
         }),
@@ -46,7 +46,7 @@ class Layout {
           "name": "Logout",
           "type": "logout",
           "icon": "fe:logout",
-          "controller": "",
+          "helpingAttribute": "",
           "customTitle": "Welcome to Boiler Plate",
           "isFavourite": false
         })
