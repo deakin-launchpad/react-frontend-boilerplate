@@ -681,9 +681,8 @@ export const EnhancedTable = (props) => {
     return <div>Irrevelant data.</div>;
   if (!Array.isArray(props.data))
     return <div>Not an array.</div>;
-  return <TablePaperWrapper
-    disableContainer={props.options && props.options.ui && props.options.ui.disableContainer} >
-    <TableHeader {...props} keys={keys} disable={props.options.ui.disableTitle} selecteditems={selecteditems} />
+  return <TablePaperWrapper disableContainer={props.options?.ui?.disableContainer} >
+    <TableHeader {...props} keys={keys} disable={props.options?.ui?.disableTitle} selecteditems={selecteditems} />
     <div className={classes.tableWrapper}>
       <Table className={classes.table} stickyHeader={props.options !== undefined ? props.options.selector ? true : false : false} >
         <TableHeading {...props} keys={keys} />
