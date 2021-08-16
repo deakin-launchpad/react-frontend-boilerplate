@@ -176,7 +176,7 @@ TablePaperWrapper.propTypes = {
 };
 
 const Heading = (props) => {
-  return (<TableCell  align={(props.align !== undefined ? props.align : "left")}><strong>{props.value}</strong></TableCell>);
+  return (<TableCell align={(props.align !== undefined ? props.align : "left")}><strong>{props.value}</strong></TableCell>);
 };
 Heading.propTypes = {
   styles: PropTypes.object,
@@ -679,6 +679,8 @@ export const EnhancedTable = (props) => {
 
   if (props.data === undefined || props.data === null)
     return <div>Irrevelant data.</div>;
+  if (!Array.isArray(props.data))
+    return <div>Not an array.</div>;
   return <TablePaperWrapper
     disableContainer={props.options && props.options.ui && props.options.ui.disableContainer} >
     <TableHeader {...props} keys={keys} disable={props.options.ui.disableTitle} selecteditems={selecteditems} />
