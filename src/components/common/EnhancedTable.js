@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, TablePagination, Checkbox, IconButton, Toolbar, Button, Grid, Switch } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, TablePagination, Checkbox, IconButton, Toolbar, Button, Grid, Switch, TableSortLabel } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -176,12 +176,33 @@ TablePaperWrapper.propTypes = {
 };
 
 const Heading = (props) => {
-  return (<TableCell align={(props.align !== undefined ? props.align : "left")}><strong>{props.value}</strong></TableCell>);
+  return (<TableCell
+    sortDirection={!props.sortAssending ? 'desc' : 'asc'}
+    align={(props.align !== undefined ? props.align : "left")}
+  >
+    {
+      props.sort ?
+        <TableSortLabel
+          active={props.value === props.selectedSortVariable}
+          direction={!props.sortAssending ? 'desc' : 'asc'}
+          onClick={(e) => props.onSortChange instanceof Function && props.onSortChange(e, props.value)}
+        >
+          {props.titleCase ? TextHelper.titleCase(props.value) : props.value}
+        </TableSortLabel>
+        : <strong>{props.titleCase ? TextHelper.titleCase(props.value) : props.value}</strong>
+    }
+
+  </TableCell>);
 };
 Heading.propTypes = {
   styles: PropTypes.object,
   align: PropTypes.string,
-  value: PropTypes.any
+  sort: PropTypes.bool,
+  titleCase: PropTypes.bool,
+  selectedSortVariable: PropTypes.string,
+  onSortChange: PropTypes.func,
+  value: PropTypes.string.isRequired,
+  sortAssending: PropTypes.bool,
 };
 
 const TableHeader = (props) => {
@@ -240,10 +261,14 @@ const TableHeading = (props) => {
 
   const renderHeader = useCallback(() => {
     return props.keys.map((key, i) => {
-      return <Heading key={`heading_${i}`} value={props?.options?.titleCaseHeadings ?
-        TextHelper.titleCase(key) : key} />;
+      return <Heading key={`heading_${i}`}
+        align={props.data[key] instanceof Number ? 'right' : 'left'}
+        titleCase={props?.options?.titleCaseHeadings}
+        value={key}
+        {...props.sort}
+      />;
     });
-  }, [props.keys, props.options]);
+  }, [props.keys, props.data, props?.options?.titleCaseHeadings, props?.sort]);
 
   const renderActionHeaders = () => {
     return props.options.actions.map((value, i) => {
@@ -270,6 +295,7 @@ const TableHeading = (props) => {
 };
 
 TableHeading.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
   options: PropTypes.shape({
     actionLocation: PropTypes.oneOf(['start', 'end']),
     selector: PropTypes.bool,
@@ -291,6 +317,12 @@ TableHeading.propTypes = {
     titleCaseHeadings: PropTypes.bool,
   }),
   keys: PropTypes.arrayOf(PropTypes.string),
+  sort: PropTypes.shape({
+    sort: PropTypes.bool,
+    selectedSortVariable: PropTypes.string,
+    onSortChange: PropTypes.func,
+    sortAssending: PropTypes.bool,
+  })
 };
 
 const TableErrorAndEmptyRows = (props) => {
@@ -361,13 +393,33 @@ RenderRow.propTypes = {
 
 
 const TableRows = (props) => {
-  const currentRowData = useMemo(() => {
+  let prepareCurrentRowData = useCallback(() => {
     if (props.data === undefined) return [];
-    if (props?.options?.disablePagination) {
-      return props.data;
+    let _data = props.data;
+    if (props.sort?.sort) {
+      _data.sort((a, b) => {
+        if (a[props.sort.selectedSortVariable] === b[props.sort.selectedSortVariable]) return 0;
+        if (props.sort.sortAssending !== true) {
+          if (a[props.sort.selectedSortVariable] > b[props.sort.selectedSortVariable]) return -1;
+          else return 1;
+        }
+        else {
+          if (a[props.sort.selectedSortVariable] > b[props.sort.selectedSortVariable]) return 1;
+          else return -1;
+        }
+      });
     }
-    return props.data.slice(props.page * props.rowsPerPage, props.page * props.rowsPerPage + props.rowsPerPage);
-  }, [props.data, props?.options?.disablePagination, props.page, props.rowsPerPage]);
+    if (props?.options?.disablePagination) {
+      return _data;
+    }
+    return _data.slice(props.page * props.rowsPerPage, props.page * props.rowsPerPage + props.rowsPerPage);
+  }, [props.data, props?.options?.disablePagination, props.page, props.rowsPerPage, props.sort]);
+  const [currentRowData, setCurrentRowData] = useState([]);
+  useEffect(() => {
+    let data = prepareCurrentRowData();
+    setCurrentRowData(data);
+  }, [prepareCurrentRowData]);
+
 
   const renderActions = useCallback((__obj) => {
     let defaultValue;
@@ -431,6 +483,11 @@ TableRows.propTypes = {
         function: PropTypes.func
       })
     ),
+  }),
+  sort: PropTypes.shape({
+    sort: PropTypes.bool,
+    selectedSortVariable: PropTypes.string,
+    sortAssending: PropTypes.bool,
   })
 };
 
@@ -553,63 +610,6 @@ TablePaginationComponent.propTypes = {
 };
 
 
-/**
- * 
- * @param {Object[]} props.data Accepts data for the table to display.
- * @param {Boolean} props.error Accepts data for the table to display.
- * @param {String} props.errorText Accepts data for the table to display.
- * @param {Object} props.options options for the Table.
- * @param {Boolean} props.options.disablePagination disable pagination and adds scroll.
- * @param {Boolean} props.options.disablePaginationDefaults disable the default function for pagination buttons.
- * @param {Object} props.options.pagination extention functions for PaginationsButtons.
- * @param {Function} props.options.pagination.onFirstButtonClick extention function PaginationsButtons.
- * @param {Function} props.options.pagination.onBackButtonClick extention function PaginationsButtons.
- * @param {Function} props.options.pagination.onNextButtonClick extention function PaginationsButtons.
- * @param {Function} props.options.pagination.onLastButtonClick extention function PaginationsButtons.
- * @param {Array} props.options.ignoreKeys send the keys you want to ignore.
- * @param {Objects[]} props.options.actions array to set actions per row basis.
- * @param {String} props.options.actions.name name of the action to be displayed in Table header.
- * @param {String} props.options.actions.label label for the action button.
- * @param {String} props.options.actions.type switch or button.
- * @param {String} props.options.actions.defaultValueFrom key name from the object to set defaultValue of switch.
- * @param {Function} props.options.actions.function function to be performed by switch(onChange) and button(onClick) : params (event,rowData).
- * @param {Objects[]} props.options.toolbarActions array to set actions on selected items.
- * @param {String} props.options.toolbarActions.label Button Label.
- * @param {Function} props.options.toolbarActions.function function to be performed by toolbar button(onClick) : params (event,selectedItemData).
- * @param {Function} props.options.ui. function to be performed by toolbar button(onClick) : params (event,selectedItemData).
- * 
- * 
- * @example <EnhancedTable data={data} title='Hello World' options={{
-      disablePagination: true,
-      selector: true,
-      toolbarActions: [{
-        label: 'console selected items',
-        function: (e, data) => {
-         console.log(data);
-        }
-      }],
-      actions: [
-          {
-            name: 'action switch',
-            label: 'console hello world onn swich change',
-            type:'switch',
-            defaultValueFrom,
-            function: (e, data) => {
-              console.log("hello world");
-            }
-          },
-          {
-            name: 'action button',
-            label: 'console hello world on button click',
-            type:'button'
-            function: (e, data) => {
-              console.log(data);
-            }
-          }
-        ],
-      ignoreKeys: ['createdAt', 'updatedAt', 'id'],
-    }} />
- */
 export const EnhancedTable = (props) => {
   const useStyles = makeStyles(theme => ({
     root: {
@@ -641,6 +641,8 @@ export const EnhancedTable = (props) => {
   const [rowsPerPage, setRowsPerPage] = useState(props.rows !== undefined ? props.rows : 5);
   const [rowsPerPageOptions, setRowsPerPageOptions] = useState([]);
   const [keys, setKeys] = useState([]);
+  const [sortBy, setSortBy] = useState("");
+  const [sortAccending, setSortAccending] = useState(true);
 
   useEffect(() => {
     let rowsPP = 10;
@@ -669,6 +671,11 @@ export const EnhancedTable = (props) => {
       }
   }, [props.data, props.options]);
 
+
+  useEffect(() => {
+    setSortBy(keys[0]);
+  }, [keys]);
+
   const emptyRows = useCallback(() => {
     return rowsPerPage - Math.min(rowsPerPage, (props.data !== undefined && props.data !== null ? props.data.length : 0)
       - page * rowsPerPage);
@@ -679,15 +686,30 @@ export const EnhancedTable = (props) => {
 
   if (props.data === undefined || props.data === null)
     return <div>Irrevelant data.</div>;
-  if (!Array.isArray(props.data))
-    return <div>Not an array.</div>;
-  return <TablePaperWrapper disableContainer={props.options?.ui?.disableContainer} >
+  return <TablePaperWrapper
+    disableContainer={props.options?.ui?.disableContainer} >
     <TableHeader {...props} keys={keys} disable={props.options?.ui?.disableTitle} selecteditems={selecteditems} />
     <div className={classes.tableWrapper}>
       <Table className={classes.table} stickyHeader={props.options !== undefined ? props.options.selector ? true : false : false} >
-        <TableHeading {...props} keys={keys} />
+        <TableHeading {...props} keys={keys} sort={{
+          onSortChange: (event, value) => {
+            if (sortBy !== value) {
+              setSortBy(value);
+              setSortAccending(true);
+            } else {
+              setSortAccending(sortAssending => !sortAssending);
+            }
+          },
+          sort: props.options?.enableSort,
+          selectedSortVariable: sortBy || keys[0],
+          sortAssending: sortAccending
+        }} />
         <TableBody className={classes.tableBody}>
-          <TableRows keys={keys} page={page} rowsPerPage={rowsPerPage} {...props} />
+          <TableRows keys={keys} page={page} rowsPerPage={rowsPerPage} {...props} sort={{
+            sort: props.options?.enableSort,
+            selectedSortVariable: sortBy || keys[0],
+            sortAssending: sortAccending
+          }} />
           <TableErrorAndEmptyRows emptyRows={emptyRows} keys={keys} {...props} />
         </TableBody>
       </Table>
@@ -708,6 +730,7 @@ EnhancedTable.propTypes = {
   errorText: PropTypes.string,
   options: PropTypes.shape({
     rowsPerPage: PropTypes.number,
+    enableSort: PropTypes.bool,
     ignoreKeys: PropTypes.arrayOf(PropTypes.string),
     selector: PropTypes.bool,
     actionLocation: PropTypes.oneOf(['start', 'end']),
