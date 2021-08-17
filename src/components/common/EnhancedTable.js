@@ -609,7 +609,63 @@ TablePaginationComponent.propTypes = {
   setRowsPerPage: PropTypes.func.isRequired
 };
 
-
+/**
+ * 
+ * @param {Object[]} props.data Accepts data for the table to display.
+ * @param {Boolean} props.error Accepts data for the table to display.
+ * @param {String} props.errorText Accepts data for the table to display.
+ * @param {Object} props.options options for the Table.
+ * @param {Boolean} props.options.disablePagination disable pagination and adds scroll.
+ * @param {Boolean} props.options.disablePaginationDefaults disable the default function for pagination buttons.
+ * @param {Object} props.options.pagination extention functions for PaginationsButtons.
+ * @param {Function} props.options.pagination.onFirstButtonClick extention function PaginationsButtons.
+ * @param {Function} props.options.pagination.onBackButtonClick extention function PaginationsButtons.
+ * @param {Function} props.options.pagination.onNextButtonClick extention function PaginationsButtons.
+ * @param {Function} props.options.pagination.onLastButtonClick extention function PaginationsButtons.
+ * @param {Array} props.options.ignoreKeys send the keys you want to ignore.
+ * @param {Objects[]} props.options.actions array to set actions per row basis.
+ * @param {String} props.options.actions.name name of the action to be displayed in Table header.
+ * @param {String} props.options.actions.label label for the action button.
+ * @param {String} props.options.actions.type switch or button.
+ * @param {String} props.options.actions.defaultValueFrom key name from the object to set defaultValue of switch.
+ * @param {Function} props.options.actions.function function to be performed by switch(onChange) and button(onClick) : params (event,rowData).
+ * @param {Objects[]} props.options.toolbarActions array to set actions on selected items.
+ * @param {String} props.options.toolbarActions.label Button Label.
+ * @param {Function} props.options.toolbarActions.function function to be performed by toolbar button(onClick) : params (event,selectedItemData).
+ * @param {Function} props.options.ui. function to be performed by toolbar button(onClick) : params (event,selectedItemData).
+ * 
+ * 
+ * @example <EnhancedTable data={data} title='Hello World' options={{
+      disablePagination: true,
+      selector: true,
+      toolbarActions: [{
+        label: 'console selected items',
+        function: (e, data) => {
+         console.log(data);
+        }
+      }],
+      actions: [
+          {
+            name: 'action switch',
+            label: 'console hello world onn swich change',
+            type:'switch',
+            defaultValueFrom,
+            function: (e, data) => {
+              console.log("hello world");
+            }
+          },
+          {
+            name: 'action button',
+            label: 'console hello world on button click',
+            type:'button'
+            function: (e, data) => {
+              console.log(data);
+            }
+          }
+        ],
+      ignoreKeys: ['createdAt', 'updatedAt', 'id'],
+    }} />
+ */
 export const EnhancedTable = (props) => {
   const useStyles = makeStyles(theme => ({
     root: {
