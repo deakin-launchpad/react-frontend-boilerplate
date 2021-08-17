@@ -740,7 +740,7 @@ export const EnhancedTable = (props) => {
 
 
 
-  if (props.data === undefined || props.data === null)
+  if (props.data === undefined || props.data === null || !Array.isArray(props.data))
     return <div>Irrevelant data.</div>;
   return <TablePaperWrapper
     disableContainer={props.options?.ui?.disableContainer} >
