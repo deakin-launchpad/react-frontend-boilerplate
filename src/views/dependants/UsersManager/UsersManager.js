@@ -38,7 +38,7 @@ export const UsersManager = () => {
           sm: window.screen.availHeight / 50
         }
       }}>
-        <EnhancedTable users={users} title="Users Manager" />
+        <EnhancedTable data={users} title="Users Manager" options={{ ignoreKeys: ['_id', 'deakinSSO', 'firstLogin', 'emailVerified', 'isBlocked']}}/>
       </Container>
     </Box>
   );
