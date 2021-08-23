@@ -242,7 +242,7 @@ const TableHeader = (props) => {
 };
 
 TableHeader.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   disable: PropTypes.bool.isRequired,
   selecteditems: PropTypes.arrayOf(PropTypes.object).isRequired,
   options: PropTypes.shape({
@@ -354,7 +354,7 @@ const TableErrorAndEmptyRows = (props) => {
 };
 
 TableErrorAndEmptyRows.propTypes = {
-  error: PropTypes.bool.isRequired,
+  error: PropTypes.bool,
   errorText: PropTypes.string,
   emptyRows: PropTypes.func.isRequired,
   keys: PropTypes.arrayOf(PropTypes.string),
@@ -570,8 +570,8 @@ const TablePaginationComponent = (props) => {
     props.setPage(0);
   }, [props]);
 
-  if (props?.options?.disablePagination)
-    return null;
+  if (props?.options?.disablePagination) return null;
+    
   return <TablePagination
     component="div"
     rowsPerPageOptions={props.rowsPerPageOptions}
@@ -614,30 +614,47 @@ TablePaginationComponent.propTypes = {
  * @param {Object[]} props.data Accepts data for the table to display.
  * @param {Boolean} props.error Accepts data for the table to display.
  * @param {String} props.errorText Accepts data for the table to display.
- * @param {Object} props.options options for the Table.
+ * 
  * @param {Boolean} props.options.disablePagination disable pagination and adds scroll.
  * @param {Boolean} props.options.disablePaginationDefaults disable the default function for pagination buttons.
+ * @param {Array} props.options.ignoreKeys send the keys you want to ignore.
+ * 
+ * @param {Object} props.options options for the Table.
  * @param {Object} props.options.pagination extention functions for PaginationsButtons.
  * @param {Function} props.options.pagination.onFirstButtonClick extention function PaginationsButtons.
  * @param {Function} props.options.pagination.onBackButtonClick extention function PaginationsButtons.
  * @param {Function} props.options.pagination.onNextButtonClick extention function PaginationsButtons.
  * @param {Function} props.options.pagination.onLastButtonClick extention function PaginationsButtons.
- * @param {Array} props.options.ignoreKeys send the keys you want to ignore.
+ * 
  * @param {Objects[]} props.options.actions array to set actions per row basis.
  * @param {String} props.options.actions.name name of the action to be displayed in Table header.
  * @param {String} props.options.actions.label label for the action button.
  * @param {String} props.options.actions.type switch or button.
  * @param {String} props.options.actions.defaultValueFrom key name from the object to set defaultValue of switch.
  * @param {Function} props.options.actions.function function to be performed by switch(onChange) and button(onClick) : params (event,rowData).
+ * 
  * @param {Objects[]} props.options.toolbarActions array to set actions on selected items.
  * @param {String} props.options.toolbarActions.label Button Label.
  * @param {Function} props.options.toolbarActions.function function to be performed by toolbar button(onClick) : params (event,selectedItemData).
- * @param {Function} props.options.ui. function to be performed by toolbar button(onClick) : params (event,selectedItemData).
+ * 
+ * @param {Object} props.options.ui
+ * @param {Boolean} props.options.ui.disableContainer boolean value for disbale container wrapper
+ * @param {Boolean} props.options.ui.disableTitle boolean value for hiding table title
+ * @param {Any} props.options.ui.maxHeight not implemented
+ * @param {Any} props.options.ui.minWidth not implemented
  * 
  * 
- * @example <EnhancedTable data={data} title='Hello World' options={{
-      disablePagination: true,
+ * @example <EnhancedTable data={data} title='Hello World'
+ *  options={{
+      rowsPerPage: 10
+      disablePaginationDefaults: false,
       selector: true,
+      pagination: {{
+        onFirstButtonClick: () => {},
+        onBackButtonClick: () => {},
+        onNextButtonClick: () => {},
+        onLastButtonClick: () => {},
+      }}
       toolbarActions: [{
         label: 'console selected items',
         function: (e, data) => {
@@ -694,22 +711,21 @@ export const EnhancedTable = (props) => {
   const classes = useStyles();
   var selecteditems = useMemo(() => [], []);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(props.rows !== undefined ? props.rows : 5);
+  const [rowsPerPage, setRowsPerPage] = useState(props?.options?.rowsPerPage ? props.options.rowsPerPage : 5);
   const [rowsPerPageOptions, setRowsPerPageOptions] = useState([]);
   const [keys, setKeys] = useState([]);
   const [sortBy, setSortBy] = useState("");
   const [sortAccending, setSortAccending] = useState(true);
 
   useEffect(() => {
-    let rowsPP = 10;
-    if (props?.options?.rowsPerPage) rowsPP = props?.options?.rowsPerPage;
+    let rowsPP = rowsPerPage || 5;
     var _tempArray = [];
     var _counterLimit = Math.floor((props?.data?.length || 0) / rowsPP);
     for (var i = 0; i <= _counterLimit; i++) {
       _tempArray.push(rowsPP * (i + 1));
     }
     setRowsPerPageOptions(_tempArray);
-  }, [props.options.rowsPerPage, props.data]);
+  }, [rowsPerPage, props.data]);
 
   useEffect(() => {
     const ignoreKeys = () => {
@@ -743,8 +759,8 @@ export const EnhancedTable = (props) => {
   if (props.data === undefined || props.data === null)
     return <div>Irrevelant data.</div>;
   return <TablePaperWrapper
-    disableContainer={props.options?.ui?.disableContainer} >
-    <TableHeader {...props} keys={keys} disable={props.options?.ui?.disableTitle} selecteditems={selecteditems} />
+    disableContainer={props.options?.ui?.disableContainer || false} >
+    <TableHeader {...props} keys={keys} disable={props.options?.ui?.disableTitle || false} selecteditems={selecteditems} />
     <div className={classes.tableWrapper}>
       <Table className={classes.table} stickyHeader={props.options !== undefined ? props.options.selector ? true : false : false} >
         <TableHeading {...props} keys={keys} sort={{
@@ -779,9 +795,8 @@ export const EnhancedTable = (props) => {
 
 
 EnhancedTable.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  rows: PropTypes.number,
   error: PropTypes.bool,
   errorText: PropTypes.string,
   options: PropTypes.shape({
@@ -812,7 +827,7 @@ EnhancedTable.propTypes = {
         function: PropTypes.func
       })
     ),
-    disablePaginationDefaults: PropTypes.bool.isRequired,
+    disablePaginationDefaults: PropTypes.bool,
     pagination: PropTypes.shape({
       disable: PropTypes.bool.isRequired,
       onFirstButtonClick: PropTypes.func,
