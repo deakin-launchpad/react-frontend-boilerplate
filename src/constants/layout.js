@@ -43,6 +43,14 @@ class Layout {
           "isFavourite": true
         }),
         new MenuItem({
+          "name": "Users Manager",
+          "type": "button",
+          "icon": "bytesize:user",
+          "helpingAttribute": "/users",
+          "customTitle": "Users Manager",
+          "isFavourite": true
+        }),
+        new MenuItem({
           "name": "Logout",
           "type": "logout",
           "icon": "fe:logout",

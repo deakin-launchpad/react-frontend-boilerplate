@@ -8,6 +8,7 @@ import { Register } from './common/Register/Register';
 import { Home } from './dependants/Home/Home';
 import { MobileMenu } from './dependants/mobileMenu/mobileMenu';
 import { Example } from './dependants/Example/Example';
+import { UsersManager } from './dependants/UsersManager/UsersManager';
 export {
   Example,
   Login,
@@ -15,5 +16,6 @@ export {
   Home,
   MobileMenu,
   FourOFour,
-  AuthCallback
+  AuthCallback,
+  UsersManager,
 };
