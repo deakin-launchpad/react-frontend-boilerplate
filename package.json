@@ -12,7 +12,7 @@
     "@mui/material": "^5.0.6",
     "@mui/styles": "^5.1.0",
     "@tinymce/tinymce-react": "3.12.6",
-    "axios": "^0.21.1",
+    "axios": "^0.24.0",
     "date-fns": "^2.21.1",
     "eslint": "^7.11.0",
     "eslint-utils": "^2.1.0",
