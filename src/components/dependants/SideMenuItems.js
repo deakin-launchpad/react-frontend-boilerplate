@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { LayoutContext } from 'contexts';
-import { Icon as ParentIcon } from '@material-ui/core';
+import { Icon as ParentIcon } from '@mui/material';
 import { InlineIcon } from '@iconify/react-with-api';
 import { API } from 'helpers';
 import { LayoutConfig } from 'constants/index';

@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import { List, Icon, ListItem, ListItemText, ListSubheader, Divider, Typography, useMediaQuery } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { useContext } from 'react';
+import { List, Icon, ListItem, ListItemText, ListSubheader, Divider, Typography, useMediaQuery } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Link, Redirect } from 'react-router-dom';
 import { API } from 'helpers';
 import { LayoutContext } from 'contexts';

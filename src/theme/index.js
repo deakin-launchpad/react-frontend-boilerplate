@@ -1,15 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import merge from 'lodash/merge';
 import {
-  createTheme as createMuiTheme,
-  ThemeProvider as MuiThemeProvider,
-  responsiveFontSizes
-} from '@material-ui/core/styles';
-import { THEMES } from '../constants/theme';
-import { lightShadows, darkShadows } from './shadows';
+  createTheme as createMuiTheme, responsiveFontSizes, ThemeProvider as MuiThemeProvider
+} from '@mui/material/styles';
 import { LoadingScreen } from 'components/index';
 import { LayoutContext } from 'contexts/index';
+import merge from 'lodash/merge';
+import PropTypes from 'prop-types';
+import { useContext, useEffect, useState } from 'react';
+import { THEMES } from '../constants/theme';
+import { darkShadows, lightShadows } from './shadows';
+
 
 const baseOptions = {
   direction: 'ltr',
@@ -243,9 +242,9 @@ export const createTheme = (config = {}) => {
 
 
 export const ThemeProvider = ({ children }) => {
-  const [appTheme, changeAppTheme] = React.useState();
-  const layoutContext = React.useContext(LayoutContext);
-  React.useEffect(() => {
+  const [appTheme, changeAppTheme] = useState();
+  const layoutContext = useContext(LayoutContext);
+  useEffect(() => {
     if (layoutContext !== undefined)
       if (layoutContext.currentTheme !== undefined)
         changeAppTheme(createTheme(layoutContext.currentTheme));

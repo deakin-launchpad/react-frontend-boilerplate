@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { SwipeableDrawer, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { SwipeableDrawer, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 export const EnhancedDrawer = (props) => {
   const [drawerHeight, setDrawerHeight] = useState('50vh');

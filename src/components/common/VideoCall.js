@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Container, TextField, Button, Grid, CardMedia } from '@material-ui/core';
+import { Container, TextField, Button, Grid, CardMedia } from '@mui/material';
 import Video from 'twilio-video';
 import { APIKeys } from 'constants/index';
 

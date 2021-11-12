@@ -1,7 +1,7 @@
 /***
  *  Created by Sanchit Dang
  ***/
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import './helpers/database/idb';
 import { AppRoutes } from './bricks/index';

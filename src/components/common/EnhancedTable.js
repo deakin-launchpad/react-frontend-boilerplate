@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, TablePagination, Checkbox, IconButton, Toolbar, Button, Grid, Switch, TableSortLabel } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, TablePagination, Checkbox, IconButton, Toolbar, Button, Grid, Switch, TableSortLabel } from '@mui/material';
+import { useTheme } from '@mui/material';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import LastPageIcon from '@mui/icons-material/LastPage';
 import { TextHelper } from 'helpers/index';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@mui/styles';
 
 const Selector = (props) => {
   const [initData, setInitData] = useState(false);
@@ -359,6 +359,7 @@ TableErrorAndEmptyRows.propTypes = {
   emptyRows: PropTypes.func.isRequired,
   keys: PropTypes.arrayOf(PropTypes.string),
   options: PropTypes.shape({
+    selector: PropTypes.bool,
     ui: PropTypes.shape({
       disableContainer: PropTypes.bool,
     }),
@@ -571,7 +572,7 @@ const TablePaginationComponent = (props) => {
   }, [props]);
 
   if (props?.options?.disablePagination) return null;
-    
+
   return <TablePagination
     component="div"
     rowsPerPageOptions={props.rowsPerPageOptions}

@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import { FormControlLabel, Switch, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { useContext, useCallback } from 'react';
+import { FormControlLabel, Switch, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { DeveloperConfig } from 'constants/index';
 import { LayoutContext, LoginContext } from 'contexts/index';
 
@@ -23,7 +23,7 @@ export const DevModeSwitch = () => {
   const classes = useStyles();
   const { devMode, setDevMode } = useContext(LoginContext);
   const { setCurrentTheme } = useContext(LayoutContext);
-  const devModeStatusToggle = React.useCallback(() => {
+  const devModeStatusToggle = useCallback(() => {
     setDevMode(current => {
       setCurrentTheme(X => { return { ...X, theme: !current ? 'DARK' : 'LIGHT' }; });
       return !current;

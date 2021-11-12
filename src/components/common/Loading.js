@@ -1,7 +1,7 @@
-import React from 'react';
+
 import PropTypes from 'prop-types';
-import { CircularProgress, Grid, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { CircularProgress, Grid, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles(() => ({
   root: {
     height: '100%',

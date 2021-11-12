@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { LayoutConfig, THEMES } from 'constants/index';
 import { LoadingScreen } from 'components/index';

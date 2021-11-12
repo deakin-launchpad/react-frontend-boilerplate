@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { LoadingScreen } from 'components/index';
-import { validate, v4 } from 'uuid';
+import PropTypes from 'prop-types';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import { deviceDetect } from 'react-device-detect';
+import { v4, validate } from 'uuid';
 
-export const DeviceInfoContext = React.createContext();
+export const DeviceInfoContext = createContext();
 
 export const DeviceInfoProvider = (props) => {
-  const [deviceUUID, setDeviceUUID] = React.useState();
-  const [deviceInfo, setDeviceInfo] = React.useState();
-  React.useEffect(() => {
+  const [deviceUUID, setDeviceUUID] = useState();
+  const [deviceInfo, setDeviceInfo] = useState();
+  useEffect(() => {
     const string = window.localStorage.getItem('uuid');
     if (!validate(string)) {
       let newUUID = v4();
@@ -20,7 +20,7 @@ export const DeviceInfoProvider = (props) => {
     setDeviceInfo(deviceDetect());
   }, []);
 
-  const deviceData = React.useMemo(() => {
+  const deviceData = useMemo(() => {
     if (deviceInfo === undefined || deviceUUID === undefined) return undefined;
     return {
       deviceType: 'WEB',

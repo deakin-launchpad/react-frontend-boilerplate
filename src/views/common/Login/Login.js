@@ -1,9 +1,9 @@
 /***
  *  Created by Sanchit Dang
  ***/
-import React, { useState, useContext, useCallback } from 'react';
-import { Typography, Box, Container, Card, CardContent, Divider, Link } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/styles';
+import { useState, useContext, useCallback } from 'react';
+import { Typography, Box, Container, Card, CardContent, Divider, Link } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
 import { LoginContext, DeviceInfoContext, LayoutContext } from 'contexts';
 import { LoginForm, SsoLogin } from 'components';
 import { API } from 'helpers';

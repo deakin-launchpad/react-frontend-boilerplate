@@ -1,7 +1,7 @@
 /***
 *  Created by Sanchit Dang
 ***/
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { LoginContext } from 'contexts';
 import { Login, Register, Home, MobileMenu, FourOFour, Example, AuthCallback, UsersManager } from 'views';

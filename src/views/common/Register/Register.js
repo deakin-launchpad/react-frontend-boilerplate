@@ -1,9 +1,9 @@
 /***
  *  Created by Sanchit Dang
  ***/
-import React, { useState } from 'react';
-import { TextField, Typography, Button, Box, Divider, Container, Card, CardContent, Link } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/styles';
+import { useState, useContext } from 'react';
+import { TextField, Typography, Button, Box, Divider, Container, Card, CardContent, Link } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
 import { notify } from 'components';
 import { Link as RouterLink } from 'react-router-dom';
 import { DeviceInfoContext } from 'contexts/index';
@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => createStyles({
 
 export const Register = () => {
   const classes = useStyles();
-  const { deviceData } = React.useContext(DeviceInfoContext);
+  const { deviceData } = useContext(DeviceInfoContext);
   const [pageHeading] = useState('Register');
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');

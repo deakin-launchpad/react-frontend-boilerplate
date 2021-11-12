@@ -1,11 +1,11 @@
-import React, { useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { LoginContext, DeviceInfoContext } from 'contexts/index';
 import { API } from 'helpers/index';
 import { Redirect, withRouter } from 'react-router-dom';
 import { LoadingScreen } from 'components/index';
 
 export const AuthCallback = withRouter((props) => {
-  const { accessToken, loginStatus, setAccessToken } = React.useContext(LoginContext);
+  const { accessToken, loginStatus, setAccessToken } = useContext(LoginContext);
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
 
   useEffect(() => {

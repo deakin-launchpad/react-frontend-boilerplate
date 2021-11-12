@@ -1,9 +1,9 @@
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
+import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 
 ReactDOM.render(
   //uses the HTML5 history API (pushState, replaceState and the popstate event) to keep your UI in sync with the URL.
