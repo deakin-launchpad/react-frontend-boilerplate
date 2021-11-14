@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Grid, Typography, Button, Card, CardContent, CardActions, Box } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/styles';
+import { useState } from 'react';
+import { Grid, Typography, Button, Card, CardContent, CardActions, Box } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
 import { EnhancedEditor, EnhancedDrawer, EnhancedModal, VideoCall } from 'components';
 import { useGeoLocation } from 'helpers';
 import { EnhancedTable } from 'components/index';

@@ -1,12 +1,13 @@
-import React, { useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { LoginContext, DeviceInfoContext } from 'contexts/index';
 import { API } from 'helpers/index';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { LoadingScreen } from 'components/index';
 
-export const AuthCallback = withRouter((props) => {
-  const { accessToken, loginStatus, setAccessToken } = React.useContext(LoginContext);
+export const AuthCallback = () => {
+  const { accessToken, loginStatus, setAccessToken } = useContext(LoginContext);
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
+  let { ssoToken } = useParams();
 
   useEffect(() => {
     (async () => {
@@ -16,14 +17,14 @@ export const AuthCallback = withRouter((props) => {
           deviceName: deviceName,
           deviceUUID: deviceUUID
         };
-        const response = await API.authenticateSSO({ ssoToken: props.match.params.ssoToken, deviceData });
+        const response = await API.authenticateSSO({ ssoToken: ssoToken, deviceData });
         if (response.success) {
           setAccessToken(response.data.accessToken);
         }
       }
     })();
 
-  }, [props, setAccessToken, deviceUUID, deviceName]);
+  }, [ssoToken, setAccessToken, deviceUUID, deviceName]);
   if (accessToken === undefined && loginStatus === false && deviceUUID === undefined && deviceName === undefined) return <LoadingScreen />;
-  return <Redirect to='/' />;
-});
+  return <Navigate to='/' />;
+};

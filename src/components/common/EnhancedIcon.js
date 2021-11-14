@@ -1,4 +1,4 @@
-import React from 'react';
+
 import PropsTypes from 'prop-types';
 
 export const EnhancedIcon = (props) => {

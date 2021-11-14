@@ -19,8 +19,11 @@ class API {
   }
 
   getUserRole() {
-    return axiosInstance.get(`userRole`).then(response => generateSuccess(response))
-      .catch(error => errorHelper(error));
+    return axiosInstance.post('accessTokenLogin', {}, {
+      headers: {
+        authorization: "Bearer " + AccessToken
+      }
+    }).then((response) => generateSuccess(response.data.data)).catch(error => errorHelper(error));
   }
 
   /**
@@ -78,6 +81,19 @@ class API {
     return axiosInstance.post(`register`, data)
       .then((response) => generateSuccess(response.data.data))
       .catch(error => errorHelper(error));
+  }
+
+  getUsers() {
+    return axiosInstance
+      .get("admin/getUser", {
+        headers: {
+          authorization: "Bearer " + AccessToken,
+        },
+      })
+      .then((response) => {
+        return generateSuccess(response.data.data);
+      })
+      .catch((error) => errorHelper(error));
   }
 }
 const instance = new API();

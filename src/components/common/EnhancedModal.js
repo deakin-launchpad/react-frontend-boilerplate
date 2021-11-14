@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
+import { useState, useEffect } from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 /**
 * 17/09/2019 : Options for actionsButtons are moved inside options
 * Note v 0.2.0-alpha : Update Your code accordingly previous params maybe depreceted in future versions.

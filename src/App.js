@@ -1,8 +1,7 @@
 /***
  *  Created by Sanchit Dang
  ***/
-import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useEffect } from 'react';
 import './helpers/database/idb';
 import { AppRoutes } from './bricks/index';
 import { ContextManager } from 'contexts';
@@ -28,4 +27,4 @@ const App = (props) => {
   );
 };
 
-export default withRouter(App);
+export default App;

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 
 export const ConfirmationDailog = (props) => {
   const { isOpen, setIsOpen } = props;
   const [cancelButtonName, setCancelButtonName] = useState('Cancel');
   const [submitButtonName, setSubmitButtonName] = useState('OK');
 
-  const radioGroupRef = React.useRef(null);
+  const radioGroupRef = useRef(null);
 
   useEffect(() => {
     if (props.cancelButtonName) {

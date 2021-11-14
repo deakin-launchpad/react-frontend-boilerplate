@@ -3,10 +3,10 @@
  *  Contributors : Sanchit Dang *12/08/19*
  ***/
 
-import React, { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction, Paper, Icon as ParentIcon } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/styles';
+import { BottomNavigation, BottomNavigationAction, Paper, Icon as ParentIcon } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
 import { API } from 'helpers';
 import { LayoutContext } from 'contexts';
 import { InlineIcon } from '@iconify/react-with-api';

@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import clsx from 'clsx';
-import { AppBar, Toolbar, Typography, Drawer, Divider, IconButton, useMediaQuery } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/styles';
+import { AppBar, Toolbar, Typography, Drawer, Divider, IconButton, useMediaQuery } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
 import { LayoutContext } from 'contexts';
 import { SideMenuItems } from './SideMenuItems';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 export const Header = () => {
   let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');

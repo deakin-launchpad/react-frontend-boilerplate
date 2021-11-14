@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { Link as MaterialLink } from "@material-ui/core";
+
+import { Link as MaterialLink } from "@mui/material";
 import { Link as RouterLink } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
