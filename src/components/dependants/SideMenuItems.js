@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { LayoutContext } from 'contexts';
 import { Icon as ParentIcon } from '@mui/material';
@@ -7,9 +7,10 @@ import { InlineIcon } from '@iconify/react-with-api';
 import { API } from 'helpers';
 import { LayoutConfig } from 'constants/index';
 
-export const SideMenuItems = withRouter(() => {
+export const SideMenuItems = () => {
   const { setPageTitle, layoutConfiguration, currentUserRole } = useContext(LayoutContext);
   const [selectedIndex, setSelectedIndex] = useState(0);
+
   const menuitemsController = (value, key) => {
     switch (value.type) {
       case 'button': return renderMenuButton(value.name, value.icon, value.helpingAttribute, value.customTitle, key);
@@ -17,6 +18,7 @@ export const SideMenuItems = withRouter(() => {
       default: return null;
     }
   };
+
   useEffect(() => {
     if (undefined !== layoutConfiguration) {
       let counter = 0;
@@ -83,4 +85,4 @@ export const SideMenuItems = withRouter(() => {
       })}
     </List>
   );
-});
+};
