@@ -1,14 +1,14 @@
 /***
 *  Created by Sanchit Dang
 ***/
-import { useContext } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { LoginContext } from 'contexts';
-import { Login, Register, Home, MobileMenu, FourOFour, Example, AuthCallback, UsersManager } from 'views';
-import { Layout } from './layout';
-import { LayoutConfig } from 'constants/index';
 import { LoadingScreen } from 'components';
+import { LayoutConfig } from 'constants/index';
+import { LoginContext } from 'contexts';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { AuthCallback, Example, FourOFour, Home, Login, MobileMenu, Register, UsersManager } from 'views';
+import { Layout } from './layout';
 
 export const AppRoutes = (props) => {
   const { loginStatus } = useContext(LoginContext);
