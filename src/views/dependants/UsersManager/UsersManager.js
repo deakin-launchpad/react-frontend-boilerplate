@@ -19,7 +19,8 @@ export const UsersManager = () => {
         notify('Failed to Fetch Users List');
       }
     } catch (err) {
-      console.log(err);
+      setUsers([]);
+      notify('Failed to Fetch Users List');
     }
 
   }, [isMounted]);

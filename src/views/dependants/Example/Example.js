@@ -26,7 +26,7 @@ export const Example = () => {
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">Text Editor Example</Typography>
-              <EnhancedEditor id={'textEditor'} getContent={(content) => setContentStorage(content)} />
+              <EnhancedEditor id={'textEditor'} onEditorChange={(newValue) => setContentStorage(newValue)} />
             </CardContent>
             <CardActions>
               <Button variant="outlined" onClick={() => console.log(contentStorage)}>Console Data</Button>
