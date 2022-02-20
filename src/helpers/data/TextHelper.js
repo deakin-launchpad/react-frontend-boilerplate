@@ -1,4 +1,4 @@
-import moment from "moment-timezone";
+import format from "date-fns/format";
 
 class TextHelper {
   /**
@@ -52,7 +52,7 @@ class TextHelper {
    * @returns {String} Formatted date
    */
   formatToD_MMMM_YYYY(date) {
-    return moment(date).format("D MMMM YYYY");
+    return format(new Date(date), "D MMMM YYYY");
   }
 }
 

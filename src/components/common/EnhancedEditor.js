@@ -4,12 +4,22 @@ import { Editor } from '@tinymce/tinymce-react';
 import { APIKeys } from 'constants/index';
 
 /**
- * Created by Sanchit Dang.
+ * Created by Sanchit Dang. Updated by Jason Pham.
  * This Editor is a wrapper on TinyMCE-React (https://github.com/tinymce/tinymce-react)
  * Use apiKeys from constants to change apiKey
+ * 
+ * @example <EnhancedEditor 
+                id="description" 
+                placeholder='Job Description is required' 
+                name="description"
+                initialValues={formik.values.description}
+                value={formik.values.description}
+                error={formik.touched.description && Boolean(formik.errors.description)}
+                helperText={formik.touched.description && formik.errors.description}
+                onEditorChange={(newValue) => formik.handleChange({ target: { name: 'description', value: newValue.toString() } })}
+              />
 */
 export const EnhancedEditor = (props) => {
-  const [_content, _setContent] = useState('');
   const [editorID, setEditorID] = useState();
   const [menuBar, setMenuBar] = useState(true);
   const [height, setHeight] = useState(500);
@@ -21,16 +31,8 @@ export const EnhancedEditor = (props) => {
     'searchreplace visualblocks visualchars nonbreaking code fullscreen',
     'insertdatetime table media directionality emoticons paste code wordcount save'
   ];
-  const content_css = ['//fonts.googleapis.com/css?family=Lato:300,300i,400,400i'];
-  const setContent = (data) => {
-    _setContent(data);
-    if (props.getContent)
-      if (typeof props.getContent === 'function')
-        props.getContent(data);
-  };
+  const content_css = ['//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i'];
   useEffect(() => {
-    if (props.content)
-      _setContent(String(props.content));
     if (props.id)
       setEditorID(String(props.id));
     if (props.options) {
@@ -62,16 +64,17 @@ export const EnhancedEditor = (props) => {
         }
       };
       input.click();
-    }
+    },
+    placeholder: props.placeholder
   };
 
   if (!menuBar) Object.assign(initObj, { menubar: false });
   let editor = (<Editor
     apiKey={APIKeys.tinyMCE.key}
-    initialValue={_content}
+    initialValue={props.content}
     id={editorID}
     init={initObj}
-    onChange={(e) => setContent(e.target.getContent())}
+    {...props}
   />
   );
   return editor;
@@ -81,6 +84,7 @@ EnhancedEditor.propTypes = {
   id: PropTypes.string.isRequired,
   content: PropTypes.node,
   getContent: PropTypes.func,
+  placeholder: PropTypes.string,
   options: PropTypes.shape({
     menuBar: PropTypes.bool,
     toolbar1: PropTypes.string,

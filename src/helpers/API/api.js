@@ -83,7 +83,7 @@ class API {
       .catch(error => errorHelper(error));
   }
 
-  getUsers() {
+  async getUsers() {
     return axiosInstance
       .get("admin/getUser", {
         headers: {
