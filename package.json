@@ -12,10 +12,17 @@
     "@mui/styles": "~5.4.2",
     "@tinymce/tinymce-react": "~3.13.0",
     "axios": "~0.26.0",
+    "babel-eslint": "^10.1.0",
     "date-fns": "~2.28.0",
     "eslint": "~7.11.0",
+    "eslint-config-react-app": "^7.0.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-utils": "~2.1.0",
     "formik": "~2.2.9",
+    "google-map-react": "^2.1.10",
     "idb": "~6.0.0",
     "lodash": "~4.17.21",
     "lodash.template": "~4.5.0",
@@ -28,6 +35,7 @@
     "react-router-dom": "~6.2.1",
     "react-scripts": "~4.0.3",
     "socket.io-client": "~3.1.3",
+    "styled-components": "^5.3.3",
     "twilio": "~3.74.0",
     "twilio-video": "~2.20.1",
     "typeface-roboto": "~1.1.13",
@@ -49,7 +57,10 @@
     "mixin-deep": "~2.0.1"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "no-unused-vars": "off" 
+    }
   },
   "browserslist": {
     "production": [

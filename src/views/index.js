@@ -10,6 +10,7 @@ import { MobileMenu } from './dependants/mobileMenu/mobileMenu';
 import { Example } from './dependants/Example/Example';
 import { UsersManager } from './dependants/UsersManager/UsersManager';
 import { Tutorial } from './dependants/Tutorial/Tutorial';
+import { HawkAI } from './dependants/HawkAI/HawkAI';
 
 export {
   Example,
@@ -21,4 +22,5 @@ export {
   AuthCallback,
   UsersManager,
   Tutorial,
+  HawkAI,
 };

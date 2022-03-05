@@ -59,6 +59,14 @@ class Layout {
           "isFavourite": true
         }),
         new MenuItem({
+          "name": "HawkAI",
+          "type": "button",
+          "icon": "eos-icons:drone",
+          "helpingAttribute": "/hawkai",
+          "customTitle": "HawkAI",
+          "isFavourite": true
+        }),
+        new MenuItem({
           "name": "Logout",
           "type": "logout",
           "icon": "fe:logout",
