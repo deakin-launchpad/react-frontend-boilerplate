@@ -51,6 +51,14 @@ class Layout {
           "isFavourite": true
         }),
         new MenuItem({
+          "name": "Tutorial",
+          "type": "button",
+          "icon": "bxs:book-alt",
+          "helpingAttribute": "/tutorial",
+          "customTitle": "Tutorial",
+          "isFavourite": true
+        }),
+        new MenuItem({
           "name": "Logout",
           "type": "logout",
           "icon": "fe:logout",

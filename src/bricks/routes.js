@@ -7,7 +7,7 @@ import { LoginContext } from 'contexts';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { AuthCallback, Example, FourOFour, Home, Login, MobileMenu, Register, UsersManager } from 'views';
+import { AuthCallback, Example, FourOFour, Home, Login, MobileMenu, Register, UsersManager, Tutorial } from 'views';
 import { Layout } from './layout';
 
 
@@ -75,6 +75,11 @@ export const AppRoutes = (props) => {
       <Route exact path='/users' element={
         <AuthRoute redirectTo='/login' loginStatus={loginStatus} parentProps={props}>
           <Layout> <UsersManager  {...props} /></Layout>
+        </AuthRoute>}
+      />
+      <Route exact path='/tutorial' element={
+        <AuthRoute redirectTo='/login' loginStatus={loginStatus} parentProps={props}>
+          <Layout> <Tutorial  {...props} /></Layout>
         </AuthRoute>}
       />
       <Route element={
