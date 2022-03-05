@@ -20,13 +20,17 @@ import AutoComplete from 'components/dependants/googlemap/Autocomplete';
 import Marker from 'components/dependants/googlemap/Marker';
 import 'css/Googlemap.css';
 
-const Wrapper = styled.main`
-  width: 75%;
-  height: 75%;
-`;
+// const Wrapper = styled.main`
+//     width: 100%;
+//     height: 100%;
+// `;
+
+const Wrapper = styled.main((props) => ({
+  width: props.width,
+  height: props.height
+}));
 
 export class HawkAI extends Component {
-
 
     state = {
       mapApiLoaded: false,
@@ -39,7 +43,9 @@ export class HawkAI extends Component {
       address: '',
       draggable: true,
       lat: null,
-      lng: null
+      lng: null,
+      clicked: false,
+      lastClicked: true
     };
 
     UNSAFE_componentWillMount() {
@@ -70,7 +76,11 @@ export class HawkAI extends Component {
     _onClick = (value) => {
       this.setState({
         lat: value.lat,
-        lng: value.lng
+        lng: value.lng,
+        clicked: this.state.lastClicked ? true : false
+      });
+      this.setState({
+        lastClicked: this.state.clicked
       });
     }
 
@@ -135,9 +145,12 @@ export class HawkAI extends Component {
         places, mapApiLoaded, mapInstance, mapApi,
       } = this.state;
 
+      let height = this.state.clicked ? "75%" : "100%";
+      let width = this.state.clicked ? "75%" : "100%";
 
       return (
-        <Wrapper>
+        
+        <Wrapper height={height} width={width}>
           {mapApiLoaded && (
             <div>
               <AutoComplete map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />
@@ -167,7 +180,6 @@ export class HawkAI extends Component {
               lat={this.state.lat}
               lng={this.state.lng}
             />
-
 
           </GoogleMapReact>
           <div className="info-wrapper">
