@@ -1,0 +1,19 @@
+.main-wrapper {
+    height: 60vh;
+    margin: 10px 50px;
+    filter: drop-shadow(-1px 5px 3px #ccc);
+  }
+  .info-wrapper {
+    margin-top: 15px;
+  }
+  .map-details {
+    text-align: center;
+    font-size: 1.2em;
+  }
+  .map-details span {
+    font-weight: bold;
+  }
+  .search-input {
+    font-size: 1.2em;
+    width: 80%;
+  }

@@ -18,10 +18,11 @@ import styled from 'styled-components';
 
 import AutoComplete from 'components/dependants/googlemap/Autocomplete';
 import Marker from 'components/dependants/googlemap/Marker';
+import 'css/Googlemap.css';
 
 const Wrapper = styled.main`
-  width: 100%;
-  height: 100%;
+  width: 75%;
+  height: 75%;
 `;
 
 export class HawkAI extends Component {
@@ -153,7 +154,8 @@ export class HawkAI extends Component {
             onChildClick={() => console.log('child click')}
             onClick={this._onClick}
             bootstrapURLKeys={{
-              key: 'AIzaSyAM9uE4Sy2nWFfP-Ha6H8ZC6ghAMKJEKps',
+              //   key: 'AIzaSyAM9uE4Sy2nWFfP-Ha6H8ZC6ghAMKJEKps',
+              key: 'AIzaSyCMNZWdT1QMmnjf48z6bloyQFIUfTFfa5Q',
               libraries: ['places', 'geometry'],
             }}
             yesIWantToUseGoogleMapApiInternals
