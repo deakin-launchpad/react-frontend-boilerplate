@@ -41,7 +41,7 @@ export class HawkAI extends Component {
       lng: null
     };
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
       this.setCurrentLocation();
     }
 
