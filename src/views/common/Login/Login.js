@@ -12,8 +12,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(() => createStyles({
   developMessage: {
-    position: 'absolute',
-    bottom: '2vh',
+    paddingBottom: '4vh',
     margin: 'auto',
     width: '100%'
   }
@@ -91,7 +90,7 @@ export const Login = () => {
           </CardContent>
         </Card>
       </Container>
-      <Box mt={5}>
+      <Box mt={2}>
         <Typography className={classes.developMessage} variant="body2" color="textSecondary" align="center">
           Developed by Deakin Launchpad
         </Typography>

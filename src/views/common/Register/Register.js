@@ -12,8 +12,7 @@ import { API } from 'helpers/index';
 
 const useStyles = makeStyles(() => createStyles({
   developMessage: {
-    position: 'absolute',
-    bottom: '2vh',
+    paddingBottom: '4vh',
     margin: 'auto',
     width: '100%'
   }
@@ -131,7 +130,7 @@ export const Register = () => {
           </CardContent>
         </Card>
       </Container>
-      <Box mt={5}>
+      <Box mt={2}>
         <Typography className={classes.developMessage} variant="body2" color="textSecondary" align="center">
           Developed by Deakin Launchpad
         </Typography>
