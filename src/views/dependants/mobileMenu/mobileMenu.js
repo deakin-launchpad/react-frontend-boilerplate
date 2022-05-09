@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles';
 import { Link, Navigate } from 'react-router-dom';
 import { API } from 'helpers';
 import { LayoutContext } from 'contexts';
+import { LayoutConfig } from 'constants/index';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,8 +29,7 @@ const useStyles = makeStyles(theme => ({
     boxShadow: '0 1px rgba(76,45,45,0.80)'
   },
   logoutButton: {
-    backgroundColor: theme.palette.secondary.main,
-    color: 'white',
+    color: 'black',
     paddingLeft: "5vw",
     paddingRight: "5vw"
   },
@@ -41,9 +41,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const MobileMenu = () => {
-  const { layoutConfiguration } = useContext(LayoutContext);
+  const { layoutConfiguration,currentUserRole} = useContext(LayoutContext);
   const classes = useStyles();
-  const items = layoutConfiguration.menuItems;
+  const items =  LayoutConfig.getMenuItems(currentUserRole);
   let menuButtonLabel = (layoutConfiguration.menuButtonLabel !== undefined ?
     layoutConfiguration.menuButtonLabel !== '' ? layoutConfiguration.menuButtonLabel : 'menu'
     : 'menu');
