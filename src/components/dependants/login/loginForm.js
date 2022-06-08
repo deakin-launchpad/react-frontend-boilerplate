@@ -40,12 +40,12 @@ export const LoginForm = (props) => {
       const response = await props.login(values);
       if (response.success) {
         if (!(props.onSuccess instanceof Function) || !ConnectionConfig.useACL) {
-          setAccessToken(response.accessToken);
+          setAccessToken(response.data);
           setStatus({ success: true });
         } else {
           const response = await props.onSuccess();
           if (response) {
-            setAccessToken(response.accessToken);
+            setAccessToken(response.data);
             setStatus({ success: true });
           }
           else setStatus({ success: false });

@@ -9,7 +9,6 @@ export const AuthCallback =(() => {
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
   let { ssoToken } = useParams();
   useEffect(() => {
-    console.log(ssoToken);
     (async () => {
       if (deviceUUID !== undefined && deviceName !== undefined) {
         const deviceData = {
@@ -20,7 +19,6 @@ export const AuthCallback =(() => {
         const response = await API.authenticateSSO({ ssoToken: ssoToken, deviceData });
         if (response.success) {
           setAccessToken(response.data.accessToken);
-          history.push('/home');
         }
       }
     })();
