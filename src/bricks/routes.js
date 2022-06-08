@@ -46,7 +46,11 @@ export const AppRoutes = (props) => {
             <Navigate to={{ pathname: '/login' }} {...props} />
           </UnauthRoute>}
       />
-      <Route exact path='/auth/callback/:ssoToken' element={(props) => <AuthCallback loginStatus={loginStatus} parentProps={props} />} />
+      <Route exact path='/auth/callback/:ssoToken'
+        element={<UnauthRoute redirectTo={landingPage} loginStatus={loginStatus} parentProps={props}>
+          <AuthCallback {...props} />
+        </UnauthRoute>}
+      />
       <Route exact path='/login'
         element={<UnauthRoute redirectTo={landingPage} loginStatus={loginStatus} parentProps={props}>
           <Login {...props} />

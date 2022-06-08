@@ -1,13 +1,13 @@
 class Connection {
   constructor() {
-    this.useAccessTokenVerificationAPI = false;
+    this.useAccessTokenVerificationAPI = true;
     this.socket = {
       "initSocket": false,
       "socketDefaultOptions": {},
-      "accessTokenVerification": false
+      "accessTokenVerification": true
     };
-    this.bypassBackend = true;
-    this.useDeakinSSO = false;
+    this.bypassBackend = false;
+    this.useDeakinSSO = true;
     this.useACL = false;
   }
 }
