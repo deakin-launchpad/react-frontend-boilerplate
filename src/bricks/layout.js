@@ -1,63 +1,135 @@
-import { useContext } from 'react';
-import { useMediaQuery } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';
-import { Header, BottomNavToolbar } from 'components';
-import { LayoutContext } from 'contexts';
+import { useContext,useEffect,useState } from 'react';
+import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
+import { useMediaQuery} from '@mui/material';
+import { Box ,Toolbar,Drawer as MuiDrawer,AppBar as MuiAppBar,CssBaseline,Typography,Icon} from '@mui/material';
+import { SideMenuItems, BottomNavToolbar } from '../components';
+import { LayoutContext } from '../contexts';
 
-const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
-const useStyles = makeStyles(theme => createStyles({
-  root: {
-    display: 'flex',
+const drawerWidth = 240;
+
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+});
+
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
   },
-  header: {
-    display: 'flex',
-    flex: '0 0 auto',
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  mobileContent: {
-    '-webkit-overflow-scrolling': 'touch',
-    flexGrow: 1,
-    height: '100%',
-    overflowY: 'scroll',
-    overflowX: 'hidden'
-  },
-  iOSPadding: {
-    height: iOS ? theme.spacing(2) : 0
-  },
+});
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
 }));
 
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: 0,
+    width: `100%`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+  }),
+);
+
 export const Layout = (props) => {
-  const { layoutConfiguration } = useContext(LayoutContext);
-  const classes = useStyles();
+  let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
+  //const theme = useTheme();
+  const { pageTitle, headerElements, layoutConfiguration } = useContext(LayoutContext);
+  const [open, setOpen] = useState(isItDesktop ? (layoutConfiguration.sideMenu.default === 'open' ? true : false) : false);
 
-
-
-  const headerRenderStatus = () => {
-    if (isItDesktop)
-      return layoutConfiguration.header.visibleOnDesktop;
-    else
-      return layoutConfiguration.header.visibleOnMobile;
+  const handleDrawerOpen = () => {
+    setOpen(true);
   };
 
-  let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
-  let content = (
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
-    <div className={classes.root}>
-      {headerRenderStatus() && <Header />}
-      <main className={isItDesktop ? classes.content : classes.mobileContent}>
-        <div className={isItDesktop ? classes.appBarSpacer : headerRenderStatus() ? classes.appBarSpacer : null} />
+  useEffect(()=>{
+    if(!isItDesktop) setOpen(false);
+    return ()=>{
+      setOpen(true);
+    };
+  },[isItDesktop]);
+
+  let content = (
+    <Box sx={{display:'flex' }}>
+      <CssBaseline />
+      {<AppBar position="fixed" open={open}>
+        <Toolbar>
+          {isItDesktop && <Icon
+            color="inherit"
+            aria-label="open drawer"
+            onClick={open ? handleDrawerClose :handleDrawerOpen}
+            edge="start"
+            sx={{
+              marginRight: 5,
+              ...(open && { display: 'none' }),
+            }}
+          > {!open ? 'menu' :'menu_open' }
+          </Icon>}
+          {
+            headerElements !== null ? headerElements :
+              <Typography variant="h6" noWrap component="div">
+                {pageTitle}
+              </Typography>
+          }
+        </Toolbar>
+      </AppBar>}
+      {isItDesktop && <Drawer variant="permanent" open={open}>
+        <DrawerHeader />
+        <SideMenuItems open={open} />
+      </Drawer>}
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
         {props.children}
-        <div className={isItDesktop ? null : layoutConfiguration.bottomMobileNavigation ? classes.appBarSpacer : null} />
-        <div className={classes.iOSPadding} />
-      </main>
+      </Box>
       {isItDesktop ? null : layoutConfiguration.bottomMobileNavigation ? <BottomNavToolbar /> : null}
-    </div>
+    </Box>
   );
   return content;
+};
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired
 };
 

@@ -1,13 +1,11 @@
-/***
- *  Created by Sanchit Dang
- ***/
 import { useEffect } from 'react';
-import './helpers/database/idb';
-import { AppRoutes } from './bricks/index';
-import { ContextManager } from 'contexts';
-import { Notification, DevModeSwitch, LoginCheck, GlobalStyles } from 'components';
-import { DeveloperConfig } from 'constants/index';
-import { ThemeProvider } from 'theme';
+import { AppRoutes } from './bricks';
+import { ContextManager } from './contexts';
+import { Notification, DevModeSwitch } from './components';
+import { LoginCheck } from './helpers';
+import { DeveloperConfig } from './constants';
+import { ThemeProvider} from './theme';
+
 
 const App = (props) => {
   useEffect(() => {
@@ -18,7 +16,6 @@ const App = (props) => {
       <ThemeProvider>
         <LoginCheck>
           <AppRoutes {...props} />
-          <GlobalStyles />
           {DeveloperConfig.visible ? <DevModeSwitch /> : ''}
           <Notification />
         </LoginCheck>

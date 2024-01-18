@@ -1,11 +1,11 @@
 class Developer {
   constructor() {
     this.visible = true;
-    this.label = "Developer";
-    this.verticlePosition = "bottom";
+    this.label = "switch theme";
+    this.verticalPosition = "bottom";
     this.horizontalPosition = "right";
     this.devDetails = {
-      "user": "sanchit@user.com",
+      "user": "launchpad@user.com",
       "password": "password"
     };
 

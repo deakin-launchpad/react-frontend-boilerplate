@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import { ConnectionConfig, DeveloperConfig } from 'constants/index';
+import { ConnectionConfig, DeveloperConfig } from '../../constants';
 import { useSocket } from './service';
 import { socketAuthCallback } from './util';
 
@@ -10,10 +10,10 @@ const initSocket = () => {
     socketInstance = io(process.env.REACT_APP_BASE_URL, ConnectionConfig.socket.socketDefaultOptions);
     if (socketInstance) {
       if (DeveloperConfig.visible)
-        console.log('socketClient initilized');
+        console.log('socketClient initialized');
       return socketInstance;
     }
-  } else if (DeveloperConfig.visible) console.log('SocketClient Already Initilized');
+  } else if (DeveloperConfig.visible) console.log('SocketClient Already Initialized');
 };
 if (ConnectionConfig.socket.initSocket)
   initSocket();

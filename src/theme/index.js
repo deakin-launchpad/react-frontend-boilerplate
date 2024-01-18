@@ -1,14 +1,13 @@
 import {
   createTheme as createMuiTheme, responsiveFontSizes, ThemeProvider as MuiThemeProvider
 } from '@mui/material/styles';
-import { LoadingScreen } from 'components/index';
-import { LayoutContext } from 'contexts/index';
+import { Loading } from '../components';
+import { LayoutContext } from '../contexts';
 import merge from 'lodash/merge';
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
-import { THEMES } from '../constants/theme';
+import { Themes } from '../constants/theme';
 import { darkShadows, lightShadows } from './shadows';
-
 
 const baseOptions = {
   direction: 'ltr',
@@ -88,7 +87,7 @@ const baseOptions = {
 };
 
 const themesOptions = {
-  [THEMES.LIGHT]: {
+  [Themes.LIGHT]: {
     components: {
       MuiInputBase: {
         styleOverrides: {
@@ -133,7 +132,7 @@ const themesOptions = {
     },
     shadows: lightShadows
   },
-  [THEMES.DARK]: {
+  [Themes.DARK]: {
     components: {
       MuiTableCell: {
         styleOverrides: {
@@ -173,7 +172,7 @@ const themesOptions = {
     },
     shadows: darkShadows
   },
-  [THEMES.NATURE]: {
+  [Themes.NATURE]: {
     components: {
       MuiTableCell: {
         styleOverrides: {
@@ -220,13 +219,13 @@ export const createTheme = (config = {}) => {
 
   if (!themeOptions) {
     console.warn(new Error(`The theme ${config.theme} is not valid`));
-    themeOptions = themesOptions[THEMES.LIGHT];
+    themeOptions = themesOptions[Themes.LIGHT];
   }
 
   let theme = createMuiTheme(merge({}, baseOptions, themeOptions, {
     ...(config.roundedCorners && {
       shape: {
-        borderRadius: 16
+        borderRadius: 12
       }
     })
   }, {
@@ -249,11 +248,12 @@ export const ThemeProvider = ({ children }) => {
       if (layoutContext.currentTheme !== undefined)
         changeAppTheme(createTheme(layoutContext.currentTheme));
   }, [layoutContext]);
-  if (appTheme === undefined) return <LoadingScreen loadingText='loading theme' />;
+  if (appTheme === undefined) return <Loading loadingText='loading theme' />;
   return <MuiThemeProvider theme={appTheme} >
     {children}
   </MuiThemeProvider>;
 };
+
 
 ThemeProvider.propTypes = {
   children: PropTypes.node.isRequired

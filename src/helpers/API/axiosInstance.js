@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { logout } from 'contexts/helpers';
-import { notify } from 'components';
+import { logout } from '../../contexts/common';
+import { notify } from '../../components';
 
 const baseURL = process.env.REACT_APP_BASE_URL + '/api/';
 
@@ -9,7 +9,6 @@ export const axiosInstance = axios.create({
 });
 
 /**
- * @author Sanchit Dang
  * @param {any} data Response to send
  * @returns {Object} response
  */
@@ -21,7 +20,6 @@ export const generateSuccess = (data) => {
 };
 
 /**
- * @author Sanchit Dang
  * @param {String} errorMessage Error Message
  * @returns {Object}
  */
@@ -33,7 +31,6 @@ export const generateError = (errorMessage) => {
 };
 
 /**
- * @author Sanchit Dang
  * @param {String} errorMessage Error Message
  * @returns {Object}
  */
@@ -46,7 +43,6 @@ export const generateErrorAndNotify = (errorMessage) => {
 };
 
 /**
- * @author Sanchit Dang
  * @description Error Helper
  * 
  * @param {any} error 

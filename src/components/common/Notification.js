@@ -1,9 +1,9 @@
-/***
- *  Created by Sanchit Dang
- * */
-
+/**
+ *  Created by Sanchit Dang. Updated by Qiaoli Wang.
+ */
 import { useEffect, useState } from 'react';
 import { Snackbar } from '@mui/material';
+import PropTypes from 'prop-types';
 
 let OpenNotificationFunction;
 
@@ -88,3 +88,8 @@ export const notify = (message, callback, variant) => {
 
 
 export default EnhancedNotification;
+
+EnhancedNotification.propTypes= {
+  horizontal: PropTypes.string,
+  vertical: PropTypes.string
+};

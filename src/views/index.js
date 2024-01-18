@@ -1,21 +1,17 @@
-/***
- *  Created by Sanchit Dang
- ***/
-import { Login } from './common/Login/Login';
-import { AuthCallback } from './common/Login/AuthCallback';
-import { FourOFour } from './common/FourOFour/FourOFour';
-import { Register } from './common/Register/Register';
-import { Home } from './dependants/Home/Home';
-import { MobileMenu } from './dependants/mobileMenu/mobileMenu';
-import { Example } from './dependants/Example/Example';
-import { UsersManager } from './dependants/UsersManager/UsersManager';
+/**
+ * Created by Qiaoli Wang.
+ */
+import { Login } from './login/index';
+import { AuthCallback } from './login/authCallback';
+import { Register } from './register/index';
+import { Home } from './home/index';
+import { UsersManager } from './user/index';
+import { Example } from './example';
 export {
-  Example,
   Login,
   Register,
   Home,
-  MobileMenu,
-  FourOFour,
   AuthCallback,
   UsersManager,
+  Example
 };

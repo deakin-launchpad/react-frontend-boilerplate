@@ -1,4 +1,4 @@
-import { AccessToken, logout } from 'contexts/helpers';
+import { AccessToken, logout } from '../../contexts/common';
 import { axiosInstance, errorHelper, generateSuccess } from './axiosInstance';
 
 class API {
@@ -7,7 +7,6 @@ class API {
   }
 
   /**
-   * @author Sanchit Dang
    * @description Login API endpoint
    * @param {Object} loginDetails Login details for the user
    * @returns {Object} responseObject
@@ -18,16 +17,22 @@ class API {
     }).catch(error => errorHelper(error, "login"));
   }
 
-  getUserRole() {
-    return axiosInstance.post('accessTokenLogin', {}, {
-      headers: {
-        authorization: "Bearer " + AccessToken
-      }
-    }).then((response) => generateSuccess(response.data.data)).catch(error => errorHelper(error));
+  async getUserRole() {
+    try
+    {
+      const response = await axiosInstance.post( 'accessTokenLogin', {}, {
+        headers: {
+          authorization: "Bearer " + AccessToken
+        }
+      } );
+      return generateSuccess( response.data.data );
+    } catch ( error )
+    {
+      return errorHelper( error );
+    }
   }
 
   /**
-  * @author Sanchit Dang
   * @description AccessToken Login API endpoint
   * @returns {Object} responseObject
   */
@@ -41,12 +46,11 @@ class API {
 
 
   /**
-  * @author Sanchit Dang
   * @description logoutUser Login API endpoint
   * @returns {Promise<Object>} responseObject
   */
   async logoutUser() {
-    return axiosInstance.put('logout', {}, {
+    return axiosInstance.put('admin/logout', {}, {
       headers: {
         authorization: "Bearer " + AccessToken
       }
@@ -57,7 +61,6 @@ class API {
   }
 
   /**
-   * @author Sanchit Dang
    * @param {Object} data 
    * @param {String} data.ssoToken 
    * @param {Object} data.deviceData 
@@ -78,7 +81,7 @@ class API {
    * @returns {Promise<Object>}
    */
   async register(data) {
-    return axiosInstance.post(`register`, data)
+    return axiosInstance.post(`admin/register`, data)
       .then((response) => generateSuccess(response.data.data))
       .catch(error => errorHelper(error));
   }

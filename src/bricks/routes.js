@@ -1,15 +1,11 @@
-/***
-*  Created by Sanchit Dang
-***/
-import { LoadingScreen } from 'components';
-import { LayoutConfig } from 'constants/index';
-import { LoginContext } from 'contexts';
 import PropTypes from 'prop-types';
+import { Loading } from '../components';
+import { LayoutConfig } from '../constants';
+import { LoginContext } from '../contexts';
 import { useContext } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { AuthCallback, Example, FourOFour, Home, Login, MobileMenu, Register, UsersManager } from 'views';
+import { AuthCallback, Example, Home, Login, Register, UsersManager } from '../views';
 import { Layout } from './layout';
-
 
 const AuthRoute = ({ children, redirectTo, parentProps, loginStatus }) => {
   return loginStatus === false ? <Navigate to={redirectTo} {...parentProps} /> : children;
@@ -37,7 +33,7 @@ UnauthRoute.propTypes = {
 export const AppRoutes = (props) => {
   const { loginStatus } = useContext(LoginContext);
   let landingPage = (LayoutConfig.landingPage !== undefined ? LayoutConfig.landingPage !== '' ? LayoutConfig.landingPage : '/home' : '/home');
-  if (loginStatus === undefined) return <LoadingScreen />;
+  if (loginStatus === undefined) return <Loading />;
   return (
     <Routes>
       <Route exact path='/'
@@ -66,26 +62,18 @@ export const AppRoutes = (props) => {
           <Layout><Home {...props} /></Layout>
         </AuthRoute>}
       />
-      <Route exact path='/menu' element={
-        <AuthRoute redirectTo='/login' loginStatus={loginStatus} parentProps={props}>
-          <Layout> <MobileMenu  {...props} /></Layout>
-        </AuthRoute>}
-      />
-      <Route exact path='/examples' element={
-        <AuthRoute redirectTo='/login' loginStatus={loginStatus} parentProps={props}>
-          <Layout> <Example  {...props} /></Layout>
-        </AuthRoute>}
-      />
       <Route exact path='/users' element={
         <AuthRoute redirectTo='/login' loginStatus={loginStatus} parentProps={props}>
           <Layout> <UsersManager  {...props} /></Layout>
         </AuthRoute>}
       />
-      <Route element={
+
+      <Route exact path='/examples' element={
         <AuthRoute redirectTo='/login' loginStatus={loginStatus} parentProps={props}>
-          <Layout> <FourOFour  {...props} /></Layout>
+          <Layout> <Example  {...props} /></Layout>
         </AuthRoute>}
       />
+
     </Routes >
   );
 };

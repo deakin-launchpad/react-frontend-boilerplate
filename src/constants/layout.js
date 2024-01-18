@@ -1,14 +1,13 @@
 
 class MenuItem {
   /**
-   * 
    * @param {Object} data 
    * @param {String} data.name
    * @param {String} data.type
    * @param {String} data.icon
    * @param {String} data.helpingAttribute
    * @param {String} data.customTitle
-   * @param {boolean} data.isFavourite
+   * @param {boolean} data.isFavorite
    */
   constructor(data) {
     this.id = data.id;
@@ -17,7 +16,7 @@ class MenuItem {
     this.icon = data.icon;
     this.helpingAttribute = data.helpingAttribute;
     this.customTitle = data.customTitle;
-    this.isFavourite = data.isFavourite;
+    this.isFavorite = data.isFavorite;
   }
 }
 
@@ -29,34 +28,34 @@ class Layout {
         new MenuItem({
           "name": "Home",
           "type": "button",
-          "icon": "ant-design:home-filled",
+          "icon": "home",
           "helpingAttribute": "/home",
           "customTitle": "Welcome to Boiler Plate",
-          "isFavourite": true
+          "isFavorite": true
         }),
         new MenuItem({
           "name": "Example",
           "type": "button",
-          "icon": "bytesize:code",
+          "icon": "description",
           "helpingAttribute": "/examples",
           "customTitle": "Example Code File",
-          "isFavourite": true
+          "isFavorite": true
         }),
         new MenuItem({
           "name": "Users Manager",
           "type": "button",
-          "icon": "bytesize:user",
+          "icon": "people",
           "helpingAttribute": "/users",
           "customTitle": "Users Manager",
-          "isFavourite": true
+          "isFavorite": true
         }),
         new MenuItem({
           "name": "Logout",
           "type": "logout",
-          "icon": "fe:logout",
+          "icon": "logout",
           "helpingAttribute": "",
           "customTitle": "Welcome to Boiler Plate",
-          "isFavourite": false
+          "isFavorite": false
         })
       ],
     };

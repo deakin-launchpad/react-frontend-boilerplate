@@ -1,0 +1,22 @@
+.background-color {
+    background-color: #f4f5f7;
+}
+.login-wrapper{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sidebar-icon{
+    padding-right: 15px;
+}
+.switch-theme {
+    position: fixed;
+    right: 20px;
+    top: 65px;
+}
+.table-title{
+    text-transform:capitalize;
+    margin-bottom: 10px;
+}

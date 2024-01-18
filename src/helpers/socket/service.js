@@ -17,7 +17,7 @@ export const useSocket = (variant, event, callback) => {
   };
   useEffect(() => {
     if (socketInstance === null)
-      setError('Socket not initilized! Check Configuration to enable it.');
+      setError('Socket not initialized! Check Configuration to enable it.');
     if (String(variant).toLowerCase() !== 'on' && String(variant).toLowerCase() !== 'emit' && String(variant).toLowerCase() !== 'off')
       setError('Unsupported Variant Provided! Please use one of "on" "emit" or "off"');
     else {

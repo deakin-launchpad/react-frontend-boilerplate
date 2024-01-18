@@ -1,8 +1,8 @@
 
 import PropTypes from 'prop-types';
-import { LoginContext, LoginProvider } from './common/LoginContext';
-import { LayoutContext, LayoutProvider } from './common/LayoutContext';
-import { DeviceInfoContext, DeviceInfoProvider } from './common/DeviceInfoContext';
+import { LoginContext, LoginProvider } from './common/login';
+import { LayoutContext, LayoutProvider } from './common/layout';
+import { DeviceInfoContext, DeviceInfoProvider } from './common/deviceInfo';
 
 export {
   LoginContext,
