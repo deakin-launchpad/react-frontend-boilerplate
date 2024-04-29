@@ -104,7 +104,11 @@ export default function EnhancedDataGrid(props) {
             },
           }}
           onRowSelectionModelChange={(newSelection)=>{
-            props?.onRowSelectionModelChange(newSelection) ?? console.log(newSelection);
+            if (typeof props?.onRowSelectionModelChange === 'function') {
+              props.onRowSelectionModelChange(newSelection);
+            } else {
+              console.log(newSelection);
+            }
           }}
           rowsPerPageOptions={props?.rowsPerPageOptions ?? [5]}
           disableSelectionOnClick
