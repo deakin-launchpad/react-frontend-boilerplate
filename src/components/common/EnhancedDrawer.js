@@ -1,23 +1,20 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { SwipeableDrawer, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 
 export const EnhancedDrawer = (props) => {
   const [drawerHeight, setDrawerHeight] = useState('50vh');
   const [drawerWidth, setDrawerWidth] = useState('50vh');
   const [drawerMargin, setDrawerMargin] = useState(null);
-  const useStyles = makeStyles(theme => ({
-    container: {
-      height: drawerHeight,
-      width: drawerWidth,
-      margin: drawerMargin !== null ? drawerMargin : theme.spacing(2)
-    },
-    title: {
-    }
+
+  const Container = styled('div')(({ theme }) => ({
+    height: drawerHeight,
+    width: drawerWidth,
+    margin: drawerMargin !== null ? drawerMargin : theme.spacing(2)
   }));
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const classes = useStyles();
+  const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('DrawerTitle');
   const [drawerContent, setDrawerContent] = useState(<p>Please pass content for the drawer</p>);
@@ -61,14 +58,14 @@ export const EnhancedDrawer = (props) => {
           props.onClose();
     }}
   >
-    <div className={classes.container}>
-      <div className={classes.title}>
+    <Container options={props.options}>
+      <div>
         <Typography variant={'h5'} component={'h5'} >{title}</Typography>
       </div>
-      <div className={classes.content}>
+      <div>
         {drawerContent}
       </div>
-    </div>
+    </Container>
   </SwipeableDrawer >);
   return drawer;
 };

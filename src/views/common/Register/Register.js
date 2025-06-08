@@ -3,24 +3,13 @@
  ***/
 import { useState, useContext } from 'react';
 import { TextField, Typography, Button, Box, Divider, Container, Card, CardContent, Link } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';
 import { notify } from 'components';
 import { Link as RouterLink } from 'react-router-dom';
 import { DeviceInfoContext } from 'contexts/index';
 import { API } from 'helpers/index';
 
 
-const useStyles = makeStyles(() => createStyles({
-  developMessage: {
-    paddingBottom: '4vh',
-    margin: 'auto',
-    width: '100%'
-  }
-}));
-
-
 export const Register = () => {
-  const classes = useStyles();
   const { deviceData } = useContext(DeviceInfoContext);
   const [pageHeading] = useState('Register');
   const [emailId, setEmailId] = useState('');
@@ -28,14 +17,17 @@ export const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const register = () => {
-    // TODO : Update Register API
+    // Process the phone number by removing the first 0
+    let processedPhoneNumber = phoneNumber.replace(/^0/, '');
     API.register({
       deviceData,
       emailId,
       password,
       firstName,
-      lastName
+      lastName,
+      phoneNumber: processedPhoneNumber
     });
   };
   const validationCheck = () => {
@@ -54,13 +46,20 @@ export const Register = () => {
     if (emailPatternTest) {
       return register();
     }
+    if (phoneNumber.length < 0 || phoneNumber === '') {
+      return notify("Please fill in all the details.");
+    }
+    if (phoneNumber.length !== 10 || !phoneNumber.startsWith('04')) {
+      return notify("Phone number must be 10 digits. Starting with 04");
+    }
   };
   let form = (<form noValidate>
     <TextField variant="outlined" margin="normal" required fullWidth id="firstName" label="First Name" name="firstName" autoComplete="email" onChange={e => setFirstName(e.target.value)} autoFocus />
     <TextField variant="outlined" margin="normal" required fullWidth id="lastName" label="Last Name" name="lastName" autoComplete="email" onChange={e => setLastName(e.target.value)} />
     <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" onChange={e => setEmailId(e.target.value)} />
-    <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" onChange={e => setPassword(e.target.value)} autoComplete="current-password" />
-    <TextField variant="outlined" margin="normal" required fullWidth name="confirmPassword" label="Confirm Password" type="password" id="confirmPassword" onChange={e => setConfirmPassword(e.target.value)} autoComplete="current-password" />
+    <TextField variant="outlined" margin="normal" required fullWidth id="phoneNumber" label="Phone Number" name="phoneNumber" autoComplete="phoneNumber" onChange={e => setPhoneNumber(e.target.value)} />
+    <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" onChange={e => setPassword(e.target.value)} />
+    <TextField variant="outlined" margin="normal" required fullWidth name="confirmPassword" label="Confirm Password" type="password" id="confirmPassword" onChange={e => setConfirmPassword(e.target.value)} />
     <Box sx={{ mt: 2 }}>
       <Button fullWidth variant="contained" color="primary" onClick={validationCheck}>Register</Button>
     </Box>
@@ -106,7 +105,7 @@ export const Register = () => {
                   color="textSecondary"
                   variant="body2"
                 >
-                  Register on the internal platform
+                  Register
                 </Typography>
               </div>
             </Box>
@@ -130,11 +129,15 @@ export const Register = () => {
           </CardContent>
         </Card>
       </Container>
-      <Box mt={2}>
-        <Typography className={classes.developMessage} variant="body2" color="textSecondary" align="center">
+      {/* <Box mt={2}>
+        <Typography sx={{
+          paddingBottom: '4vh',
+          margin: 'auto',
+          width: '100%'
+        }} variant="body2" color="textSecondary" align="center">
           Developed by Deakin Launchpad
         </Typography>
-      </Box>
+      </Box> */}
     </Box>
 
   );

@@ -1,15 +1,13 @@
 
 import PropTypes from 'prop-types';
-import { makeStyles } from '@mui/styles';
-const useStyles = makeStyles(() => ({
-  content: {
-    display: 'contents'
-  }
+import { styled } from '@mui/material/styles';
+
+const Content = styled('div')(() => ({
+  display: 'contents'
 }));
 
 export const HeaderElements = (props) => {
-  const classes = useStyles();
-  return (<div className={classes.content}>{props.children}</div>);
+  return (<Content>{props.children}</Content>);
 };
 HeaderElements.propTypes = {
   children: PropTypes.node.isRequired

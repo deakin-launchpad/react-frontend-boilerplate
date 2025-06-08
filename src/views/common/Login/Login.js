@@ -3,23 +3,13 @@
  ***/
 import { useState, useContext, useCallback } from 'react';
 import { Typography, Box, Container, Card, CardContent, Divider, Link } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';
 import { LoginContext, DeviceInfoContext, LayoutContext } from 'contexts';
 import { LoginForm, SsoLogin } from 'components';
 import { API } from 'helpers';
 import { ConnectionConfig } from 'constants/index';
 import { Link as RouterLink } from 'react-router-dom';
 
-const useStyles = makeStyles(() => createStyles({
-  developMessage: {
-    paddingBottom: '4vh',
-    margin: 'auto',
-    width: '100%'
-  }
-}));
-
 export const Login = () => {
-  const classes = useStyles();
   const [pageHeading] = useState('Login');
   const { setAccessToken } = useContext(LoginContext);
   const { deviceUUID, deviceName } = useContext(DeviceInfoContext);
@@ -90,11 +80,15 @@ export const Login = () => {
           </CardContent>
         </Card>
       </Container>
-      <Box mt={2}>
-        <Typography className={classes.developMessage} variant="body2" color="textSecondary" align="center">
+      {/* <Box mt={2}>
+        <Typography sx={{
+          paddingBottom: '4vh',
+          margin: 'auto',
+          width: '100%'
+        }} variant="body2" color="textSecondary" align="center">
           Developed by Deakin Launchpad
         </Typography>
-      </Box>
+      </Box> */}
     </Box>
   );
   return content;

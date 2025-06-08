@@ -5,33 +5,23 @@
 
 import { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction, Paper, Icon as ParentIcon } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';
+import { BottomNavigation, BottomNavigationAction, Paper, Box, Icon as ParentIcon } from '@mui/material';
+// import { makeStyles, createStyles } from '@mui/styles';
 import { API } from 'helpers';
 import { LayoutContext } from 'contexts';
 import { InlineIcon } from '@iconify/react-with-api';
+import { styled } from '@mui/material/styles';
 
-let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+const Root = styled('div')({
+  width: '100%',
+  position: 'fixed',
+  bottom: 0,
+});
 
-const useStyles = makeStyles(theme => createStyles({
-  root: {
-    width: '100%',
-    position: 'fixed',
-    bottom: '0'
-  },
-  iOSPadding: {
-    height: iOS ? theme.spacing(2) : 0
-  },
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-}));
+const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
 
 export const BottomNavToolbar = () => {
-  const classes = useStyles();
   const [value, setValue] = useState(null);
   const { setPageTitle, layoutConfiguration, currentUserRole } = useContext(LayoutContext);
   let menuButtonLabel = (layoutConfiguration.menuButtonLabel !== undefined ?
@@ -71,7 +61,7 @@ export const BottomNavToolbar = () => {
     else return null;
   };
 
-  return (<Paper className={classes.root}>
+  return (<Paper component={Root}>
     <BottomNavigation
       showLabels
       value={value}
@@ -87,7 +77,7 @@ export const BottomNavToolbar = () => {
         </ParentIcon>} /> : null}
 
     </BottomNavigation>
-    <div className={classes.iOSPadding} />
+    <Box sx={{ height: iOS ? (theme) => theme.spacing(2) : 0 }} />
   </Paper>);
 };
 

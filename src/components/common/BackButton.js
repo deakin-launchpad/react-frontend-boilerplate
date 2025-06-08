@@ -12,7 +12,7 @@ export const BackButton = (props) => {
   let history = useHistory();
   useEffect(() => { historyGoback = history.goBack; }, [history]);
   return (
-    <Link id="backBUTTON" onClick={() => {
+    <Link id="backButton" onClick={() => {
       if (!(props.disableHistoryBack))
         history.goBack();
       if (props.onClick instanceof Function)

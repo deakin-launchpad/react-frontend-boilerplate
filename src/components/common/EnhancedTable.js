@@ -7,7 +7,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { TextHelper } from 'helpers/index';
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 
 const Selector = (props) => {
   const [initData, setInitData] = useState(false);
@@ -127,45 +127,26 @@ const breakObject = (obj) => {
     }));
 };
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(0),
-    overflowX: 'auto'
-  },
-  tableWrapper: {
-    overflow: 'auto',
-    maxHeight: 407
-  },
-  table: {
-    minWidth: 650,
-  },
-  spacer: {
-    flex: '1 1 100%',
-  },
-  title: {
-    flex: '0 0 auto',
-  },
-  actions: {
-    float: 'right'
-  }
+const Root = styled('div')(({ theme }) => ({
+  width: '100%',
+  marginTop: theme.spacing(0),
+  overflowX: 'auto'
 }));
 
-const useStyles1 = makeStyles(theme => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5),
-  },
-}));
+const Spacer = styled('div')({
+  flex: '1 1 100%',
+});
+
+const Title = styled('div')({
+  flex: '0 0 auto',
+});
 
 const TablePaperWrapper = (props) => {
-  const classes = useStyles();
   if (props.disableContainer)
-    return <div className={classes.root}  >
+    return <Root>
       {props.children}
-    </div>;
-  return <Paper className={classes.root} >
+    </Root>;
+  return <Paper component={Root} >
     {props.children}
   </Paper>;
 };
@@ -206,11 +187,11 @@ Heading.propTypes = {
 };
 
 const TableHeader = (props) => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   if (props.disable) return null;
   return <Toolbar>
-    <div className={classes.title}>
+    <Title options={props.options}>
       {props.selecteditems.length !== 0 ?
         <Typography color="black" variant="tableTitle">
           {props.selecteditems.length} selected
@@ -220,14 +201,14 @@ const TableHeader = (props) => {
           {props.title !== undefined ? props.title : 'EnhancedTable'}
         </Typography>
       }
-    </div>
-    <div className={classes.spacer} />
+    </Title>
+    <Spacer />
     {
       props.options && <Grid container spacing={1} direction="row" justifyContent="flex-end" alignItems="flex-end">
         {props.options.toolbarActions !== undefined ?
           props.options.toolbarActions.map((value, i) => {
             if (value === undefined || value === false) return null;
-            return (<Grid item key={'toolbarAction' + i}>
+            return (<Grid key={'toolbarAction' + i}>
               <Button color="primary" size="small"
                 onClick={(e) => value.function(e, props.selecteditems)} variant="contained"
               >{value.label}
@@ -332,7 +313,7 @@ const TableErrorAndEmptyRows = (props) => {
         <Grid container spacing={0}
           align="center"
           justify="center">
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography>{props.errorText}</Typography>
           </Grid>
         </Grid></TableCell>
@@ -492,11 +473,14 @@ TableRows.propTypes = {
   })
 };
 
-
+const Root2 = styled('div')(({ theme }) => ({
+  flexShrink: 0,
+  color: theme.palette.text.secondary,
+  marginLeft: theme.spacing(2.5),
+}));
 
 const TablePaginationComponent = (props) => {
   const TablePaginationActions = () => {
-    const classes = useStyles1();
     const theme = useTheme();
     const handleFirstPageButtonClick = () => {
       if (props.options === undefined)
@@ -535,7 +519,7 @@ const TablePaginationComponent = (props) => {
       }
     };
     return (
-      <div className={classes.root}>
+      <Root2>
         <IconButton
           onClick={handleFirstPageButtonClick}
           disabled={props.page === 0}
@@ -562,7 +546,7 @@ const TablePaginationComponent = (props) => {
         >
           {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
         </IconButton>
-      </div>
+      </Root2>
     );
   };
 
@@ -685,31 +669,18 @@ TablePaginationComponent.propTypes = {
     }} />
  */
 export const EnhancedTable = (props) => {
-  const useStyles = makeStyles(theme => ({
-    root: {
-      width: '100%',
-      marginTop: theme.spacing(0),
-      overflowX: 'auto'
-    },
-    tableWrapper: {
-      maxHeight: props?.options?.ui?.maxHeight || 407,
-      overflowY: 'auto',
-      '-webkit-overflow-scrolling': 'touch',
-    },
-    table: {
-      minWidth: props?.options?.ui?.minWidth || 650,
-    },
-    spacer: {
-      flex: '1 1 100%',
-    },
-    title: {
-      flex: '0 0 auto',
-    },
-    actions: {
-      float: 'right'
-    },
+
+  const TableWrapper = styled('div')(({ options }) => ({
+    maxHeight: options?.ui?.maxHeight || 407,
+    overflowY: 'auto',
+    WebkitOverflowScrolling: 'touch',
   }));
-  const classes = useStyles();
+
+  const StyledTable = styled(Table)(({ options }) => ({
+    minWidth: options?.ui?.minWidth || 650,
+  }));
+
+
   var selecteditems = useMemo(() => [], []);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(props?.options?.rowsPerPage ? props.options.rowsPerPage : 5);
@@ -762,8 +733,8 @@ export const EnhancedTable = (props) => {
   return <TablePaperWrapper
     disableContainer={props.options?.ui?.disableContainer || false} >
     <TableHeader {...props} keys={keys} disable={props.options?.ui?.disableTitle || false} selecteditems={selecteditems} />
-    <div className={classes.tableWrapper}>
-      <Table className={classes.table} stickyHeader={props.options !== undefined ? props.options.selector ? true : false : false} >
+    <TableWrapper options={props.options}>
+      <StyledTable options={props.options} stickyHeader={props.options !== undefined ? props.options.selector ? true : false : false} >
         <TableHeading {...props} keys={keys} sort={{
           onSortChange: (event, value) => {
             if (sortBy !== value) {
@@ -777,7 +748,7 @@ export const EnhancedTable = (props) => {
           selectedSortVariable: sortBy || keys[0],
           sortAssending: sortAccending
         }} />
-        <TableBody className={classes.tableBody}>
+        <TableBody>
           <TableRows keys={keys} page={page} rowsPerPage={rowsPerPage} {...props} sort={{
             sort: props.options?.enableSort,
             selectedSortVariable: sortBy || keys[0],
@@ -785,8 +756,8 @@ export const EnhancedTable = (props) => {
           }} />
           <TableErrorAndEmptyRows emptyRows={emptyRows} keys={keys} {...props} />
         </TableBody>
-      </Table>
-    </div>
+      </StyledTable>
+    </TableWrapper>
     <TablePaginationComponent {...props}
       page={page} rowsPerPage={rowsPerPage} rowsPerPageOptions={rowsPerPageOptions}
       setPage={setPage} setRowsPerPage={setRowsPerPage} />

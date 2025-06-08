@@ -43,14 +43,6 @@ class Layout {
           "isFavourite": true
         }),
         new MenuItem({
-          "name": "Users Manager",
-          "type": "button",
-          "icon": "bytesize:user",
-          "helpingAttribute": "/users",
-          "customTitle": "Users Manager",
-          "isFavourite": true
-        }),
-        new MenuItem({
           "name": "Logout",
           "type": "logout",
           "icon": "fe:logout",
@@ -77,7 +69,8 @@ class Layout {
 
     this.defaultContainerSX = {
       backgroundColor: 'background.default',
-      display: 'flex', flexDirection: 'column',
+      display: 'flex',
+      flexDirection: 'column',
       minHeight: 'calc(100% - 64px)'
     };
   }

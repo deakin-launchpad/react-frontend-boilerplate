@@ -12,7 +12,6 @@ import { HeaderElements } from './helpers/HeaderElements';
 import { EnhancedEditor } from './common/EnhancedEditor';
 import { EnhancedDrawer } from './common/EnhancedDrawer';
 import { LoginCheck } from './helpers/LoginCheck.js';
-import { VideoCall } from './common/VideoCall';
 import { LoginForm } from './dependants/login/loginForm';
 import { GlobalStyles } from './helpers/GlobalStyles';
 import { SsoLogin } from './dependants/login/ssoLogin';
@@ -33,7 +32,6 @@ export {
   EnhancedEditor,
   EnhancedDrawer,
   LoginCheck,
-  VideoCall,
   LoginForm,
   GlobalStyles,
   SsoLogin

@@ -1,5 +1,5 @@
 import {
-  createTheme as createMuiTheme, responsiveFontSizes, ThemeProvider as MuiThemeProvider
+  createTheme, responsiveFontSizes, ThemeProvider
 } from '@mui/material/styles';
 import { LoadingScreen } from 'components/index';
 import { LayoutContext } from 'contexts/index';
@@ -12,6 +12,7 @@ import { darkShadows, lightShadows } from './shadows';
 
 const baseOptions = {
   direction: 'ltr',
+  spacing: 8,
   components: {
     MuiAvatar: {
       styleOverrides: {
@@ -215,7 +216,7 @@ const themesOptions = {
   }
 };
 
-export const createTheme = (config = {}) => {
+export const createAppTheme = (config = {}) => {
   let themeOptions = themesOptions[config.theme];
 
   if (!themeOptions) {
@@ -223,7 +224,7 @@ export const createTheme = (config = {}) => {
     themeOptions = themesOptions[THEMES.LIGHT];
   }
 
-  let theme = createMuiTheme(merge({}, baseOptions, themeOptions, {
+  let theme = createTheme(merge({}, baseOptions, themeOptions, {
     ...(config.roundedCorners && {
       shape: {
         borderRadius: 16
@@ -241,20 +242,20 @@ export const createTheme = (config = {}) => {
 };
 
 
-export const ThemeProvider = ({ children }) => {
+export const AppThemeProvider = ({ children }) => {
   const [appTheme, changeAppTheme] = useState();
   const layoutContext = useContext(LayoutContext);
   useEffect(() => {
     if (layoutContext !== undefined)
       if (layoutContext.currentTheme !== undefined)
-        changeAppTheme(createTheme(layoutContext.currentTheme));
+        changeAppTheme(createAppTheme(layoutContext.currentTheme));
   }, [layoutContext]);
   if (appTheme === undefined) return <LoadingScreen loadingText='loading theme' />;
-  return <MuiThemeProvider theme={appTheme} >
+  return <ThemeProvider theme={appTheme} >
     {children}
-  </MuiThemeProvider>;
+  </ThemeProvider>;
 };
 
-ThemeProvider.propTypes = {
+AppThemeProvider.propTypes = {
   children: PropTypes.node.isRequired
 };
